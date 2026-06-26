@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy–Utility Dilemma — Thursday Masking Day</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+    :root {
+      --cds-background:      #000000;
+      --cds-layer:           #161616;
+      --cds-layer-accent:    #262626;
+      --cds-border-subtle:   #525252;
+      --cds-text-primary:    #f4f4f4;
+      --cds-text-secondary:  #c6c6c6;
+      --cds-text-placeholder:#6f6f6f;
+      --cds-interactive:     #0f62fe;
+      --cds-support-success: #42be65;
+      --cds-support-warning: #f1c21b;
+      --cds-support-error:   #fa4d56;
+      --cds-support-info:    #4589ff;
+      --cds-link:            #78a9ff;
+      --cds-highlight:       #0043ce;
+      --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", "Consolas", monospace;
+    }
+    .reveal-viewport { background: var(--cds-background) !important; }
+    .reveal { font-family: var(--font-body); font-size: 22px; color: var(--cds-text-primary); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-body); font-weight: 300; color: var(--cds-text-primary);
+      text-transform: none; letter-spacing: -0.01em; margin-bottom: 0.5em;
+    }
+    .reveal h1 { font-size: 2.4em; font-weight: 300; line-height: 1.15; }
+    .reveal h2 { font-size: 1.4em; font-weight: 600;
+                 border-bottom: 1px solid var(--cds-border-subtle); padding-bottom: 0.3em; }
+    .reveal h3 { font-size: 1em; font-weight: 600; color: var(--cds-link); }
+    .reveal section { padding: 0 2.5em; overflow: hidden; }
+    .reveal .slides { text-align: left; }
+    .reveal .slide-number { color: var(--cds-text-placeholder); font-family: var(--font-mono);
+      font-size: 0.65em; background: transparent; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: 0.3em; font-size: 0.88em; color: var(--cds-text-secondary); }
+    .reveal li strong { color: var(--cds-text-primary); font-weight: 600; }
+    .reveal table { border-collapse: collapse; width: 100%; font-size: 0.72em; }
+    .reveal table th { background: var(--cds-layer-accent); color: var(--cds-text-primary);
+      font-weight: 600; padding: 0.5em 0.9em; text-align: left;
+      border-bottom: 2px solid var(--cds-interactive); }
+    .reveal table td { padding: 0.4em 0.9em; border-bottom: 1px solid var(--cds-layer-accent);
+      color: var(--cds-text-secondary); }
+    .reveal table tr:nth-child(even) td { background: var(--cds-layer); }
+    .reveal pre { font-family: var(--font-mono); background: var(--cds-layer);
+      border: 1px solid var(--cds-layer-accent); border-left: 3px solid var(--cds-interactive);
+      border-radius: 0; padding: 0.8em 1em; font-size: 0.7em; box-shadow: none; width: 100%; }
+    .reveal code { font-family: var(--font-mono); font-size: 0.85em; color: var(--cds-support-info);
+      background: var(--cds-layer); padding: 0.1em 0.3em; border-radius: 2px; }
+    .reveal pre code { color: var(--cds-text-primary); font-size: 1em; background: none; }
+    .callout { display: flex; align-items: flex-start; gap: 0.7em; background: var(--cds-layer);
+      border-left: 3px solid var(--cds-interactive); padding: 0.7em 1em;
+      margin: 0.7em 0; font-size: 0.78em; color: var(--cds-text-secondary); }
+    .callout.success { border-color: var(--cds-support-success); }
+    .callout.warning { border-color: var(--cds-support-warning); }
+    .callout.danger  { border-color: var(--cds-support-error); }
+    .tag { display: inline-flex; align-items: center; gap: 0.3em; background: var(--cds-layer-accent);
+      color: var(--cds-text-secondary); font-size: 0.65em; font-weight: 600;
+      padding: 0.2em 0.6em; border-radius: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+    .tag.blue   { background: #002d9c; color: #a6c8ff; }
+    .tag.green  { background: #022d0d; color: #6fdc8c; }
+    .tag.purple { background: #1c0f30; color: #d4bbff; }
+    .tag.red    { background: #2d0709; color: #ffb3b8; }
+    .tag.teal   { background: #081a1c; color: #3ddbd9; }
+    .tag.yellow { background: #312400; color: #f1c21b; }
+    .cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em; }
+    .small  { font-size: 0.68em; color: var(--cds-text-secondary); }
+    .muted  { color: var(--cds-text-placeholder); }
+    .em     { color: var(--cds-link); font-weight: 600; }
+    .mono   { font-family: var(--font-mono); font-size: 0.85em; }
+    .eyebrow { font-size: 0.65em; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--cds-text-placeholder); margin-bottom: 0.3em; }
+    .title-slide { display: flex; flex-direction: column; justify-content: center; min-height: 65vh; }
+    .title-slide h1 { font-size: 2.6em; font-weight: 300; margin-bottom: 0.2em; }
+    .title-slide .subtitle { font-size: 1em; color: var(--cds-link); margin-bottom: 1em; }
+    .title-slide .meta { font-size: 0.7em; color: var(--cds-text-placeholder); }
+    .divider { background: var(--cds-highlight) !important; }
+    .divider h2 { font-size: 2em; font-weight: 300; border: none; color: #fff; }
+    .divider .eyebrow { color: rgba(255,255,255,0.6); }
+
+    /* ── Trade-off scale ─────────────────────────────── */
+    .scale-bar {
+      display: flex; align-items: center; gap: 0; height: 28px;
+      border-radius: 2px; overflow: hidden; margin: 0.6em 0;
+    }
+    .scale-seg {
+      flex: 1; height: 100%; display: flex; align-items: center;
+      justify-content: center; font-size: 0.62em; font-weight: 600;
+      color: #161616; letter-spacing: 0.04em;
+    }
+
+    /* ── Tradeoff matrix cell ────────────────────────── */
+    .matrix-cell {
+      background: var(--cds-layer); border: 1px solid var(--cds-layer-accent);
+      padding: 0.8em; text-align: center;
+    }
+    .matrix-cell .val { font-size: 1.6em; font-weight: 300; display: block; margin-bottom: 0.2em; }
+    .matrix-cell .lbl { font-size: 0.65em; color: var(--cds-text-placeholder); text-transform: uppercase; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- ── TITLE ─────────────────────────────────────── -->
+  <section>
+    <div class="title-slide">
+      <p class="eyebrow">15:15 – 16:00 · Thursday · Tilburg Multiscale Summerschool 2026</p>
+
+      <!-- Balance / scale pictogram -->
+      <svg width="72" height="72" viewBox="0 0 32 32" fill="none" style="display:block;margin-bottom:0.5em">
+        <line x1="16" y1="4" x2="16" y2="28" stroke="#0f62fe" stroke-width="1.5"/>
+        <line x1="4" y1="10" x2="28" y2="10" stroke="#0f62fe" stroke-width="1.5"/>
+        <circle cx="4" cy="18" r="5" stroke="#42be65" stroke-width="1.5" fill="#022d0d"/>
+        <text x="4" y="21" text-anchor="middle" fill="#42be65" font-size="5" font-family="monospace">U</text>
+        <circle cx="28" cy="14" r="5" stroke="#fa4d56" stroke-width="1.5" fill="#2d0709"/>
+        <text x="28" y="17" text-anchor="middle" fill="#fa4d56" font-size="5" font-family="monospace">P</text>
+        <line x1="4" y1="10" x2="4" y2="13" stroke="#42be65" stroke-width="1.5"/>
+        <line x1="28" y1="10" x2="28" y2="9" stroke="#fa4d56" stroke-width="1.5"/>
+      </svg>
+
+      <h1>The Privacy–Utility Dilemma</h1>
+      <p class="subtitle">How much signal do we lose when we protect identities?</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        15:15 – 16:00
+      </p>
+    </div>
+  </section>
+
+  <!-- ── THE CORE TENSION ──────────────────────────── -->
+  <section>
+    <h2>The core tension</h2>
+    <div class="cols">
+      <div>
+        <h3>Privacy</h3>
+        <ul>
+          <li><strong>GDPR Article 4(1)</strong> — biometric data is sensitive personal data</li>
+          <li>Face recognition trivially re-identifies blurred video at scale (Gross et al. 2006)</li>
+          <li>IRB / ethics committees increasingly require de-identification before sharing</li>
+          <li>Participants have a <span class="em">right to withdraw</span> — data must be revisable</li>
+        </ul>
+        <div class="callout danger" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          Face &amp; voice are directly identifying. Background details, gait, and body shape can also re-identify.
+        </div>
+      </div>
+      <div>
+        <h3>Scientific utility</h3>
+        <ul>
+          <li>Body movement data requires visible joints</li>
+          <li>Gesture research needs hand and head motion</li>
+          <li>Vocal analysis requires original audio — or its acoustic properties</li>
+          <li>Heavy masking → <span class="em">degraded signal</span>, reduced replicability</li>
+        </ul>
+        <div class="callout success" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          MaskBench shows body keypoints (RMSE &lt; 10 px) survive most masking strategies.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRIVACY SCALE ────────────────────────────── -->
+  <section>
+    <h2>The privacy–utility spectrum</h2>
+    <p class="small" style="margin-bottom:0.3em">Moving right increases privacy but reduces visible signal.</p>
+
+    <!-- Colour gradient bar -->
+    <div class="scale-bar">
+      <div class="scale-seg" style="background:#42be65">Raw</div>
+      <div class="scale-seg" style="background:#6fdc8c">Blur</div>
+      <div class="scale-seg" style="background:#f1c21b">Pixelate</div>
+      <div class="scale-seg" style="background:#ff7eb6">Solid fill</div>
+      <div class="scale-seg" style="background:#fa4d56;color:#f4f4f4">Silhouette</div>
+      <div class="scale-seg" style="background:#8a3ffc;color:#f4f4f4">Skeleton only</div>
+    </div>
+    <div class="scale-bar" style="height:14px;margin-top:0">
+      <div class="scale-seg" style="background:#161616;color:#42be65;flex:1">← more utility</div>
+      <div class="scale-seg" style="background:#161616;color:#fa4d56;flex:1">more privacy →</div>
+    </div>
+
+    <table style="margin-top:1em">
+      <thead>
+        <tr>
+          <th>Method</th><th>Face visible?</th><th>Gait visible?</th>
+          <th>Hands visible?</th><th>Re-ID risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Raw video</td><td><span class="tag red">Yes</span></td>
+          <td><span class="tag red">Yes</span></td><td><span class="tag red">Yes</span></td>
+          <td><span class="tag red">High</span></td>
+        </tr>
+        <tr>
+          <td>Blur (σ=30)</td><td><span class="tag yellow">Partial</span></td>
+          <td><span class="tag yellow">Partial</span></td><td><span class="tag yellow">Partial</span></td>
+          <td><span class="tag yellow">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Solid fill</td><td><span class="tag green">No</span></td>
+          <td><span class="tag yellow">Partial</span></td><td><span class="tag green">No</span></td>
+          <td><span class="tag blue">Low</span></td>
+        </tr>
+        <tr>
+          <td>Silhouette</td><td><span class="tag green">No</span></td>
+          <td><span class="tag yellow">Partial</span></td><td><span class="tag green">No</span></td>
+          <td><span class="tag blue">Low</span></td>
+        </tr>
+        <tr>
+          <td>Skeleton only</td><td><span class="tag green">No</span></td>
+          <td><span class="tag green">Abstract</span></td><td><span class="tag green">No</span></td>
+          <td><span class="tag green">Minimal</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── WHAT MASKING CANNOT HIDE ──────────────────── -->
+  <section>
+    <h2>What masking cannot hide</h2>
+    <div class="cols">
+      <div>
+        <h3>Residual identifiers</h3>
+        <ul>
+          <li><strong>Gait</strong> — body sway, step pattern are person-specific (Nixon et al. 2006)</li>
+          <li><strong>Hand shape</strong> — even silhouette reveals knuckle width</li>
+          <li><strong>Clothing</strong> — colour, pattern, logos visible through partial blur</li>
+          <li><strong>Voice</strong> — even pitch-shifted audio retains prosodic signature</li>
+          <li><strong>Background</strong> — room, posters, unique objects</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mitigations</h3>
+        <ul>
+          <li><strong>Full solid fill + skeleton</strong> removes most residuals</li>
+          <li><strong>Audio replacement</strong> (TTS) eliminates voice entirely</li>
+          <li><strong>Background replacement</strong> — chroma key or inpainting</li>
+          <li><strong>Access control</strong> — tiered release; IRB-only for raw</li>
+          <li><strong>Time jitter</strong> — shift session timestamps to prevent linking</li>
+        </ul>
+        <div class="callout warning" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          No de-identification method is 100% proof against a determined adversary with auxiliary information.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GDPR AND ETHICS ───────────────────────────── -->
+  <section>
+    <h2>Legal &amp; ethical framing</h2>
+    <div class="cols">
+      <div>
+        <h3>GDPR requirements</h3>
+        <ul>
+          <li><strong>Art. 4(1)</strong> — identified or <em>identifiable</em> natural person</li>
+          <li><strong>Art. 9</strong> — biometric &amp; health data as special category</li>
+          <li><strong>Art. 89</strong> — research exemption, but requires safeguards</li>
+          <li><strong>Recital 26</strong> — pseudonymisation ≠ anonymisation if re-linkable</li>
+        </ul>
+        <div class="callout" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+          </svg>
+          Video is personal data under GDPR by default. Consent ≠ free access to identifiable recordings.
+        </div>
+      </div>
+      <div>
+        <h3>Ethics committee checklist</h3>
+        <ul>
+          <li><span class="tag green">Required</span> Informed consent covering recording</li>
+          <li><span class="tag green">Required</span> Data management plan</li>
+          <li><span class="tag green">Required</span> Storage location (EU/EEA preferred)</li>
+          <li><span class="tag blue">Recommended</span> De-identification before sharing</li>
+          <li><span class="tag blue">Recommended</span> Access-controlled repository (DANS, OSF private)</li>
+          <li><span class="tag">Optional</span> Right-to-erasure workflow for each participant</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ─────────────────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Discussion</p>
+    <h2>Where do we draw the line?</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">
+      Group exercise — 10 minutes
+    </p>
+  </section>
+
+  <!-- ── DISCUSSION SCENARIOS ─────────────────────── -->
+  <section>
+    <h2>Discussion scenarios</h2>
+    <div class="cols-3">
+      <div style="background:var(--cds-layer);border-top:3px solid #42be65;padding:1em">
+        <p class="eyebrow" style="color:#42be65">Scenario A</p>
+        <p class="small" style="font-size:0.78em;color:var(--cds-text-secondary)">
+          You have <strong>30-minute design sessions</strong> with three participants per group.
+          You want to share <strong>5-minute excerpts</strong> as open-access supplementary material.
+          What strategy do you choose?
+        </p>
+      </div>
+      <div style="background:var(--cds-layer);border-top:3px solid #f1c21b;padding:1em">
+        <p class="eyebrow" style="color:#f1c21b">Scenario B</p>
+        <p class="small" style="font-size:0.78em;color:var(--cds-text-secondary)">
+          A participant withdraws consent <strong>two years after recording</strong>.
+          The masked video is already in a repository with a DOI.
+          How do you handle the withdrawal?
+        </p>
+      </div>
+      <div style="background:var(--cds-layer);border-top:3px solid #fa4d56;padding:1em">
+        <p class="eyebrow" style="color:#fa4d56">Scenario C</p>
+        <p class="small" style="font-size:0.78em;color:var(--cds-text-secondary)">
+          A reviewer requests access to <strong>raw (unmasked) video</strong>
+          to verify annotation quality.
+          What access control mechanism do you put in place?
+        </p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:1em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+      </svg>
+      There is no universally correct answer. The right choice depends on your data sensitivity, participant consent scope, and intended audience.
+    </div>
+  </section>
+
+  <!-- ── DECISION FRAMEWORK ─────────────────────────── -->
+  <section>
+    <h2>A practical decision framework</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Audience</th><th>Video access</th><th>Audio access</th>
+          <th>Recommended strategy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Research team only</td>
+          <td><span class="tag red">Raw</span></td>
+          <td><span class="tag red">Raw</span></td>
+          <td>Secure institutional storage; no sharing</td>
+        </tr>
+        <tr>
+          <td>Restricted collaborators</td>
+          <td><span class="tag yellow">Blur</span></td>
+          <td><span class="tag yellow">Original + NDA</span></td>
+          <td>DANS Data Station SSH / OSF private</td>
+        </tr>
+        <tr>
+          <td>Peer review</td>
+          <td><span class="tag blue">Solid fill</span></td>
+          <td><span class="tag blue">Pitch-shifted</span></td>
+          <td>Embargoed DOI; reviewer access link</td>
+        </tr>
+        <tr>
+          <td>Open access</td>
+          <td><span class="tag green">Silhouette</span></td>
+          <td><span class="tag green">TTS replacement</span></td>
+          <td>DataverseNL / Zenodo public</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout success" style="margin-top:0.7em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      The Envision triadic dataset uses <strong>solid fill + skeleton overlay</strong> for internal sharing and <strong>skeleton-only export</strong> for open access.
+    </div>
+  </section>
+
+  <!-- ── KEY TAKEAWAYS ─────────────────────────────── -->
+  <section>
+    <h2>Key takeaways</h2>
+    <ul>
+      <li><strong>De-identification ≠ anonymisation</strong> — GDPR still applies unless re-linkage is truly impossible</li>
+      <li><strong>No one-size-fits-all</strong> — match strategy to audience and data sensitivity</li>
+      <li><strong>Body keypoints survive masking</strong> — MaskBench shows PCK &gt; 88% for wrists/shoulders</li>
+      <li><strong>Audio is often the weakest link</strong> — pitch shift alone is insufficient; consider TTS or suppression</li>
+      <li><strong>Design for layered access</strong> — keep raw data under strict control, release progressively masked versions</li>
+    </ul>
+    <div class="callout" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      Next: <strong>04_audio_masking</strong> — practical audio de-identification with librosa, Whisper, and pyannote
+    </div>
+  </section>
+
+  <!-- ── CLOSING DIVIDER ───────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Up next · 16:15</p>
+    <h2>Audio De-identification</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">
+      Open <code style="background:rgba(255,255,255,0.15);color:#fff;padding:0.2em 0.5em">04_audio_deidentification.ipynb</code>
+    </p>
+  </section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720,
+    margin: 0.04, minScale: 0.2, maxScale: 2.0,
+    center: false, hash: true,
+    slideNumber: 'c/t',
+    controls: true, progress: true,
+    transition: 'fade', transitionSpeed: 'fast',
+    autoPlayMedia: true,
+  });
+</script>
+</body>
+</html>

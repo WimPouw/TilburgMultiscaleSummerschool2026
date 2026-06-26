@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masking Taxonomy — Thursday Masking Day</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+    :root {
+      --cds-background:      #000000;
+      --cds-layer:           #161616;
+      --cds-layer-accent:    #262626;
+      --cds-border-subtle:   #525252;
+      --cds-text-primary:    #f4f4f4;
+      --cds-text-secondary:  #c6c6c6;
+      --cds-text-placeholder:#6f6f6f;
+      --cds-interactive:     #0f62fe;
+      --cds-support-success: #42be65;
+      --cds-support-warning: #f1c21b;
+      --cds-support-error:   #fa4d56;
+      --cds-support-info:    #4589ff;
+      --cds-link:            #78a9ff;
+      --cds-highlight:       #0043ce;
+      --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", "Consolas", monospace;
+    }
+    .reveal-viewport { background: var(--cds-background) !important; }
+    .reveal { font-family: var(--font-body); font-size: 22px; color: var(--cds-text-primary); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-body); font-weight: 300; color: var(--cds-text-primary);
+      text-transform: none; letter-spacing: -0.01em; margin-bottom: 0.5em;
+    }
+    .reveal h1 { font-size: 2.4em; font-weight: 300; line-height: 1.15; }
+    .reveal h2 { font-size: 1.4em; font-weight: 600;
+                 border-bottom: 1px solid var(--cds-border-subtle); padding-bottom: 0.3em; }
+    .reveal h3 { font-size: 1em; font-weight: 600; color: var(--cds-link); }
+    .reveal section { padding: 0 2.5em; overflow: hidden; }
+    .reveal .slides { text-align: left; }
+    .reveal .slide-number { color: var(--cds-text-placeholder); font-family: var(--font-mono);
+      font-size: 0.65em; background: transparent; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: 0.3em; font-size: 0.88em; color: var(--cds-text-secondary); }
+    .reveal li strong { color: var(--cds-text-primary); font-weight: 600; }
+    .reveal table { border-collapse: collapse; width: 100%; font-size: 0.72em; }
+    .reveal table th { background: var(--cds-layer-accent); color: var(--cds-text-primary);
+      font-weight: 600; padding: 0.5em 0.9em; text-align: left;
+      border-bottom: 2px solid var(--cds-interactive); }
+    .reveal table td { padding: 0.4em 0.9em; border-bottom: 1px solid var(--cds-layer-accent);
+      color: var(--cds-text-secondary); }
+    .reveal table tr:nth-child(even) td { background: var(--cds-layer); }
+    .reveal pre { font-family: var(--font-mono); background: var(--cds-layer);
+      border: 1px solid var(--cds-layer-accent); border-left: 3px solid var(--cds-interactive);
+      border-radius: 0; padding: 0.8em 1em; font-size: 0.7em; box-shadow: none; width: 100%; }
+    .reveal code { font-family: var(--font-mono); font-size: 0.85em; color: var(--cds-support-info);
+      background: var(--cds-layer); padding: 0.1em 0.3em; border-radius: 2px; }
+    .reveal pre code { color: var(--cds-text-primary); font-size: 1em; background: none; }
+    .callout { display: flex; align-items: flex-start; gap: 0.7em; background: var(--cds-layer);
+      border-left: 3px solid var(--cds-interactive); padding: 0.7em 1em;
+      margin: 0.7em 0; font-size: 0.78em; color: var(--cds-text-secondary); }
+    .callout.success { border-color: var(--cds-support-success); }
+    .callout.warning { border-color: var(--cds-support-warning); }
+    .callout.danger  { border-color: var(--cds-support-error); }
+    .tag { display: inline-flex; align-items: center; gap: 0.3em; background: var(--cds-layer-accent);
+      color: var(--cds-text-secondary); font-size: 0.65em; font-weight: 600;
+      padding: 0.2em 0.6em; border-radius: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+    .tag.blue   { background: #002d9c; color: #a6c8ff; }
+    .tag.green  { background: #022d0d; color: #6fdc8c; }
+    .tag.purple { background: #1c0f30; color: #d4bbff; }
+    .tag.red    { background: #2d0709; color: #ffb3b8; }
+    .tag.teal   { background: #081a1c; color: #3ddbd9; }
+    .tag.yellow { background: #312400; color: #f1c21b; }
+    .cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em; }
+    .cols-13{ display: grid; grid-template-columns: 1fr 2fr; gap: 2em; align-items: start; }
+    .small  { font-size: 0.68em; color: var(--cds-text-secondary); }
+    .muted  { color: var(--cds-text-placeholder); }
+    .em     { color: var(--cds-link); font-weight: 600; }
+    .mono   { font-family: var(--font-mono); font-size: 0.85em; }
+    .eyebrow { font-size: 0.65em; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--cds-text-placeholder); margin-bottom: 0.3em; }
+    .title-slide { display: flex; flex-direction: column; justify-content: center; min-height: 65vh; }
+    .title-slide h1 { font-size: 2.6em; font-weight: 300; margin-bottom: 0.2em; }
+    .title-slide .subtitle { font-size: 1em; color: var(--cds-link); margin-bottom: 1em; }
+    .title-slide .meta { font-size: 0.7em; color: var(--cds-text-placeholder); }
+    .divider { background: var(--cds-highlight) !important; }
+    .divider h2 { font-size: 2em; font-weight: 300; border: none; color: #fff; }
+    .divider .eyebrow { color: rgba(255,255,255,0.6); }
+
+    /* Taxonomy tree node */
+    .tree-node {
+      background: var(--cds-layer);
+      border-left: 3px solid var(--cds-interactive);
+      padding: 0.5em 0.8em;
+      margin: 0.3em 0;
+      font-size: 0.8em;
+    }
+    .tree-node.l1 { border-color: #0f62fe; margin-left: 0; }
+    .tree-node.l2 { border-color: #78a9ff; margin-left: 1.5em; }
+    .tree-node.l3 { border-color: #4589ff; margin-left: 3em; font-size: 0.75em; }
+    .tree-node strong { color: var(--cds-text-primary); }
+    .tree-node span   { color: var(--cds-text-secondary); }
+
+    /* Method card */
+    .method-card {
+      background: var(--cds-layer);
+      padding: 0.8em;
+      font-size: 0.8em;
+    }
+    .method-card h3 { font-size: 0.9em; margin: 0 0 0.3em 0; }
+    .method-card p  { font-size: 0.75em; color: var(--cds-text-secondary); margin: 0.2em 0; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- ── TITLE ─────────────────────────────────────── -->
+  <section>
+    <div class="title-slide">
+      <p class="eyebrow">Reference · Thursday · Tilburg Multiscale Summerschool 2026</p>
+
+      <!-- Layers / taxonomy pictogram -->
+      <svg width="72" height="72" viewBox="0 0 32 32" fill="none" style="display:block;margin-bottom:0.5em" aria-hidden="true">
+        <rect x="4"  y="6"  width="24" height="5" rx="0.5" fill="#0f62fe" opacity="0.9"/>
+        <rect x="4"  y="13" width="24" height="5" rx="0.5" fill="#4589ff" opacity="0.8"/>
+        <rect x="4"  y="20" width="24" height="5" rx="0.5" fill="#78a9ff" opacity="0.7"/>
+        <line x1="8"  y1="6" x2="8"  y2="25" stroke="#000000" stroke-width="0.5"/>
+        <line x1="16" y1="6" x2="16" y2="25" stroke="#000000" stroke-width="0.5"/>
+        <line x1="24" y1="6" x2="24" y2="25" stroke="#000000" stroke-width="0.5"/>
+      </svg>
+
+      <h1>A Taxonomy of Video Masking</h1>
+      <p class="subtitle">Organising de-identification methods by mechanism, modality, and reversibility</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        Reference slide deck · Thursday Masking Day
+      </p>
+    </div>
+  </section>
+
+  <!-- ── WHY A TAXONOMY ─────────────────────────────── -->
+  <section>
+    <h2>Why organise by taxonomy?</h2>
+    <div class="cols">
+      <div>
+        <p style="font-size:0.85em;color:var(--cds-text-secondary)">
+          The literature uses <span class="em">blur</span>, <span class="em">anonymisation</span>,
+          <span class="em">de-identification</span>, and <span class="em">obfuscation</span>
+          interchangeably — and often imprecisely.
+        </p>
+        <p style="font-size:0.85em;color:var(--cds-text-secondary);margin-top:0.5em">
+          A taxonomy lets us:
+        </p>
+        <ul>
+          <li>Choose the right method for a given threat model</li>
+          <li>Compare methods in MaskBench on equal terms</li>
+          <li>Communicate clearly to ethics boards</li>
+          <li>Design reproducible de-identification pipelines</li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+          </svg>
+          <span>We distinguish three orthogonal axes: <strong>mechanism</strong> (how), <strong>modality</strong> (what), and <strong>reversibility</strong> (can it be undone?).</span>
+        </div>
+        <div class="callout warning" style="margin-top:0.5em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          <span><strong>Irreversible</strong> ≠ anonymised: gait and body proportions are stable identifiers that no pixel-level method removes.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AXIS 1: MECHANISM ───────────────────────── -->
+  <section>
+    <h2>Axis 1 — Mechanism</h2>
+    <p class="small">How is the transformation applied?</p>
+
+    <div class="tree-node l1"><strong>Signal degradation</strong> <span>— reduce information content in pixel space</span></div>
+    <div class="tree-node l2"><strong>Spatial blur</strong> <span>— Gaussian, box, motion blur</span></div>
+    <div class="tree-node l2"><strong>Spatial quantisation</strong> <span>— pixelation, mosaic</span></div>
+    <div class="tree-node l2"><strong>Noise injection</strong> <span>— Gaussian, salt-and-pepper</span></div>
+
+    <div class="tree-node l1" style="margin-top:0.5em"><strong>Region replacement</strong> <span>— substitute person region</span></div>
+    <div class="tree-node l2"><strong>Solid fill</strong> <span>— colour constant, configurable</span></div>
+    <div class="tree-node l2"><strong>Inpainting</strong> <span>— generative background fill (LaMa, Stable Diffusion)</span></div>
+    <div class="tree-node l2"><strong>Silhouette / contour</strong> <span>— shape outline only</span></div>
+
+    <div class="tree-node l1" style="margin-top:0.5em"><strong>Representation replacement</strong> <span>— replace with abstract signal</span></div>
+    <div class="tree-node l2"><strong>Skeleton overlay</strong> <span>— stick figure from keypoints only</span></div>
+    <div class="tree-node l2"><strong>Pose re-rendering</strong> <span>— neural avatar driven by pose (NeRF, UV-maps)</span></div>
+    <div class="tree-node l2"><strong>Face swapping</strong> <span>— synthetic face replacement (DeepFaceLab)</span></div>
+  </section>
+
+  <!-- ── AXIS 2: MODALITY ────────────────────────── -->
+  <section>
+    <h2>Axis 2 — Modality</h2>
+    <p class="small">What signal is being de-identified?</p>
+
+    <div class="cols">
+      <div>
+        <div class="tree-node l1"><strong>Visual</strong></div>
+        <div class="tree-node l2"><strong>Face</strong> <span>— primary identity signal</span></div>
+        <div class="tree-node l2"><strong>Whole body</strong> <span>— full person region</span></div>
+        <div class="tree-node l2"><strong>Hands</strong> <span>— fingerprints, ring patterns</span></div>
+        <div class="tree-node l2"><strong>Background</strong> <span>— location, posters, labels</span></div>
+        <div class="tree-node l2"><strong>Screen content</strong> <span>— slides, documents in frame</span></div>
+      </div>
+      <div>
+        <div class="tree-node l1"><strong>Audio</strong></div>
+        <div class="tree-node l2"><strong>Voice</strong> <span>— pitch, timbre, accent</span></div>
+        <div class="tree-node l2"><strong>Paralanguage</strong> <span>— laughter, breathing, prosody</span></div>
+        <div class="tree-node l2"><strong>Background audio</strong> <span>— identifiable sounds</span></div>
+
+        <div class="tree-node l1" style="margin-top:0.5em"><strong>Metadata</strong></div>
+        <div class="tree-node l2"><strong>Timestamps</strong> <span>— date, time, session order</span></div>
+        <div class="tree-node l2"><strong>Filename / path</strong> <span>— participant ID in filename</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AXIS 3: REVERSIBILITY ───────────────────── -->
+  <section>
+    <h2>Axis 3 — Reversibility</h2>
+    <div class="cols">
+      <div>
+        <h3>Irreversible (destructive)</h3>
+        <ul>
+          <li><strong>Blur, pixelate, solid fill</strong> — pixel information destroyed</li>
+          <li><strong>Audio deletion</strong> — silence or noise</li>
+          <li><strong>Face inpainting</strong> — background painted over</li>
+        </ul>
+        <div class="callout danger" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          Once destroyed, original data is unrecoverable — keep raw master under strict access control.
+        </div>
+      </div>
+      <div>
+        <h3>Reversible (with key)</h3>
+        <ul>
+          <li><strong>Encryption-based</strong> — encrypted region, decryptable by authorised party</li>
+          <li><strong>Pseudonymisation</strong> — participant code table held separately</li>
+          <li><strong>Alpha-channel masking</strong> — original stored as separate layer</li>
+        </ul>
+        <div class="callout success" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Reversible masking enables withdrawal compliance — participant data can be fully erased post-deposit.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ─────────────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 2</p>
+    <h2>Method comparison</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Video, audio, and combined approaches</p>
+  </section>
+
+  <!-- ── VIDEO METHODS TABLE ─────────────────────── -->
+  <section>
+    <h2>Video de-identification methods</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th><th>Mechanism</th><th>Reversible?</th>
+          <th>Pose preserved?</th><th>GPU?</th><th>Tool</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gaussian blur</td><td>Signal degradation</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>MaskAnyone, ffmpeg</td>
+        </tr>
+        <tr>
+          <td>Pixelation</td><td>Quantisation</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>MaskAnyone, OpenCV</td>
+        </tr>
+        <tr>
+          <td>Solid fill</td><td>Region replacement</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v2</td>
+        </tr>
+        <tr>
+          <td>Silhouette</td><td>Region replacement</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v2</td>
+        </tr>
+        <tr>
+          <td>Skeleton only</td><td>Representation replacement</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Abstract</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>MediaPipe, YOLO</td>
+        </tr>
+        <tr>
+          <td>Face swap (synthetic)</td><td>Representation replacement</td>
+          <td><span class="tag blue">With key</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag red">Yes</span></td>
+          <td>DeepFaceLab, SimSwap</td>
+        </tr>
+        <tr>
+          <td>Neural avatar</td><td>Representation replacement</td>
+          <td><span class="tag blue">Partial</span></td>
+          <td><span class="tag green">Yes (driven)</span></td>
+          <td><span class="tag red">Yes</span></td>
+          <td>NeRF, Human4DiT</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── AUDIO METHODS ──────────────────────────── -->
+  <section>
+    <h2>Audio de-identification methods</h2>
+    <div class="cols-3">
+      <div class="method-card" style="border-top:3px solid #42be65">
+        <h3>Signal processing</h3>
+        <p><span class="tag green">Low compute</span></p>
+        <ul style="font-size:0.75em;margin-top:0.4em">
+          <li>Pitch shifting (librosa)</li>
+          <li>Noise injection</li>
+          <li>Formant scrambling</li>
+          <li>Time stretching</li>
+          <li>Low-pass filtering</li>
+        </ul>
+        <p style="margin-top:0.5em"><span class="tag yellow">Moderate privacy</span></p>
+        <p>Preserves prosody and timing. Speaker style partially retained.</p>
+      </div>
+      <div class="method-card" style="border-top:3px solid #4589ff">
+        <h3>Voice conversion</h3>
+        <p><span class="tag blue">Medium compute</span></p>
+        <ul style="font-size:0.75em;margin-top:0.4em">
+          <li>GAN-based VC (StarGAN-VC)</li>
+          <li>VITS / YourTTS</li>
+          <li>RVC (Real-time VC)</li>
+          <li>Emotion-preserving VC</li>
+        </ul>
+        <p style="margin-top:0.5em"><span class="tag blue">High privacy</span></p>
+        <p>Converts to a different speaker voice. May preserve linguistic content.</p>
+      </div>
+      <div class="method-card" style="border-top:3px solid #fa4d56">
+        <h3>Speech re-synthesis</h3>
+        <p><span class="tag red">High compute</span></p>
+        <ul style="font-size:0.75em;margin-top:0.4em">
+          <li>Whisper ASR → text</li>
+          <li>pyttsx3 / Coqui TTS</li>
+          <li>Bark / Tortoise TTS</li>
+          <li>Pyannote diarization</li>
+        </ul>
+        <p style="margin-top:0.5em"><span class="tag red">Highest privacy</span></p>
+        <p>Completely new voice. Content preserved, not speaker identity.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+      </svg>
+      We cover methods 1 and 3 in <code>04_audio_deidentification.ipynb</code>. Voice conversion requires dedicated setup (e.g. RVC inference server).
+    </div>
+  </section>
+
+  <!-- ── SEGMENTATION BACKENDS ──────────────────── -->
+  <section>
+    <h2>Segmentation backends compared</h2>
+    <p class="small">The segmenter determines mask quality — all strategies depend on it.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Backend</th><th>Approach</th><th>Quality</th>
+          <th>Speed</th><th>GPU req.</th><th>Used in</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MediaPipe Selfie</strong></td>
+          <td>CNN body segmenter</td>
+          <td><span class="tag blue">Good</span></td>
+          <td><span class="tag green">Real-time</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v1/v2</td>
+        </tr>
+        <tr>
+          <td><strong>BBox</strong></td>
+          <td>YOLO bounding box</td>
+          <td><span class="tag yellow">Coarse</span></td>
+          <td><span class="tag green">Real-time</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v2</td>
+        </tr>
+        <tr>
+          <td><strong>SAM2-tiny</strong></td>
+          <td>Segment Anything (tiny)</td>
+          <td><span class="tag green">Excellent</span></td>
+          <td><span class="tag blue">~5 fps CPU</span></td>
+          <td><span class="tag yellow">Optional</span></td>
+          <td>Masked-Piper v2, MaskAnyone</td>
+        </tr>
+        <tr>
+          <td><strong>SAM2-large</strong></td>
+          <td>Segment Anything (large)</td>
+          <td><span class="tag green">Best</span></td>
+          <td><span class="tag red">Slow on CPU</span></td>
+          <td><span class="tag red">Recommended</span></td>
+          <td>MaskAnyone</td>
+        </tr>
+        <tr>
+          <td><strong>OpenPose mask</strong></td>
+          <td>Skeleton → convex hull</td>
+          <td><span class="tag yellow">Coarse</span></td>
+          <td><span class="tag blue">Medium</span></td>
+          <td><span class="tag yellow">Optional</span></td>
+          <td>MaskAnyone API</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── CHOOSING A METHOD ──────────────────────── -->
+  <section>
+    <h2>Choosing the right method</h2>
+    <div class="cols">
+      <div>
+        <h3>Decision questions</h3>
+        <ol style="font-size:0.84em">
+          <li>Who will access the data? <span class="muted">(team / collaborators / public)</span></li>
+          <li>What analysis do you plan? <span class="muted">(gesture / gaze / speech)</span></li>
+          <li>Do you need audio? <span class="muted">(linguistic content vs. identity)</span></li>
+          <li>What is the re-identification risk? <span class="muted">(clinical vs. students)</span></li>
+          <li>Do you have GPU compute? <span class="muted">(SAM2 vs. MediaPipe)</span></li>
+        </ol>
+      </div>
+      <div>
+        <h3>Quick guide</h3>
+        <table style="font-size:0.7em">
+          <thead><tr><th>Goal</th><th>Recommended</th></tr></thead>
+          <tbody>
+            <tr><td>Gesture / body movement</td><td>Solid fill + skeleton JSON</td></tr>
+            <tr><td>Head movement / gaze</td><td>Blur (face keypoints survive)</td></tr>
+            <tr><td>Speech transcription</td><td>Whisper on original → publish text</td></tr>
+            <tr><td>Prosody / emotion</td><td>Pitch shift + formant scramble</td></tr>
+            <tr><td>Open-access video</td><td>Silhouette + TTS audio</td></tr>
+            <tr><td>Reviewer access</td><td>Solid fill + embargoed DOI</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PIPELINE OVERVIEW ──────────────────────── -->
+  <section>
+    <h2>Full de-identification pipeline</h2>
+    <pre style="font-size:0.68em"><code>Raw MP4 (4-up composite)
+    │
+    ├─[00_dataset_preparation]─► Split streams: cam_p1, cam_p2, cam_p3, cam_overhead
+    │                             Trim to 5-min excerpt
+    │                             Re-encode H.264 if needed
+    │
+    ├─[02_maskanyone_hands_on]─► Detect persons (YOLO / MediaPipe)
+    │                             Segment (SAM2-tiny / MediaPipe Selfie)
+    │                             Apply strategy (blur / solid / silhouette)
+    │                             Export masked MP4 + COCO-17 JSON
+    │
+    ├─[03_maskbench_evaluation]─► Compare keypoints: raw vs masked
+    │                              Compute RMSE, PCK, velocity, acceleration
+    │                              Decide if signal quality is acceptable
+    │
+    ├─[04_audio_deidentification]► Pitch shift / TTS / noise injection on audio track
+    │                               Recombine with masked video
+    │
+    └─[05_av_archiving]──────────► Canonical naming + SHA-256 sidecar JSON
+                                    BagIt package
+                                    Deposit to DANS / DataverseNL</code></pre>
+  </section>
+
+  <!-- ── CLOSING DIVIDER ────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Thursday Masking Day · SYNAPSIS</p>
+    <h2>Build reproducible, ethical video pipelines</h2>
+    <p style="color:#c6c6c6;font-size:0.85em">
+      synapsis.codeberg.page &nbsp;·&nbsp; envisionbox.org &nbsp;·&nbsp; github.com/MaskAnyone
+    </p>
+  </section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720,
+    margin: 0.04, minScale: 0.2, maxScale: 2.0,
+    center: false, hash: true,
+    slideNumber: 'c/t',
+    controls: true, progress: true,
+    transition: 'fade', transitionSpeed: 'fast',
+    autoPlayMedia: true,
+  });
+</script>
+</body>
+</html>

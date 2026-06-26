@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Masking &amp; Multi-Modal Considerations</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+    :root {
+      --cds-background:#000000; --cds-layer:#262626; --cds-layer-accent:#393939;
+      --cds-border-subtle:#525252; --cds-text-primary:#f4f4f4;
+      --cds-text-secondary:#c6c6c6; --cds-text-placeholder:#6f6f6f;
+      --cds-interactive:#0f62fe; --cds-support-success:#42be65;
+      --cds-support-warning:#f1c21b; --cds-support-error:#fa4d56;
+      --cds-support-info:#4589ff; --cds-link:#78a9ff;
+      --font-body:"IBM Plex Sans","Segoe UI",sans-serif;
+      --font-mono:"IBM Plex Mono","Consolas",monospace;
+    }
+    .reveal-viewport { background: var(--cds-background) !important; }
+    .reveal { font-family: var(--font-body); font-size: 22px; color: var(--cds-text-primary); }
+    .reveal h1,.reveal h2,.reveal h3 { font-family:var(--font-body); text-transform:none;
+      letter-spacing:-0.01em; color:var(--cds-text-primary); margin-bottom:0.5em; }
+    .reveal h1 { font-size:2.4em; font-weight:300; line-height:1.15; }
+    .reveal h2 { font-size:1.4em; font-weight:600;
+      border-bottom:1px solid var(--cds-border-subtle); padding-bottom:0.3em; }
+    .reveal h3 { font-size:1em; font-weight:600; color:var(--cds-link); }
+    .reveal section { padding:0 2.5em; overflow:hidden; }
+    .reveal .slides { text-align:left; }
+    .reveal .slide-number { color:var(--cds-text-placeholder); font-family:var(--font-mono);
+      font-size:0.65em; background:transparent; }
+    .reveal ul,.reveal ol { margin-left:1.2em; }
+    .reveal li { margin-bottom:0.3em; font-size:0.88em; color:var(--cds-text-secondary); }
+    .reveal li strong { color:var(--cds-text-primary); font-weight:600; }
+    .reveal table { border-collapse:collapse; width:100%; font-size:0.72em; }
+    .reveal table th { background:var(--cds-layer-accent); color:var(--cds-text-primary);
+      font-weight:600; padding:0.5em 0.9em; text-align:left;
+      border-bottom:2px solid var(--cds-interactive); }
+    .reveal table td { padding:0.4em 0.9em; border-bottom:1px solid var(--cds-layer-accent);
+      color:var(--cds-text-secondary); }
+    .reveal table tr:nth-child(even) td { background:var(--cds-layer); }
+    .reveal pre { font-family:var(--font-mono); background:var(--cds-layer);
+      border:1px solid var(--cds-layer-accent); border-left:3px solid var(--cds-interactive);
+      border-radius:0; padding:0.8em 1em; font-size:0.7em; box-shadow:none; width:100%; }
+    .reveal code { font-family:var(--font-mono); font-size:0.85em; color:var(--cds-support-info);
+      background:var(--cds-layer); padding:0.1em 0.3em; border-radius:2px; }
+    .reveal pre code { color:var(--cds-text-primary); font-size:1em; background:none; }
+
+    .callout { display:flex; align-items:flex-start; gap:0.7em; background:var(--cds-layer);
+      border-left:3px solid var(--cds-interactive); padding:0.7em 1em; margin:0.7em 0;
+      font-size:0.78em; color:var(--cds-text-secondary); }
+    .callout.success { border-color:var(--cds-support-success); }
+    .callout.warning { border-color:var(--cds-support-warning); }
+    .callout.danger  { border-color:var(--cds-support-error); }
+
+    .tag { display:inline-flex; align-items:center; gap:0.3em; background:var(--cds-layer-accent);
+      color:var(--cds-text-secondary); font-size:0.65em; font-weight:600; padding:0.2em 0.7em;
+      border-radius:0; letter-spacing:0.04em; text-transform:uppercase; }
+    .tag.blue   { background:#002d9c; color:#a6c8ff; }
+    .tag.green  { background:#022d0d; color:#6fdc8c; }
+    .tag.teal   { background:#081a1c; color:#3ddbd9; }
+    .tag.red    { background:#2d0709; color:#ffb3b8; }
+
+    .cols  { display:grid; grid-template-columns:1fr 1fr; gap:2em; align-items:start; }
+    .cols-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5em; }
+
+    .reveal video,.reveal img.gif { max-height:52vh; max-width:100%; display:block; margin:0 auto; }
+    .reveal img { max-width:100%; max-height:52vh; }
+
+    .small  { font-size:0.68em; color:var(--cds-text-secondary); }
+    .muted  { color:var(--cds-text-placeholder); }
+    .em     { color:var(--cds-link); font-weight:600; }
+    .eyebrow { font-size:0.65em; font-weight:600; letter-spacing:0.1em;
+      text-transform:uppercase; color:var(--cds-text-placeholder); margin-bottom:0.3em; }
+
+    /* waveform pictogram */
+    .wave-bar { display:inline-block; background:var(--cds-link);
+      border-radius:2px; margin:0 1px; }
+
+    /* method card */
+    .method-card { background:var(--cds-layer); border-top:2px solid var(--cds-interactive);
+      padding:0.7em 0.9em; }
+    .method-card.medium { border-color:var(--cds-support-warning); }
+    .method-card.high   { border-color:var(--cds-support-success); }
+    .method-card h4 { font-size:0.85em; font-weight:600; color:var(--cds-text-primary); margin:0 0 0.3em; }
+    .method-card p  { font-size:0.72em; color:var(--cds-text-secondary); margin:0; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- TITLE -->
+  <section>
+    <p class="eyebrow">16:15–16:45 · Thursday Masking Day · Tilburg 2026</p>
+    <h1>Audio Masking &amp;<br>Multi-Modal Considerations</h1>
+    <p style="color:var(--cds-link);font-size:0.9em;margin-bottom:1em">
+      Voice is biometric data. Masking the video is not enough.
+    </p>
+    <!-- audio waveform pictogram -->
+    <div style="margin:1em 0;display:flex;align-items:flex-end;gap:2px;height:40px">
+      <span class="wave-bar" style="width:4px;height:15px;opacity:0.4"></span>
+      <span class="wave-bar" style="width:4px;height:28px;opacity:0.6"></span>
+      <span class="wave-bar" style="width:4px;height:40px"></span>
+      <span class="wave-bar" style="width:4px;height:32px;opacity:0.8"></span>
+      <span class="wave-bar" style="width:4px;height:20px;opacity:0.6"></span>
+      <span class="wave-bar" style="width:4px;height:36px;opacity:0.9"></span>
+      <span class="wave-bar" style="width:4px;height:25px;opacity:0.7"></span>
+      <span class="wave-bar" style="width:4px;height:14px;opacity:0.4"></span>
+      <span class="wave-bar" style="width:4px;height:38px"></span>
+      <span class="wave-bar" style="width:4px;height:22px;opacity:0.6"></span>
+      <span class="wave-bar" style="width:4px;height:30px;opacity:0.8"></span>
+      <span class="wave-bar" style="width:4px;height:18px;opacity:0.5"></span>
+    </div>
+    <p class="small muted">Babajide Owoyele · Radboud University / SYNAPSIS</p>
+  </section>
+
+  <!-- WHY AUDIO MATTERS -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      Why isn't masking the video enough?
+    </h2>
+    <div class="cols">
+      <div>
+        <ul>
+          <li><strong>Voice is biometric</strong> — speaker identification works with &lt; 5 seconds of audio</li>
+          <li><strong>Existing tools</strong> — Microsoft Azure, Google Speech, AWS Transcribe all have speaker ID APIs</li>
+          <li><strong>GDPR, Art. 9</strong> — voice recordings are special-category biometric data</li>
+          <li><strong>Ethics boards increasingly require</strong> both video and audio anonymisation</li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout danger">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+          </svg>
+          <span>A masked video with an unmodified audio track is <strong>not anonymised</strong> — the audio alone re-identifies the speaker.</span>
+        </div>
+        <div class="callout warning" style="margin-top:0.5em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          <span>Even removing the audio track doesn't fully anonymise — lip movements and silent gestures can sometimes decode speech.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE METHODS -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 8h24v2H4zm0 7h24v2H4zm0 7h24v2H4z"/>
+      </svg>
+      Three de-identification strategies
+    </h2>
+    <div class="cols-3">
+      <div class="method-card">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M16 4v24M4 16h24"/>
+          </svg>
+          1. Pitch shifting
+        </h4>
+        <p>Raise or lower F0 by ±4 semitones. Fast, reversible. Prosody largely preserved.</p>
+        <br>
+        <span class="tag blue">Privacy: low–med</span>
+      </div>
+      <div class="method-card medium">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M4 16h4l4-8 4 16 4-10 4 8h4"/>
+          </svg>
+          2. Noise + formant
+        </h4>
+        <p>Add calibrated noise, shift formants via resample. Confuses speaker ID models.</p>
+        <br>
+        <span class="tag" style="background:#3b2e00;color:#f1c21b">Privacy: medium</span>
+      </div>
+      <div class="method-card high">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M16 4l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/>
+          </svg>
+          3. Speech → Text → Speech
+        </h4>
+        <p>Transcribe with Whisper, re-synthesise with TTS. Original voice is gone entirely.</p>
+        <br>
+        <span class="tag green">Privacy: high</span>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      <span>Open <code>notebooks/04_audio_deidentification.ipynb</code> to run all three methods on your own audio.</span>
+    </div>
+  </section>
+
+  <!-- PRIVACY vs UTILITY -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2L2 8v8c0 8 6 14 14 16 8-2 14-8 14-16V8L16 2z"/>
+      </svg>
+      The privacy–utility trade-off in audio
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Speaker ID blocked?</th>
+          <th>Pitch preserved?</th>
+          <th>Prosody preserved?</th>
+          <th>Intelligible?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pitch shift</td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">Partial</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No (shifted)</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">Yes</span></td>
+        </tr>
+        <tr>
+          <td>Noise + formant</td>
+          <td><span class="tag green">Mostly</span></td>
+          <td><span class="tag green">Approx.</span></td>
+          <td><span class="tag" style="background:#3b2e00;color:#f1c21b">Partial</span></td>
+          <td><span class="tag green">Yes</span></td>
+        </tr>
+        <tr>
+          <td>S → T → S</td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No</span></td>
+          <td><span class="tag green">Yes (content)</span></td>
+        </tr>
+        <tr>
+          <td>Strip audio</td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">N/A</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">N/A</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No audio</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- MULTI-SPEAKER: DIARISE FIRST -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 6a4 4 0 110 8 4 4 0 010-8zM6 8a3 3 0 110 6 3 3 0 010-6zM26 8a3 3 0 110 6 3 3 0 010-6zM16 18c-5 0-9 2-9 5v1h18v-1c0-3-4-5-9-5zM6 18c-3 0-6 1.5-6 3v1h6v-1c0-1.3.5-2.4 1.4-3.3C7 17.3 6.5 18 6 18zM26 18c-.5 0-1 .3-1.4.7C25.5 19.6 26 20.7 26 22v1h6v-1c0-1.5-3-3-6-3z"/>
+      </svg>
+      Multi-speaker sessions: diarise first
+    </h2>
+    <p class="small">The Envision triadic sessions have <span class="em">3 speakers</span>.
+      Apply a <strong>different</strong> anonymisation per speaker so they remain distinguishable.</p>
+    <pre><code class="language-python">
+# pyannote speaker diarization → per-speaker pitch shifts
+pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1")
+diarization = pipeline("group_07_cam_p1.wav")
+
+speaker_shifts = {}           # e.g. SPEAKER_00 → +4st, SPEAKER_01 → -4st
+shift_pool = [+4, -4, +6]
+
+for turn, _, speaker in diarization.itertracks(yield_label=True):
+    if speaker not in speaker_shifts:
+        speaker_shifts[speaker] = shift_pool[len(speaker_shifts)]
+    # apply pitch_shift() to this segment of audio
+    </code></pre>
+    <div class="callout warning">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+      </svg>
+      <span>Requires a HuggingFace token and accepting pyannote terms — see notebook cell for setup.</span>
+    </div>
+  </section>
+
+  <!-- CONNECTION TO TUESDAY -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 16h24M20 10l6 6-6 6"/>
+      </svg>
+      Connection to Tuesday acoustic analysis
+    </h2>
+    <div class="cols">
+      <div>
+        <h3>What Tuesday measured</h3>
+        <ul>
+          <li>Fundamental frequency (F0) — pitch</li>
+          <li>Intensity / energy</li>
+          <li>Formant frequencies (F1, F2)</li>
+          <li>Speech rate, pauses</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What de-id destroys</h3>
+        <ul>
+          <li><strong>Pitch shift</strong> — F0 values are invalid</li>
+          <li><strong>Noise injection</strong> — intensity and formants distorted</li>
+          <li><strong>S → T → S</strong> — all prosodic detail lost</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout success" style="margin-top:0.6em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      <span><strong>Best practice:</strong> extract and archive all acoustic features you need <em>before</em> de-identifying the audio.</span>
+    </div>
+  </section>
+
+  <!-- FFMPEG QUICK STRIP -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 8h24v2H4zm0 7h24v2H4zm0 7h24v2H4z"/>
+      </svg>
+      Quick reference: audio operations with ffmpeg
+    </h2>
+    <pre><code class="language-bash">
+# Extract audio track as WAV (for analysis or de-id)
+ffmpeg -i session.mp4 -vn -acodec pcm_s16le audio.wav
+
+# Strip audio entirely (for open-tier archive)
+ffmpeg -i masked.mp4 -an -c:v copy masked_silent.mp4
+
+# Replace audio track with de-identified version
+ffmpeg -i masked_video.mp4 -i deid_audio.wav \
+  -map 0:v -map 1:a -c:v copy -c:a aac \
+  masked_with_deid_audio.mp4
+
+# Apply pitch shift via ffmpeg's rubberband filter (no Python needed)
+ffmpeg -i audio.wav -af "rubberband=pitch=1.26" shifted.wav
+    </code></pre>
+    <p class="small"><span class="tag teal">pitch 1.26 ≈ +4 semitones</span>
+    &nbsp; <span class="tag blue">pitch 0.79 ≈ −4 semitones</span></p>
+  </section>
+
+  <!-- ARCHIVE DECISION -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M2 6h28v4H2zM4 10v16h24V10H4zm8 4h8v2h-8zm0 4h8v2h-8z"/>
+      </svg>
+      Archiving decision tree
+    </h2>
+    <table>
+      <thead><tr><th>Content</th><th>Tier</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Original audio (raw)</td>
+          <td><span class="tag red">Restricted</span></td>
+          <td>SYNAPSIS only — never shared</td>
+        </tr>
+        <tr>
+          <td>De-identified audio</td>
+          <td><span class="tag" style="background:#3b2e00;color:#f1c21b">Embargoed</span></td>
+          <td>DANS restricted collection</td>
+        </tr>
+        <tr>
+          <td>Silent masked video</td>
+          <td><span class="tag green">Open</span></td>
+          <td>DANS Data Station SSH (CC-BY-NC)</td>
+        </tr>
+        <tr>
+          <td>Acoustic feature CSVs</td>
+          <td><span class="tag green">Open</span></td>
+          <td>DANS + GitHub (no audio content)</td>
+        </tr>
+        <tr>
+          <td>Transcripts</td>
+          <td><span class="tag blue">Review</span></td>
+          <td>Depends on content — check with ethics board</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- HANDS-ON -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M26 16l-10 10L4 16l1.41-1.41L16 23.17l9.59-9.58z"/>
+      </svg>
+      Hands-on exercise
+    </h2>
+    <ol>
+      <li>Open <code>notebooks/04_audio_deidentification.ipynb</code> on Colab or locally</li>
+      <li>Upload your workshop clip's audio, or use the synthetic demo</li>
+      <li>Try all three methods and listen to the results</li>
+      <li>Compare F0 contours in the evaluation cell</li>
+      <li><strong>Discussion:</strong> which method would you use for your own data?</li>
+    </ol>
+    <div class="callout">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      <span>
+        <span class="tag teal">Colab</span> &nbsp;
+        <span class="tag blue">notebook 04</span> &nbsp;
+        Finish before 16:45 wrap-up
+      </span>
+    </div>
+  </section>
+
+  <!-- END -->
+  <section data-background-color="#000000">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.6)">16:45–17:00 · Wrap-Up</p>
+    <h2 style="font-weight:300;font-size:2em;border:none;color:#fff">
+      Integration with Group Projects
+    </h2>
+    <p style="color:rgba(255,255,255,0.7);font-size:0.85em">
+      How does masking fit into <em>your</em> Friday project? ·
+      What did you mask, what did you preserve? · DANS deposit plan
+    </p>
+  </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720, margin: 0.04,
+    minScale: 0.2, maxScale: 2.0,
+    hash: true, slideNumber: "c/t", transition: "fade",
+    backgroundTransition: "fade", controls: true, progress: true,
+    center: false, autoPlayMedia: true,
+  });
+</script>
+</body>
+</html>

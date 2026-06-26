@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SYNAPSIS Infrastructure — Thursday Masking Day</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+    :root {
+      --cds-background:      #000000;
+      --cds-layer:           #161616;
+      --cds-layer-accent:    #262626;
+      --cds-border-subtle:   #525252;
+      --cds-text-primary:    #f4f4f4;
+      --cds-text-secondary:  #c6c6c6;
+      --cds-text-placeholder:#6f6f6f;
+      --cds-interactive:     #0f62fe;
+      --cds-support-success: #42be65;
+      --cds-support-warning: #f1c21b;
+      --cds-support-error:   #fa4d56;
+      --cds-support-info:    #4589ff;
+      --cds-link:            #78a9ff;
+      --cds-highlight:       #0043ce;
+      --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", "Consolas", monospace;
+    }
+
+    .reveal-viewport { background: var(--cds-background) !important; }
+    .reveal { font-family: var(--font-body); font-size: 22px; color: var(--cds-text-primary); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-body); font-weight: 300; color: var(--cds-text-primary);
+      text-transform: none; letter-spacing: -0.01em; margin-bottom: 0.5em;
+    }
+    .reveal h1 { font-size: 2.4em; font-weight: 300; line-height: 1.15; }
+    .reveal h2 { font-size: 1.4em; font-weight: 600;
+                 border-bottom: 1px solid var(--cds-border-subtle); padding-bottom: 0.3em; }
+    .reveal h3 { font-size: 1em; font-weight: 600; color: var(--cds-link); }
+    .reveal section { padding: 0 2.5em; overflow: hidden; }
+    .reveal .slides { text-align: left; }
+    .reveal .slide-number { color: var(--cds-text-placeholder); font-family: var(--font-mono); font-size: 0.65em; background: transparent; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: 0.3em; font-size: 0.88em; color: var(--cds-text-secondary); }
+    .reveal li strong { color: var(--cds-text-primary); font-weight: 600; }
+    .reveal table { border-collapse: collapse; width: 100%; font-size: 0.72em; }
+    .reveal table th { background: var(--cds-layer-accent); color: var(--cds-text-primary);
+      font-weight: 600; padding: 0.5em 0.9em; text-align: left; border-bottom: 2px solid var(--cds-interactive); }
+    .reveal table td { padding: 0.4em 0.9em; border-bottom: 1px solid var(--cds-layer-accent); color: var(--cds-text-secondary); }
+    .reveal table tr:nth-child(even) td { background: var(--cds-layer); }
+    .reveal pre { font-family: var(--font-mono); background: var(--cds-layer);
+      border: 1px solid var(--cds-layer-accent); border-left: 3px solid var(--cds-interactive);
+      border-radius: 0; padding: 0.8em 1em; font-size: 0.7em; box-shadow: none; width: 100%; }
+    .reveal code { font-family: var(--font-mono); font-size: 0.85em; color: var(--cds-support-info);
+      background: var(--cds-layer); padding: 0.1em 0.3em; border-radius: 2px; }
+    .reveal pre code { color: var(--cds-text-primary); font-size: 1em; background: none; }
+    .callout { display: flex; align-items: flex-start; gap: 0.7em; background: var(--cds-layer);
+      border-left: 3px solid var(--cds-interactive); padding: 0.7em 1em;
+      margin: 0.7em 0; font-size: 0.78em; color: var(--cds-text-secondary); }
+    .callout.success { border-color: var(--cds-support-success); }
+    .callout.warning { border-color: var(--cds-support-warning); }
+    .tag { display: inline-flex; align-items: center; gap: 0.3em; background: var(--cds-layer-accent);
+      color: var(--cds-text-secondary); font-size: 0.65em; font-weight: 600;
+      padding: 0.2em 0.6em; border-radius: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+    .tag.blue   { background: #002d9c; color: #a6c8ff; }
+    .tag.green  { background: #022d0d; color: #6fdc8c; }
+    .tag.purple { background: #1c0f30; color: #d4bbff; }
+    .tag.red    { background: #2d0709; color: #ffb3b8; }
+    .tag.teal   { background: #081a1c; color: #3ddbd9; }
+    .cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em; }
+    .cols-13{ display: grid; grid-template-columns: 1fr 2fr; gap: 2em; align-items: start; }
+    .small  { font-size: 0.68em; color: var(--cds-text-secondary); }
+    .muted  { color: var(--cds-text-placeholder); }
+    .em     { color: var(--cds-link); font-weight: 600; }
+    .mono   { font-family: var(--font-mono); font-size: 0.85em; }
+    .eyebrow { font-size: 0.65em; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--cds-text-placeholder); margin-bottom: 0.3em; }
+    .title-slide { display: flex; flex-direction: column; justify-content: center; min-height: 65vh; }
+    .title-slide h1 { font-size: 2.6em; font-weight: 300; margin-bottom: 0.2em; }
+    .title-slide .subtitle { font-size: 1em; color: var(--cds-link); margin-bottom: 1em; }
+    .title-slide .meta { font-size: 0.7em; color: var(--cds-text-placeholder); }
+    .divider { background: var(--cds-highlight) !important; }
+    .divider h2 { font-size: 2em; font-weight: 300; border: none; color: #fff; }
+    .divider .eyebrow { color: rgba(255,255,255,0.6); }
+
+    /* ── Tool card (3-column) ────────────────────────── */
+    .tool-card {
+      background: var(--cds-layer);
+      border-top: 3px solid var(--cds-interactive);
+      padding: 1em;
+    }
+    .tool-card.green  { border-color: var(--cds-support-success); }
+    .tool-card.yellow { border-color: var(--cds-support-warning); }
+    .tool-card.purple { border-color: #8a3ffc; }
+    .tool-card h3 { font-size: 0.88em; margin-bottom: 0.4em; }
+    .tool-card p  { font-size: 0.72em; color: var(--cds-text-secondary); margin: 0; }
+
+    /* ── Pictogram: network/server SVG ──────────────── */
+    .pictogram { display: block; margin: 0.5em auto 0.8em; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- ── TITLE SLIDE ──────────────────────────────────── -->
+  <section>
+    <div class="title-slide">
+      <p class="eyebrow">09:00 – 09:30 · Thursday · Tilburg Multiscale Summerschool 2026</p>
+
+      <!-- Server / network pictogram -->
+      <svg class="pictogram" width="64" height="64" viewBox="0 0 32 32"
+           fill="none" aria-hidden="true">
+        <rect x="2" y="6" width="28" height="8" rx="1" stroke="#0f62fe" stroke-width="1.5" fill="#161616"/>
+        <rect x="2" y="18" width="28" height="8" rx="1" stroke="#0f62fe" stroke-width="1.5" fill="#161616"/>
+        <circle cx="6" cy="10" r="1.5" fill="#42be65"/>
+        <circle cx="6" cy="22" r="1.5" fill="#42be65"/>
+        <rect x="10" y="8.5" width="14" height="3" rx="0.5" fill="#262626"/>
+        <rect x="10" y="20.5" width="10" height="3" rx="0.5" fill="#262626"/>
+      </svg>
+
+      <h1>SYNAPSIS Infrastructure</h1>
+      <p class="subtitle">Tools, pipelines and data ecosystem for the Thursday masking day</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        09:00 – 09:30
+      </p>
+
+      <!-- Institution logos — drop PNG/SVG files in slides/logos/ -->
+      <div style="display:flex;align-items:center;gap:2.5em;margin-top:2em;flex-wrap:wrap">
+        <img src="../logos/radboud.png"
+             onerror="this.style.display='none'"
+             alt="Radboud University"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <img src="../logos/hpi.png"
+             onerror="this.style.display='none'"
+             alt="Hasso Plattner Institute"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <img src="../logos/tdcc.png"
+             onerror="this.style.display='none'"
+             alt="TDCC-SSH"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <span style="font-size:0.62em;color:#525252;letter-spacing:0.05em;
+                     text-transform:uppercase;font-weight:600">
+          Radboud University &nbsp;·&nbsp; HPI &nbsp;·&nbsp; TDCC-SSH
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHAT IS SYNAPSIS ────────────────────────────── -->
+  <section>
+    <h2>What is SYNAPSIS?</h2>
+    <div class="cols-13">
+      <div>
+        <!-- Brain / network icon -->
+        <svg width="56" height="56" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto">
+          <circle cx="16" cy="16" r="13" stroke="#0f62fe" stroke-width="1.5" fill="#161616"/>
+          <circle cx="16" cy="16" r="3" fill="#0f62fe"/>
+          <line x1="16" y1="3" x2="16" y2="13" stroke="#4589ff" stroke-width="1"/>
+          <line x1="3" y1="16" x2="13" y2="16" stroke="#4589ff" stroke-width="1"/>
+          <line x1="29" y1="16" x2="19" y2="16" stroke="#4589ff" stroke-width="1"/>
+          <line x1="16" y1="29" x2="16" y2="19" stroke="#4589ff" stroke-width="1"/>
+          <line x1="7" y1="7" x2="13" y2="13" stroke="#78a9ff" stroke-width="1"/>
+          <line x1="25" y1="7" x2="19" y2="13" stroke="#78a9ff" stroke-width="1"/>
+          <line x1="7" y1="25" x2="13" y2="19" stroke="#78a9ff" stroke-width="1"/>
+          <line x1="25" y1="25" x2="19" y2="19" stroke="#78a9ff" stroke-width="1"/>
+        </svg>
+      </div>
+      <div>
+        <p class="small" style="font-size:0.82em;color:var(--cds-text-secondary)">
+          <strong style="color:var(--cds-text-primary)">SYNAPSIS</strong> is the multimodal body-language science lab
+          at Radboud University. We build open-source tools for
+          <span class="em">video annotation, de-identification, pose estimation</span>
+          and kinematic analysis of social interaction.
+        </p>
+        <ul style="margin-top:0.6em">
+          <li><strong>MaskAnyone</strong> — full de-identification platform</li>
+          <li><strong>Masked-Piper</strong> — CPU-ready MediaPipe pipeline</li>
+          <li><strong>MaskBench</strong> — pose-quality benchmarking</li>
+          <li><strong>EnvisionBox</strong> — dataset & tutorial hub</li>
+        </ul>
+        <div class="callout" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+          </svg>
+          <span>All tools are open-source and GDPR-ready for use with research participants.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOOL LANDSCAPE ─────────────────────────────── -->
+  <section>
+    <h2>Thursday tools at a glance</h2>
+    <div class="cols-3">
+      <div class="tool-card">
+        <!-- Video icon -->
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="margin-bottom:0.4em">
+          <path d="M21 16L11 10v12l10-6zM4 4h24a2 2 0 012 2v20a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm0 2v20h24V6H4z"/>
+        </svg>
+        <h3>MaskAnyone</h3>
+        <p>Full de-id platform · YOLO+SAM2 · Docker · UI + REST API · GPU recommended</p>
+        <p style="margin-top:0.4em"><span class="tag blue">detection</span> <span class="tag green">segmentation</span></p>
+      </div>
+      <div class="tool-card green">
+        <!-- Code icon -->
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="margin-bottom:0.4em">
+          <path d="M10.54 22.65L3.2 16l7.34-6.65 1.33 1.46L5.8 16l6.07 5.19-1.33 1.46zM21.46 22.65l-1.33-1.46L26.2 16l-6.07-5.19 1.33-1.46L28.8 16l-7.34 6.65zM17.14 6l1.84.52-4.12 19.48-1.84-.52L17.14 6z"/>
+        </svg>
+        <h3>Masked-Piper v2</h3>
+        <p>Modular pipeline · MediaPipe / ViTPose · CPU-friendly · COCO-17 export</p>
+        <p style="margin-top:0.4em"><span class="tag green">CPU ready</span> <span class="tag teal">pip install</span></p>
+      </div>
+      <div class="tool-card yellow">
+        <!-- Chart icon -->
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="margin-bottom:0.4em">
+          <path d="M28 28H4V4h2v22h22v2zM9 20l5-5 5 5 8-10-1.56-1.25L19 17l-5-5-6 6L9 20z"/>
+        </svg>
+        <h3>MaskBench</h3>
+        <p>Evaluate pose quality on masked video · RMSE · PCK · velocity · acceleration</p>
+        <p style="margin-top:0.4em"><span class="tag">RMSE</span> <span class="tag">PCK</span> <span class="tag">kinematics</span></p>
+      </div>
+    </div>
+    <div class="cols-3" style="margin-top:1em">
+      <div class="tool-card purple">
+        <h3>Notebook 00</h3>
+        <p>Dataset prep · ffmpeg · split composite · trim · inspect</p>
+      </div>
+      <div class="tool-card">
+        <h3>Notebooks 01–03</h3>
+        <p>Masked-Piper v1 + v2 · MaskAnyone API · MaskBench evaluation</p>
+      </div>
+      <div class="tool-card green">
+        <h3>Notebooks 04–05</h3>
+        <p>Audio de-identification · A/V archiving · DANS deposit</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ─────────────────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 1</p>
+    <h2>MaskAnyone</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Full-stack de-identification with YOLO + SAM2</p>
+  </section>
+
+  <!-- ── MASKANYONE ARCHITECTURE ───────────────────────── -->
+  <section>
+    <h2>MaskAnyone architecture</h2>
+    <div class="cols">
+      <div>
+        <h3>How it works</h3>
+        <ol style="font-size:0.84em">
+          <li><strong>Upload</strong> — video or folder via UI or API</li>
+          <li><strong>Detect</strong> — YOLOv8-pose finds all people per frame</li>
+          <li><strong>Segment</strong> — SAM2 creates pixel-accurate masks</li>
+          <li><strong>Apply strategy</strong> — blur / pixelate / solid / contours</li>
+          <li><strong>Export</strong> — masked MP4 + pose JSON</li>
+        </ol>
+        <div class="callout warning" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          GPU required for SAM2. CPU fallback available with MediaPipe segmenter.
+        </div>
+      </div>
+      <div>
+        <h3>Quick start</h3>
+        <pre><code class="language-bash"># 1. Start server (one-time setup)
+git clone https://github.com/MaskAnyone/MaskAnyone
+cd MaskAnyone
+docker compose up -d
+
+# 2. Open UI
+open http://localhost:5001
+
+# 3. Or use the API
+curl -X POST http://localhost:8080/videos \
+  -F "file=@clip.mp4"</code></pre>
+        <p class="small">First pull downloads ~8 GB model weights.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ─────────────────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 2</p>
+    <h2>Masked-Piper v2</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Modular, CPU-friendly, pip-installable</p>
+  </section>
+
+  <!-- ── MASKED-PIPER V2 ────────────────────────────── -->
+  <section>
+    <h2>Masked-Piper v2 — modular pipeline</h2>
+    <div class="cols">
+      <div>
+        <h3>Three swappable components</h3>
+        <pre style="font-size:0.65em"><code>frame
+  │
+  ▼  PoseEstimator    ← mediapipe | vitpose
+  │
+  ▼  Segmenter        ← mediapipe | sam2-tiny | bbox
+  │
+  ▼  MaskingStrategy  ← blur | pixelate | solid | silhouette
+  │
+  ▼
+masked_frame + COCO-17 JSON</code></pre>
+        <div class="callout success" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Runs on CPU — no GPU needed with MediaPipe backend
+        </div>
+      </div>
+      <div>
+        <h3>Install &amp; run</h3>
+        <pre><code class="language-bash"># Install
+pip install "masked-piper[mediapipe]"
+
+# Run from CLI
+masked-piper process clip.mp4 \
+  --strategy blur \
+  --estimator mediapipe \
+  --segmenter mediapipe \
+  --export-coco
+
+# Outputs:
+#   clip_masked.mp4
+#   clip_pose.json  (COCO-17)</code></pre>
+        <p class="small" style="margin-top:0.5em">v1 (holistic landmarks → 3 CSVs) is in <code>01_masked_piper_v1.ipynb</code></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MASKING STRATEGIES TABLE ──────────────────── -->
+  <section>
+    <h2>Masking strategies compared</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th><th>Visual effect</th><th>Privacy level</th>
+          <th>Pose preserved?</th><th>Use case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>blur</code></td>
+          <td>Gaussian blur over person</td>
+          <td><span class="tag blue">Medium</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>General research sharing</td>
+        </tr>
+        <tr>
+          <td><code>pixelate</code></td>
+          <td>Mosaic / blocky pixels</td>
+          <td><span class="tag blue">Medium</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>News / media style</td>
+        </tr>
+        <tr>
+          <td><code>solid</code></td>
+          <td>Solid colour fill</td>
+          <td><span class="tag purple">High</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>Restricted datasets</td>
+        </tr>
+        <tr>
+          <td><code>silhouette</code></td>
+          <td>Black silhouette + skeleton</td>
+          <td><span class="tag red">Highest</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>Public open data</td>
+        </tr>
+        <tr>
+          <td><code>none</code></td>
+          <td>No masking — pose only</td>
+          <td><span class="tag red">Raw</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>Internal annotation only</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:0.7em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+      </svg>
+      All four strategies preserve COCO-17 keypoints in the JSON export — MaskBench quantifies how well.
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ─────────────────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 3</p>
+    <h2>MaskBench</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Does masking degrade body-language signal?</p>
+  </section>
+
+  <!-- ── MASKBENCH ──────────────────────────────────── -->
+  <section>
+    <h2>MaskBench evaluation framework</h2>
+    <div class="cols">
+      <div>
+        <h3>Workflow</h3>
+        <pre style="font-size:0.64em"><code>Raw video ──► Pose estimator ──► Keypoints_GT ┐
+                                               ├─► Compare
+Masked video ► Pose estimator ──► Keypoints_M  ┘
+
+Metrics:
+  RMSE      — pixel error (lower = better)
+  PCK       — % correct keypoints
+  Velocity  — motion magnitude similarity
+  Acceleration — signal dynamics</code></pre>
+        <p class="small" style="margin-top:0.5em">Raw video keypoints = ground truth.<br>
+        Masked video keypoints = prediction.</p>
+      </div>
+      <div>
+        <h3>Datasets tested in SYNAPSIS</h3>
+        <table style="font-size:0.72em">
+          <thead><tr><th>Dataset</th><th>Best strategy</th><th>PCK@20px</th></tr></thead>
+          <tbody>
+            <tr><td>TED Talks</td><td>Blur</td><td><span class="tag green">94%</span></td></tr>
+            <tr><td>TED Kid</td><td>Blur</td><td><span class="tag green">91%</span></td></tr>
+            <tr><td>TragicTalkers</td><td>Pixelate</td><td><span class="tag blue">88%</span></td></tr>
+            <tr><td>Envision Triadic</td><td>Solid fill</td><td>TBD</td></tr>
+          </tbody>
+        </table>
+        <div class="callout success" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Body keypoints (shoulders, hips, wrists) are robustly preserved across all strategies.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TODAY'S SCHEDULE ──────────────────────────── -->
+  <section>
+    <h2>Thursday schedule</h2>
+    <table>
+      <thead><tr><th>Time</th><th>Session</th><th>Notebook</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono">09:00–09:30</td>
+          <td><strong>SYNAPSIS infrastructure</strong> (this deck)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="mono">09:30–10:30</td>
+          <td><strong>Triadic dataset</strong> — prep &amp; splitting</td>
+          <td><span class="tag blue">00_dataset_preparation</span></td>
+        </tr>
+        <tr>
+          <td class="mono">11:00–12:30</td>
+          <td><strong>MaskAnyone hands-on</strong></td>
+          <td><span class="tag green">02_maskanyone_hands_on</span></td>
+        </tr>
+        <tr>
+          <td class="mono">13:30–15:00</td>
+          <td><strong>MaskBench evaluation</strong></td>
+          <td><span class="tag">03_maskbench_evaluation</span></td>
+        </tr>
+        <tr>
+          <td class="mono">15:15–16:00</td>
+          <td><strong>Privacy–utility dilemma</strong></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="mono">16:15–16:45</td>
+          <td><strong>Audio de-identification</strong></td>
+          <td><span class="tag purple">04_audio_deidentification</span></td>
+        </tr>
+        <tr>
+          <td class="mono">16:45–17:15</td>
+          <td><strong>A/V archiving &amp; DANS</strong></td>
+          <td><span class="tag teal">05_av_archiving</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── CLOSING DIVIDER ───────────────────────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Let's get started</p>
+    <h2>Open notebook 00_dataset_preparation.ipynb</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">
+      <code style="background:rgba(255,255,255,0.15);color:#fff;padding:0.2em 0.5em">thursday-masking/notebooks/00_dataset_preparation.ipynb</code>
+    </p>
+  </section>
+
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720,
+    margin: 0.04, minScale: 0.2, maxScale: 2.0,
+    center: false,
+    hash: true,
+    slideNumber: 'c/t',
+    controls: true,
+    progress: true,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    autoPlayMedia: true,
+  });
+</script>
+</body>
+</html>

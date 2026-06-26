@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thursday Masking Day — All Sessions</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+
+    :root {
+      --cds-background:       #000000;
+      --cds-layer:            #161616;
+      --cds-layer-accent:     #262626;
+      --cds-border-subtle:    #525252;
+      --cds-text-primary:     #f4f4f4;
+      --cds-text-secondary:   #c6c6c6;
+      --cds-text-placeholder: #6f6f6f;
+      --cds-interactive:      #0f62fe;
+      --cds-support-success:  #42be65;
+      --cds-support-warning:  #f1c21b;
+      --cds-support-error:    #fa4d56;
+      --cds-support-info:     #4589ff;
+      --cds-link:             #78a9ff;
+      --cds-highlight:        #0043ce;
+      --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", "Consolas", monospace;
+    }
+    .reveal-viewport { background: var(--cds-background) !important; }
+    .reveal { font-family: var(--font-body); font-size: 22px; color: var(--cds-text-primary); }
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-body); font-weight: 300; color: var(--cds-text-primary);
+      text-transform: none; letter-spacing: -0.01em; margin-bottom: 0.5em;
+    }
+    .reveal h1 { font-size: 2.4em; font-weight: 300; line-height: 1.15; }
+    .reveal h2 { font-size: 1.4em; font-weight: 600;
+                 border-bottom: 1px solid var(--cds-border-subtle); padding-bottom: 0.3em; }
+    .reveal h3 { font-size: 1em; font-weight: 600; color: var(--cds-link); }
+    .reveal section { padding: 0 2.5em; overflow: hidden; }
+    .reveal .slides { text-align: left; }
+    .reveal .slide-number { color: var(--cds-text-placeholder); font-family: var(--font-mono);
+      font-size: 0.65em; background: transparent; }
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: 0.3em; font-size: 0.88em; color: var(--cds-text-secondary); }
+    .reveal li strong { color: var(--cds-text-primary); font-weight: 600; }
+    .reveal table { border-collapse: collapse; width: 100%; font-size: 0.72em; }
+    .reveal table th { background: var(--cds-layer-accent); color: var(--cds-text-primary);
+      font-weight: 600; padding: 0.5em 0.9em; text-align: left;
+      border-bottom: 2px solid var(--cds-interactive); }
+    .reveal table td { padding: 0.4em 0.9em; border-bottom: 1px solid var(--cds-layer-accent);
+      color: var(--cds-text-secondary); }
+    .reveal table tr:nth-child(even) td { background: var(--cds-layer); }
+    .reveal pre { font-family: var(--font-mono); background: var(--cds-layer);
+      border: 1px solid var(--cds-layer-accent); border-left: 3px solid var(--cds-interactive);
+      border-radius: 0; padding: 0.8em 1em; font-size: 0.7em; box-shadow: none; width: 100%; }
+    .reveal code { font-family: var(--font-mono); font-size: 0.85em; color: var(--cds-support-info);
+      background: var(--cds-layer); padding: 0.1em 0.3em; border-radius: 2px; }
+    .reveal pre code { color: var(--cds-text-primary); font-size: 1em; background: none; }
+    .callout { display: flex; align-items: flex-start; gap: 0.7em; background: var(--cds-layer);
+      border-left: 3px solid var(--cds-interactive); padding: 0.7em 1em;
+      margin: 0.7em 0; font-size: 0.78em; color: var(--cds-text-secondary); }
+    .callout.success { border-color: var(--cds-support-success); }
+    .callout.warning { border-color: var(--cds-support-warning); }
+    .callout.danger  { border-color: var(--cds-support-error); }
+    .callout .icon   { flex-shrink: 0; margin-top: 0.1em; }
+    .tag { display: inline-flex; align-items: center; gap: 0.3em; background: var(--cds-layer-accent);
+      color: var(--cds-text-secondary); font-size: 0.65em; font-weight: 600;
+      padding: 0.2em 0.6em; border-radius: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+    .tag.blue   { background: #002d9c; color: #a6c8ff; }
+    .tag.green  { background: #022d0d; color: #6fdc8c; }
+    .tag.purple { background: #1c0f30; color: #d4bbff; }
+    .tag.red    { background: #2d0709; color: #ffb3b8; }
+    .tag.teal   { background: #081a1c; color: #3ddbd9; }
+    .tag.yellow { background: #312400; color: #f1c21b; }
+    .cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em; }
+    .cols-13{ display: grid; grid-template-columns: 1fr 2fr; gap: 2em; align-items: start; }
+    .reveal video, .reveal img.gif { max-height: 52vh; max-width: 100%; display: block; margin: 0 auto; }
+    .reveal img { max-width: 100%; max-height: 52vh; }
+    .small  { font-size: 0.68em; color: var(--cds-text-secondary); }
+    .muted  { color: var(--cds-text-placeholder); }
+    .em     { color: var(--cds-link); font-weight: 600; }
+    .mono   { font-family: var(--font-mono); font-size: 0.85em; }
+    .eyebrow { font-size: 0.65em; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--cds-text-placeholder); margin-bottom: 0.3em; }
+    .title-slide { display: flex; flex-direction: column; justify-content: center; min-height: 65vh; }
+    .title-slide h1 { font-size: 2.6em; font-weight: 300; margin-bottom: 0.2em; }
+    .title-slide .subtitle { font-size: 1em; color: var(--cds-link); margin-bottom: 1em; }
+    .title-slide .meta { font-size: 0.7em; color: var(--cds-text-placeholder); }
+    .divider { background: var(--cds-highlight) !important; }
+    .divider h2 { font-size: 2em; font-weight: 300; border: none; color: #fff; }
+    .divider .eyebrow { color: rgba(255,255,255,0.6); }
+
+    /* ── Per-deck extras (union of all deck-specific rules) ── */
+    .tool-card { background: var(--cds-layer); border-top: 3px solid var(--cds-interactive); padding: 1em; }
+    .tool-card.green  { border-color: var(--cds-support-success); }
+    .tool-card.yellow { border-color: var(--cds-support-warning); }
+    .tool-card.purple { border-color: #8a3ffc; }
+    .tool-card h3 { font-size: 0.88em; margin-bottom: 0.4em; }
+    .tool-card p  { font-size: 0.72em; color: var(--cds-text-secondary); margin: 0; }
+    .tree-node { background: var(--cds-layer); border-left: 3px solid var(--cds-interactive);
+      padding: 0.5em 0.8em; margin: 0.3em 0; font-size: 0.8em; }
+    .tree-node.l1 { border-color: #0f62fe; margin-left: 0; }
+    .tree-node.l2 { border-color: #78a9ff; margin-left: 1.5em; }
+    .tree-node.l3 { border-color: #4589ff; margin-left: 3em; font-size: 0.75em; }
+    .tree-node strong { color: var(--cds-text-primary); }
+    .tree-node span   { color: var(--cds-text-secondary); }
+    .method-card { background: var(--cds-layer); padding: 0.8em; font-size: 0.8em; }
+    .method-card h3 { font-size: 0.9em; margin: 0 0 0.3em 0; }
+    .method-card p  { font-size: 0.75em; color: var(--cds-text-secondary); margin: 0.2em 0; }
+    .scale-bar { display: flex; align-items: center; gap: 0; height: 28px;
+      border-radius: 2px; overflow: hidden; margin: 0.6em 0; }
+    .scale-seg { flex: 1; height: 100%; display: flex; align-items: center;
+      justify-content: center; font-size: 0.62em; font-weight: 600;
+      color: #161616; letter-spacing: 0.04em; }
+    .matrix-cell { background: var(--cds-layer); border: 1px solid var(--cds-layer-accent);
+      padding: 0.8em; text-align: center; }
+    .matrix-cell .val { font-size: 1.6em; font-weight: 300; display: block; margin-bottom: 0.2em; }
+    .matrix-cell .lbl { font-size: 0.65em; color: var(--cds-text-placeholder); text-transform: uppercase; }
+    /* wave animation from 05_audio_masking */
+    .wave-pictogram { display: flex; align-items: flex-end; justify-content: center;
+      gap: 4px; height: 48px; margin-bottom: 0.6em; }
+    .wave-bar { width: 6px; border-radius: 3px; background: var(--cds-interactive);
+      animation: wave 1.2s ease-in-out infinite; }
+    @keyframes wave {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.4); }
+      50%       { opacity: 1;   transform: scaleY(1); }
+    }
+
+    /* ── Speaker timer overlay ───────────────────────── */
+    #speaker-timer {
+      position: fixed; bottom: 16px; right: 16px; z-index: 9999;
+      background: rgba(22,22,22,0.92);
+      border: 1px solid #525252;
+      border-left: 3px solid #0f62fe;
+      padding: 10px 14px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: #c6c6c6;
+      min-width: 210px;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.2s;
+      user-select: none;
+    }
+    #speaker-timer.hidden { opacity: 0; pointer-events: none; }
+    #speaker-timer .t-session-name {
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #6f6f6f; margin-bottom: 6px;
+    }
+    #speaker-timer .t-row {
+      display: flex; justify-content: space-between; align-items: center;
+      margin: 3px 0;
+    }
+    #speaker-timer .t-label { color: #6f6f6f; font-size: 10px; }
+    #speaker-timer .t-value { font-size: 14px; font-weight: 600; color: #f4f4f4; }
+    #speaker-timer .t-value.warn  { color: #f1c21b; }
+    #speaker-timer .t-value.alert { color: #fa4d56; }
+    #speaker-timer .t-bar-wrap {
+      margin-top: 8px; height: 3px; background: #262626; border-radius: 2px;
+    }
+    #speaker-timer .t-bar {
+      height: 100%; border-radius: 2px; background: #0f62fe;
+      transition: width 0.5s linear, background 0.5s;
+    }
+    #speaker-timer .t-hint {
+      margin-top: 7px; font-size: 9px; color: #525252; text-align: right;
+    }
+    /* Day clock bar at very top */
+    #day-clock {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9998;
+      background: rgba(22,22,22,0.85);
+      border-bottom: 1px solid #262626;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 3px 16px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px; color: #6f6f6f;
+      backdrop-filter: blur(4px);
+      transition: opacity 0.2s;
+    }
+    #day-clock.hidden { opacity: 0; pointer-events: none; }
+    #day-clock .dc-session { color: #78a9ff; font-weight: 600; }
+    #day-clock .dc-clock   { color: #c6c6c6; }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ── Speaker timer overlay (press T to toggle) ── -->
+<div id="day-clock">
+  <span class="dc-session" id="dc-session-name">—</span>
+  <span id="dc-schedule-time"></span>
+  <span class="dc-clock" id="dc-wallclock"></span>
+</div>
+
+<div id="speaker-timer">
+  <div class="t-session-name" id="t-session-name">—</div>
+  <div class="t-row">
+    <span class="t-label">Session</span>
+    <span class="t-value" id="t-session-elapsed">0:00</span>
+    <span class="t-label" id="t-session-budget"></span>
+  </div>
+  <div class="t-row">
+    <span class="t-label">Slide</span>
+    <span class="t-value" id="t-slide-elapsed">0:00</span>
+    <span class="t-label" id="t-slide-budget"></span>
+  </div>
+  <div class="t-row">
+    <span class="t-label">Day elapsed</span>
+    <span class="t-value" id="t-day-elapsed">0:00</span>
+  </div>
+  <div class="t-bar-wrap">
+    <div class="t-bar" id="t-slide-bar" style="width:0%"></div>
+  </div>
+  <div class="t-hint">T — toggle &nbsp;|&nbsp; R — reset session</div>
+</div>
+
+
+<div class="reveal">
+<div class="slides">
+
+  <section data-time="0" data-session="Thursday Masking Day"
+           data-session-budget="0" data-session-start="1"
+           data-schedule-time="09:00 – 17:30">
+    <div class="title-slide">
+      <p class="eyebrow">Tilburg Multiscale Summerschool 2026</p>
+      <h1>Thursday: Masking &amp; Anonymising Audiovisual Data</h1>
+      <p class="subtitle">Full day · All sessions</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        Press <kbd style="background:#161616;border:1px solid #525252;
+        padding:0.1em 0.4em;font-size:0.85em;border-radius:2px">T</kbd>
+        to toggle the speaker timer &nbsp;·&nbsp;
+        <kbd style="background:#161616;border:1px solid #525252;
+        padding:0.1em 0.4em;font-size:0.85em;border-radius:2px">R</kbd>
+        to reset session clock
+      </p>
+
+      <!-- Institution logos -->
+      <div style="display:flex;align-items:center;gap:2.5em;margin-top:2em;flex-wrap:wrap">
+        <img src="logos/radboud.png"
+             onerror="this.style.display='none'"
+             alt="Radboud University"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <img src="logos/hpi.png"
+             onerror="this.style.display='none'"
+             alt="Hasso Plattner Institute"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <img src="logos/tdcc.png"
+             onerror="this.style.display='none'"
+             alt="TDCC-SSH"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <!-- Inline text fallbacks shown while logo files are missing -->
+        <span class="logo-text-fallback" style="font-size:0.62em;color:#525252;letter-spacing:0.05em;text-transform:uppercase;font-weight:600">
+          Radboud University &nbsp;·&nbsp; HPI &nbsp;·&nbsp; TDCC-SSH
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section data-background-color="#001141" class="divider" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-session-start="1" data-schedule-time="09:00 – 09:30">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.5)">Session 1 of 5 &nbsp;·&nbsp; 09:00 – 09:30&nbsp;·&nbsp; 30 min</p>
+    <h2 style="font-size:2.2em">SYNAPSIS Infrastructure</h2>
+  </section>
+  <section data-time="0" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <div class="title-slide">
+      <p class="eyebrow">09:00 – 09:30 · Thursday · Tilburg Multiscale Summerschool 2026</p>
+
+      <!-- Server / network pictogram -->
+      <svg class="pictogram" width="64" height="64" viewBox="0 0 32 32"
+           fill="none" aria-hidden="true">
+        <rect x="2" y="6" width="28" height="8" rx="1" stroke="#0f62fe" stroke-width="1.5" fill="#161616"/>
+        <rect x="2" y="18" width="28" height="8" rx="1" stroke="#0f62fe" stroke-width="1.5" fill="#161616"/>
+        <circle cx="6" cy="10" r="1.5" fill="#42be65"/>
+        <circle cx="6" cy="22" r="1.5" fill="#42be65"/>
+        <rect x="10" y="8.5" width="14" height="3" rx="0.5" fill="#262626"/>
+        <rect x="10" y="20.5" width="10" height="3" rx="0.5" fill="#262626"/>
+      </svg>
+
+      <h1>SYNAPSIS Infrastructure</h1>
+      <p class="subtitle">Tools, pipelines and data ecosystem for the Thursday masking day</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        09:00 – 09:30
+      </p>
+
+      <!-- Institution logos — drop PNG/SVG files in slides/logos/ -->
+      <div style="display:flex;align-items:center;gap:2.5em;margin-top:2em;flex-wrap:wrap">
+        <img src="../logos/radboud.png"
+             onerror="this.style.display='none'"
+             alt="Radboud University"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <img src="../logos/hpi.png"
+             onerror="this.style.display='none'"
+             alt="Hasso Plattner Institute"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <img src="../logos/tdcc.png"
+             onerror="this.style.display='none'"
+             alt="TDCC-SSH"
+             style="height:36px;opacity:0.85;filter:brightness(10)">
+        <span style="font-size:0.62em;color:#525252;letter-spacing:0.05em;
+                     text-transform:uppercase;font-weight:600">
+          Radboud University &nbsp;·&nbsp; HPI &nbsp;·&nbsp; TDCC-SSH
+        </span>
+      </div>
+    </div>
+  </section>
+  <section data-time="5" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>What is SYNAPSIS?</h2>
+    <div class="cols-13">
+      <div>
+        <!-- Brain / network icon -->
+        <svg width="56" height="56" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto">
+          <circle cx="16" cy="16" r="13" stroke="#0f62fe" stroke-width="1.5" fill="#161616"/>
+          <circle cx="16" cy="16" r="3" fill="#0f62fe"/>
+          <line x1="16" y1="3" x2="16" y2="13" stroke="#4589ff" stroke-width="1"/>
+          <line x1="3" y1="16" x2="13" y2="16" stroke="#4589ff" stroke-width="1"/>
+          <line x1="29" y1="16" x2="19" y2="16" stroke="#4589ff" stroke-width="1"/>
+          <line x1="16" y1="29" x2="16" y2="19" stroke="#4589ff" stroke-width="1"/>
+          <line x1="7" y1="7" x2="13" y2="13" stroke="#78a9ff" stroke-width="1"/>
+          <line x1="25" y1="7" x2="19" y2="13" stroke="#78a9ff" stroke-width="1"/>
+          <line x1="7" y1="25" x2="13" y2="19" stroke="#78a9ff" stroke-width="1"/>
+          <line x1="25" y1="25" x2="19" y2="19" stroke="#78a9ff" stroke-width="1"/>
+        </svg>
+      </div>
+      <div>
+        <p class="small" style="font-size:0.82em;color:var(--cds-text-secondary)">
+          <strong style="color:var(--cds-text-primary)">SYNAPSIS</strong> is the multimodal body-language science lab
+          at Radboud University. We build open-source tools for
+          <span class="em">video annotation, de-identification, pose estimation</span>
+          and kinematic analysis of social interaction.
+        </p>
+        <ul style="margin-top:0.6em">
+          <li><strong>MaskAnyone</strong> — full de-identification platform</li>
+          <li><strong>Masked-Piper</strong> — CPU-ready MediaPipe pipeline</li>
+          <li><strong>MaskBench</strong> — pose-quality benchmarking</li>
+          <li><strong>EnvisionBox</strong> — dataset & tutorial hub</li>
+        </ul>
+        <div class="callout" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+          </svg>
+          <span>All tools are open-source and GDPR-ready for use with research participants.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="6" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>Thursday tools at a glance</h2>
+    <div class="cols-3">
+      <div class="tool-card">
+        <!-- Video icon -->
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="margin-bottom:0.4em">
+          <path d="M21 16L11 10v12l10-6zM4 4h24a2 2 0 012 2v20a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm0 2v20h24V6H4z"/>
+        </svg>
+        <h3>MaskAnyone</h3>
+        <p>Full de-id platform · YOLO+SAM2 · Docker · UI + REST API · GPU recommended</p>
+        <p style="margin-top:0.4em"><span class="tag blue">detection</span> <span class="tag green">segmentation</span></p>
+      </div>
+      <div class="tool-card green">
+        <!-- Code icon -->
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="margin-bottom:0.4em">
+          <path d="M10.54 22.65L3.2 16l7.34-6.65 1.33 1.46L5.8 16l6.07 5.19-1.33 1.46zM21.46 22.65l-1.33-1.46L26.2 16l-6.07-5.19 1.33-1.46L28.8 16l-7.34 6.65zM17.14 6l1.84.52-4.12 19.48-1.84-.52L17.14 6z"/>
+        </svg>
+        <h3>Masked-Piper v2</h3>
+        <p>Modular pipeline · MediaPipe / ViTPose · CPU-friendly · COCO-17 export</p>
+        <p style="margin-top:0.4em"><span class="tag green">CPU ready</span> <span class="tag teal">pip install</span></p>
+      </div>
+      <div class="tool-card yellow">
+        <!-- Chart icon -->
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="margin-bottom:0.4em">
+          <path d="M28 28H4V4h2v22h22v2zM9 20l5-5 5 5 8-10-1.56-1.25L19 17l-5-5-6 6L9 20z"/>
+        </svg>
+        <h3>MaskBench</h3>
+        <p>Evaluate pose quality on masked video · RMSE · PCK · velocity · acceleration</p>
+        <p style="margin-top:0.4em"><span class="tag">RMSE</span> <span class="tag">PCK</span> <span class="tag">kinematics</span></p>
+      </div>
+    </div>
+    <div class="cols-3" style="margin-top:1em">
+      <div class="tool-card purple">
+        <h3>Notebook 00</h3>
+        <p>Dataset prep · ffmpeg · split composite · trim · inspect</p>
+      </div>
+      <div class="tool-card">
+        <h3>Notebooks 01–03</h3>
+        <p>Masked-Piper v1 + v2 · MaskAnyone API · MaskBench evaluation</p>
+      </div>
+      <div class="tool-card green">
+        <h3>Notebooks 04–05</h3>
+        <p>Audio de-identification · A/V archiving · DANS deposit</p>
+      </div>
+    </div>
+  </section>
+  <section data-time="5" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 1</p>
+    <h2>MaskAnyone</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Full-stack de-identification with YOLO + SAM2</p>
+  </section>
+  <section data-time="5" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>MaskAnyone architecture</h2>
+    <div class="cols">
+      <div>
+        <h3>How it works</h3>
+        <ol style="font-size:0.84em">
+          <li><strong>Upload</strong> — video or folder via UI or API</li>
+          <li><strong>Detect</strong> — YOLOv8-pose finds all people per frame</li>
+          <li><strong>Segment</strong> — SAM2 creates pixel-accurate masks</li>
+          <li><strong>Apply strategy</strong> — blur / pixelate / solid / contours</li>
+          <li><strong>Export</strong> — masked MP4 + pose JSON</li>
+        </ol>
+        <div class="callout warning" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          GPU required for SAM2. CPU fallback available with MediaPipe segmenter.
+        </div>
+      </div>
+      <div>
+        <h3>Quick start</h3>
+        <pre><code class="language-bash"># 1. Start server (one-time setup)
+git clone https://github.com/MaskAnyone/MaskAnyone
+cd MaskAnyone
+docker compose up -d
+
+# 2. Open UI
+open http://localhost:5001
+
+# 3. Or use the API
+curl -X POST http://localhost:8080/videos \
+  -F "file=@clip.mp4"</code></pre>
+        <p class="small">First pull downloads ~8 GB model weights.</p>
+      </div>
+    </div>
+  </section>
+  <section data-time="5" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 2</p>
+    <h2>Masked-Piper v2</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Modular, CPU-friendly, pip-installable</p>
+  </section>
+  <section data-time="4" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>Masked-Piper v2 — modular pipeline</h2>
+    <div class="cols">
+      <div>
+        <h3>Three swappable components</h3>
+        <pre style="font-size:0.65em"><code>frame
+  │
+  ▼  PoseEstimator    ← mediapipe | vitpose
+  │
+  ▼  Segmenter        ← mediapipe | sam2-tiny | bbox
+  │
+  ▼  MaskingStrategy  ← blur | pixelate | solid | silhouette
+  │
+  ▼
+masked_frame + COCO-17 JSON</code></pre>
+        <div class="callout success" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Runs on CPU — no GPU needed with MediaPipe backend
+        </div>
+      </div>
+      <div>
+        <h3>Install &amp; run</h3>
+        <pre><code class="language-bash"># Install
+pip install "masked-piper[mediapipe]"
+
+# Run from CLI
+masked-piper process clip.mp4 \
+  --strategy blur \
+  --estimator mediapipe \
+  --segmenter mediapipe \
+  --export-coco
+
+# Outputs:
+#   clip_masked.mp4
+#   clip_pose.json  (COCO-17)</code></pre>
+        <p class="small" style="margin-top:0.5em">v1 (holistic landmarks → 3 CSVs) is in <code>01_masked_piper_v1.ipynb</code></p>
+      </div>
+    </div>
+  </section>
+  <section data-time="3" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>Masking strategies compared</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Strategy</th><th>Visual effect</th><th>Privacy level</th>
+          <th>Pose preserved?</th><th>Use case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>blur</code></td>
+          <td>Gaussian blur over person</td>
+          <td><span class="tag blue">Medium</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>General research sharing</td>
+        </tr>
+        <tr>
+          <td><code>pixelate</code></td>
+          <td>Mosaic / blocky pixels</td>
+          <td><span class="tag blue">Medium</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>News / media style</td>
+        </tr>
+        <tr>
+          <td><code>solid</code></td>
+          <td>Solid colour fill</td>
+          <td><span class="tag purple">High</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>Restricted datasets</td>
+        </tr>
+        <tr>
+          <td><code>silhouette</code></td>
+          <td>Black silhouette + skeleton</td>
+          <td><span class="tag red">Highest</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>Public open data</td>
+        </tr>
+        <tr>
+          <td><code>none</code></td>
+          <td>No masking — pose only</td>
+          <td><span class="tag red">Raw</span></td>
+          <td><span class="tag green">Yes ✓</span></td>
+          <td>Internal annotation only</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:0.7em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+      </svg>
+      All four strategies preserve COCO-17 keypoints in the JSON export — MaskBench quantifies how well.
+    </div>
+  </section>
+  <section data-time="3" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 3</p>
+    <h2>MaskBench</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Does masking degrade body-language signal?</p>
+  </section>
+  <section data-time="3" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>MaskBench evaluation framework</h2>
+    <div class="cols">
+      <div>
+        <h3>Workflow</h3>
+        <pre style="font-size:0.64em"><code>Raw video ──► Pose estimator ──► Keypoints_GT ┐
+                                               ├─► Compare
+Masked video ► Pose estimator ──► Keypoints_M  ┘
+
+Metrics:
+  RMSE      — pixel error (lower = better)
+  PCK       — % correct keypoints
+  Velocity  — motion magnitude similarity
+  Acceleration — signal dynamics</code></pre>
+        <p class="small" style="margin-top:0.5em">Raw video keypoints = ground truth.<br>
+        Masked video keypoints = prediction.</p>
+      </div>
+      <div>
+        <h3>Datasets tested in SYNAPSIS</h3>
+        <table style="font-size:0.72em">
+          <thead><tr><th>Dataset</th><th>Best strategy</th><th>PCK@20px</th></tr></thead>
+          <tbody>
+            <tr><td>TED Talks</td><td>Blur</td><td><span class="tag green">94%</span></td></tr>
+            <tr><td>TED Kid</td><td>Blur</td><td><span class="tag green">91%</span></td></tr>
+            <tr><td>TragicTalkers</td><td>Pixelate</td><td><span class="tag blue">88%</span></td></tr>
+            <tr><td>Envision Triadic</td><td>Solid fill</td><td>TBD</td></tr>
+          </tbody>
+        </table>
+        <div class="callout success" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Body keypoints (shoulders, hips, wrists) are robustly preserved across all strategies.
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="3" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30">
+    <h2>Thursday schedule</h2>
+    <table>
+      <thead><tr><th>Time</th><th>Session</th><th>Notebook</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="mono">09:00–09:30</td>
+          <td><strong>SYNAPSIS infrastructure</strong> (this deck)</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="mono">09:30–10:30</td>
+          <td><strong>Triadic dataset</strong> — prep &amp; splitting</td>
+          <td><span class="tag blue">00_dataset_preparation</span></td>
+        </tr>
+        <tr>
+          <td class="mono">11:00–12:30</td>
+          <td><strong>MaskAnyone hands-on</strong></td>
+          <td><span class="tag green">02_maskanyone_hands_on</span></td>
+        </tr>
+        <tr>
+          <td class="mono">13:30–15:00</td>
+          <td><strong>MaskBench evaluation</strong></td>
+          <td><span class="tag">03_maskbench_evaluation</span></td>
+        </tr>
+        <tr>
+          <td class="mono">15:15–16:00</td>
+          <td><strong>Privacy–utility dilemma</strong></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="mono">16:15–16:45</td>
+          <td><strong>Audio de-identification</strong></td>
+          <td><span class="tag purple">04_audio_deidentification</span></td>
+        </tr>
+        <tr>
+          <td class="mono">16:45–17:15</td>
+          <td><strong>A/V archiving &amp; DANS</strong></td>
+          <td><span class="tag teal">05_av_archiving</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-time="3" data-session="SYNAPSIS Infrastructure" data-session-budget="30" data-schedule-time="09:00 – 09:30" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Let's get started</p>
+    <h2>Open notebook 00_dataset_preparation.ipynb</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">
+      <code style="background:rgba(255,255,255,0.15);color:#fff;padding:0.2em 0.5em">thursday-masking/notebooks/00_dataset_preparation.ipynb</code>
+    </p>
+  </section>
+  <section data-background-color="#001141" class="divider" data-session="The Triadic Dataset" data-session-budget="60" data-session-start="1" data-schedule-time="09:30 – 10:30">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.5)">Session 2 of 5 &nbsp;·&nbsp; 09:30 – 10:30&nbsp;·&nbsp; 60 min</p>
+    <h2 style="font-size:2.2em">The Triadic Dataset</h2>
+  </section>
+  <section data-time="0" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <p class="eyebrow">09:30–09:50 · Thursday Masking Day · Tilburg 2026</p>
+    <h1>The Triadic Concept<br>Generation Dataset</h1>
+    <p style="color:var(--cds-link);font-size:0.9em;margin-bottom:1em">
+      The video data we use for masking practice today
+    </p>
+    <!-- camera pictogram -->
+    <svg width="48" height="48" viewBox="0 0 32 32" fill="var(--cds-border-subtle)">
+      <path d="M29 8h-4.31l-2.23-3H9.54L7.31 8H2a2 2 0 00-2 2v16a2 2 0 002 2h27a2 2 0 002-2V10a2 2 0 00-2-2zm0 18H2V10h6.19l2.23-3h11.16l2.23 3H29v16zM16 12a6 6 0 100 12 6 6 0 000-12zm0 10a4 4 0 110-8 4 4 0 010 8z"/>
+    </svg>
+    <p class="small muted" style="margin-top:0.8em">Babajide Owoyele · Radboud University / SYNAPSIS</p>
+  </section>
+  <section data-time="5" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      Where does it come from?
+    </h2>
+    <div class="cols">
+      <div>
+        <p class="small">Edelman (2011) recorded design teams at Stanford's
+          <span class="em">Center for Design Research</span> in the <em>Design Observatory</em>.</p>
+        <p class="small">The study is called <span class="em">Envision</span> —
+          though participants were not told the name.</p>
+        <div class="callout">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+          </svg>
+          <span><strong>Research question:</strong> Under what conditions do small design teams make a radical departure from the given artefact?</span>
+        </div>
+      </div>
+      <div>
+        <p class="small muted" style="border-left:2px solid var(--cds-border-subtle);padding-left:0.8em">
+          Edelman, J.A. (2011).<br>
+          <em>Understanding Radical Breaks: Media and Behavior in Small Teams Engaged in Redesign Scenarios.</em><br>
+          PhD dissertation, Stanford University.<br>
+          CC-BY-NC 3.0
+        </p>
+      </div>
+    </div>
+  </section>
+  <section data-time="6" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      Masking in action
+    </h2>
+    <!-- gif lives at thursday-masking/mask_many.gif; from this HTML: ../../mask_many.gif -->
+    <img class="gif" src="../mask_many.gif" alt="MaskAnyone masking multiple people" />
+    <p class="small" style="text-align:center">
+      <span class="tag teal">MaskAnyone</span>
+      &nbsp; YOLO + SAM2 instance segmentation — body silhouette masking
+    </p>
+  </section>
+  <section data-time="5" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M29 8h-4.31l-2.23-3H9.54L7.31 8H2a2 2 0 00-2 2v16a2 2 0 002 2h27a2 2 0 002-2V10a2 2 0 00-2-2zm0 18H2V10h6.19l2.23-3h11.16l2.23 3H29v16zM16 12a6 6 0 100 12 6 6 0 000-12zm0 10a4 4 0 110-8 4 4 0 010 8z"/>
+      </svg>
+      4 cameras · 5 microphones
+    </h2>
+    <div class="cols-13">
+      <div>
+        <table>
+          <thead><tr><th>Stream</th><th>View</th></tr></thead>
+          <tbody>
+            <tr><td><code>cam_p1</code></td><td>Participant 1</td></tr>
+            <tr><td><code>cam_p2</code></td><td>Participant 2</td></tr>
+            <tr><td><code>cam_p3</code></td><td>Participant 3</td></tr>
+            <tr><td><code>cam_overhead</code></td><td>Top-down table view</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:0.6em;color:var(--cds-text-placeholder)">
+          All 4 streams composited into one <span class="em">four-up MP4</span> via FinalCut Pro.<br>
+          Timecode burned lower-right.
+        </p>
+      </div>
+      <div>
+        <video data-autoplay loop muted src="../__design.mp4" style="width:100%;border:1px solid var(--cds-layer-accent)"></video>
+        <p class="small" style="text-align:center">Sample four-up composite clip</p>
+      </div>
+    </div>
+  </section>
+  <section data-time="6" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 2h14l8 8v20H4V2zm14 0v8h8M12 13H8v2h4zm8 4H8v2h12zm0 4H8v2h12z"/>
+      </svg>
+      Dataset at a glance
+    </h2>
+    <div class="cols">
+      <table>
+        <thead><tr><th>Item</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td>Triadic groups</td><td><span class="em">14</span></td></tr>
+          <tr><td>Participants</td><td>42 (ages 19–77)</td></tr>
+          <tr><td>Camera streams</td><td><span class="em">56</span> (4 × 14)</td></tr>
+          <tr><td>Total video</td><td>~14 hours</td></tr>
+          <tr><td>Transcripts</td><td>1,047 pages</td></tr>
+          <tr><td>Sketches / notes</td><td>74 pages</td></tr>
+        </tbody>
+      </table>
+      <div>
+        <!-- dataset icon -->
+        <svg width="80" height="80" viewBox="0 0 32 32" fill="var(--cds-layer-accent)" style="margin:0 auto;display:block">
+          <ellipse cx="16" cy="8" rx="12" ry="4" fill="var(--cds-layer-accent)" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+          <path d="M4 8v5c0 2.21 5.37 4 12 4s12-1.79 12-4V8" fill="none" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+          <path d="M4 13v5c0 2.21 5.37 4 12 4s12-1.79 12-4v-5" fill="none" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+          <path d="M4 18v5c0 2.21 5.37 4 12 4s12-1.79 12-4v-5" fill="none" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+        </svg>
+        <p class="small muted" style="text-align:center;margin-top:0.5em">
+          Today we work with<br><span class="em">4 selected groups</span>
+        </p>
+      </div>
+    </div>
+  </section>
+  <section data-time="5" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 6a2 2 0 110 4 2 2 0 010-4M7 6a2 2 0 110 4 2 2 0 010-4M25 6a2 2 0 110 4 2 2 0 010-4M16 22a2 2 0 110 4 2 2 0 010-4M7 16a9 9 0 019-9M25 16a9 9 0 01-9-9M7 16v7M25 16v7M16 22v-4"/>
+      </svg>
+      The four workshop groups
+    </h2>
+    <table>
+      <thead><tr><th>Group</th><th>Nickname</th><th>Outcome</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="tag blue">Group 2</span></td>
+          <td>Optimizers</td>
+          <td>Incremental — stays close to the given device</td>
+        </tr>
+        <tr>
+          <td><span class="tag purple">Group 7</span></td>
+          <td>Wild Ideas</td>
+          <td>Radical departure — entirely new concept</td>
+        </tr>
+        <tr>
+          <td><span class="tag green">Group 9</span></td>
+          <td>User-Centered</td>
+          <td>Moderate redesign focused on use context</td>
+        </tr>
+        <tr>
+          <td><span class="tag red">Group 10</span></td>
+          <td>Breakers</td>
+          <td>Strongest radical break in the dataset</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout success" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      <span>These 4 groups span the full spectrum — incremental → radical. Ideal for demonstrating masking trade-offs.</span>
+    </div>
+  </section>
+  <section data-time="6" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      Why this dataset for masking?
+    </h2>
+    <ul>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><circle cx="8" cy="16" r="4"/><circle cx="16" cy="16" r="4"/><circle cx="24" cy="16" r="4"/></svg>
+          <strong>Multi-person</strong> — 3 participants, each with a dedicated camera stream
+        </div>
+      </li>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><path d="M4 28l7-7 5 5 10-14"/></svg>
+          <strong>Gesture-rich</strong> — sketching, pointing, enacting — throughout
+        </div>
+      </li>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><path d="M16 4v24M4 16h24"/></svg>
+          <strong>Multi-camera</strong> — tests masking across different angles and distances
+        </div>
+      </li>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><path d="M4 2h14l8 8v20H4V2z"/></svg>
+          <strong>Known ground truth</strong> — transcripts + VCode coding → MaskBench can verify pose
+        </div>
+      </li>
+    </ul>
+    <div class="callout warning" style="margin-top:0.6em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+      </svg>
+      <span>The overhead camera is a <strong>bonus challenge</strong>: no faces but gestures and handwriting on sketches are visible — what should you mask?</span>
+    </div>
+  </section>
+  <section data-time="5" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      The privacy–utility trade-off
+    </h2>
+    <div class="cols">
+      <div>
+        <h3>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2z"/>
+          </svg>
+          Must remove
+        </h3>
+        <ul>
+          <li>Face, hair, clothing</li>
+          <li>Voice (microphones)</li>
+          <li>Handwriting on sketches</li>
+          <li>Background cues (Stanford lab)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Must preserve
+        </h3>
+        <ul>
+          <li>Body pose &amp; gesture trajectory</li>
+          <li>Hand movements (pointing, sketching)</li>
+          <li>Shared artefacts on the table</li>
+          <li>Temporal sync across 4 streams</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:0.6em">More on this dilemma at 09:50 →</p>
+  </section>
+  <section data-time="6" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 16h24M20 10l6 6-6 6"/>
+      </svg>
+      Today's pipeline
+    </h2>
+    <pre><code>
+four-up composite (group_07.mp4)
+        │
+        ▼  split + trim         notebook 00
+   cam_p1.mp4  cam_p2.mp4  cam_p3.mp4
+        │
+        ▼  MaskAnyone            hands-on 11:30–14:30
+   masked_cam_p1.mp4  …
+        │
+        ▼  MaskBench             14:30–15:15
+   pose_error.csv   re-id_risk_score
+        │
+        ▼  archive + DANS        notebook 05
+   BagIt bag → ssh.datastations.nl
+    </code></pre>
+  </section>
+  <section data-time="5" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M26 16l-10 10L4 16l1.41-1.41L16 23.17l9.59-9.58z"/>
+      </svg>
+      Before 11:30 — prep your clip
+    </h2>
+    <ol>
+      <li>Open <code>notebooks/00_dataset_preparation.ipynb</code></li>
+      <li>Inspect your assigned group's composite video</li>
+      <li>Split → trim → compatibility check</li>
+      <li>Create a <strong>5-minute workshop clip</strong> from <code>cam_p1</code> or <code>cam_p2</code></li>
+    </ol>
+    <div class="callout">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      <span><strong>Assigned groups:</strong> check the whiteboard. Clips should be ready before the 10:30 coffee break.</span>
+    </div>
+    <p class="small muted" style="margin-top:0.5em">
+      <span class="tag teal">Notebook</span> &nbsp;
+      <span class="tag blue">SYNAPSIS server</span> &nbsp;
+      <span class="tag green">MaskAnyone</span>
+    </p>
+  </section>
+  <section data-time="5" data-session="The Triadic Dataset" data-session-budget="60" data-schedule-time="09:30 – 10:30" data-background-color="#000000">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.6)">Coming up at 09:50</p>
+    <h2 style="font-weight:300;font-size:2em;border:none;color:#fff">
+      The Privacy–Utility Dilemma
+    </h2>
+    <p style="color:rgba(255,255,255,0.7);font-size:0.85em">
+      Why masking is never perfect · What you gain and what you lose ·<br>
+      How to make an informed decision for your research data
+    </p>
+  </section>
+  <section data-background-color="#001141" class="divider" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-session-start="1" data-schedule-time="15:15 – 16:00">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.5)">Session 3 of 5 &nbsp;·&nbsp; 15:15 – 16:00&nbsp;·&nbsp; 45 min</p>
+    <h2 style="font-size:2.2em">Privacy–Utility Dilemma</h2>
+  </section>
+  <section data-time="0" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <div class="title-slide">
+      <p class="eyebrow">15:15 – 16:00 · Thursday · Tilburg Multiscale Summerschool 2026</p>
+
+      <!-- Balance / scale pictogram -->
+      <svg width="72" height="72" viewBox="0 0 32 32" fill="none" style="display:block;margin-bottom:0.5em">
+        <line x1="16" y1="4" x2="16" y2="28" stroke="#0f62fe" stroke-width="1.5"/>
+        <line x1="4" y1="10" x2="28" y2="10" stroke="#0f62fe" stroke-width="1.5"/>
+        <circle cx="4" cy="18" r="5" stroke="#42be65" stroke-width="1.5" fill="#022d0d"/>
+        <text x="4" y="21" text-anchor="middle" fill="#42be65" font-size="5" font-family="monospace">U</text>
+        <circle cx="28" cy="14" r="5" stroke="#fa4d56" stroke-width="1.5" fill="#2d0709"/>
+        <text x="28" y="17" text-anchor="middle" fill="#fa4d56" font-size="5" font-family="monospace">P</text>
+        <line x1="4" y1="10" x2="4" y2="13" stroke="#42be65" stroke-width="1.5"/>
+        <line x1="28" y1="10" x2="28" y2="9" stroke="#fa4d56" stroke-width="1.5"/>
+      </svg>
+
+      <h1>The Privacy–Utility Dilemma</h1>
+      <p class="subtitle">How much signal do we lose when we protect identities?</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        15:15 – 16:00
+      </p>
+    </div>
+  </section>
+  <section data-time="5" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>The core tension</h2>
+    <div class="cols">
+      <div>
+        <h3>Privacy</h3>
+        <ul>
+          <li><strong>GDPR Article 4(1)</strong> — biometric data is sensitive personal data</li>
+          <li>Face recognition trivially re-identifies blurred video at scale (Gross et al. 2006)</li>
+          <li>IRB / ethics committees increasingly require de-identification before sharing</li>
+          <li>Participants have a <span class="em">right to withdraw</span> — data must be revisable</li>
+        </ul>
+        <div class="callout danger" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          Face &amp; voice are directly identifying. Background details, gait, and body shape can also re-identify.
+        </div>
+      </div>
+      <div>
+        <h3>Scientific utility</h3>
+        <ul>
+          <li>Body movement data requires visible joints</li>
+          <li>Gesture research needs hand and head motion</li>
+          <li>Vocal analysis requires original audio — or its acoustic properties</li>
+          <li>Heavy masking → <span class="em">degraded signal</span>, reduced replicability</li>
+        </ul>
+        <div class="callout success" style="margin-top:0.8em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          MaskBench shows body keypoints (RMSE &lt; 10 px) survive most masking strategies.
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="7" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>The privacy–utility spectrum</h2>
+    <p class="small" style="margin-bottom:0.3em">Moving right increases privacy but reduces visible signal.</p>
+
+    <!-- Colour gradient bar -->
+    <div class="scale-bar">
+      <div class="scale-seg" style="background:#42be65">Raw</div>
+      <div class="scale-seg" style="background:#6fdc8c">Blur</div>
+      <div class="scale-seg" style="background:#f1c21b">Pixelate</div>
+      <div class="scale-seg" style="background:#ff7eb6">Solid fill</div>
+      <div class="scale-seg" style="background:#fa4d56;color:#f4f4f4">Silhouette</div>
+      <div class="scale-seg" style="background:#8a3ffc;color:#f4f4f4">Skeleton only</div>
+    </div>
+    <div class="scale-bar" style="height:14px;margin-top:0">
+      <div class="scale-seg" style="background:#161616;color:#42be65;flex:1">← more utility</div>
+      <div class="scale-seg" style="background:#161616;color:#fa4d56;flex:1">more privacy →</div>
+    </div>
+
+    <table style="margin-top:1em">
+      <thead>
+        <tr>
+          <th>Method</th><th>Face visible?</th><th>Gait visible?</th>
+          <th>Hands visible?</th><th>Re-ID risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Raw video</td><td><span class="tag red">Yes</span></td>
+          <td><span class="tag red">Yes</span></td><td><span class="tag red">Yes</span></td>
+          <td><span class="tag red">High</span></td>
+        </tr>
+        <tr>
+          <td>Blur (σ=30)</td><td><span class="tag yellow">Partial</span></td>
+          <td><span class="tag yellow">Partial</span></td><td><span class="tag yellow">Partial</span></td>
+          <td><span class="tag yellow">Moderate</span></td>
+        </tr>
+        <tr>
+          <td>Solid fill</td><td><span class="tag green">No</span></td>
+          <td><span class="tag yellow">Partial</span></td><td><span class="tag green">No</span></td>
+          <td><span class="tag blue">Low</span></td>
+        </tr>
+        <tr>
+          <td>Silhouette</td><td><span class="tag green">No</span></td>
+          <td><span class="tag yellow">Partial</span></td><td><span class="tag green">No</span></td>
+          <td><span class="tag blue">Low</span></td>
+        </tr>
+        <tr>
+          <td>Skeleton only</td><td><span class="tag green">No</span></td>
+          <td><span class="tag green">Abstract</span></td><td><span class="tag green">No</span></td>
+          <td><span class="tag green">Minimal</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-time="6" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>What masking cannot hide</h2>
+    <div class="cols">
+      <div>
+        <h3>Residual identifiers</h3>
+        <ul>
+          <li><strong>Gait</strong> — body sway, step pattern are person-specific (Nixon et al. 2006)</li>
+          <li><strong>Hand shape</strong> — even silhouette reveals knuckle width</li>
+          <li><strong>Clothing</strong> — colour, pattern, logos visible through partial blur</li>
+          <li><strong>Voice</strong> — even pitch-shifted audio retains prosodic signature</li>
+          <li><strong>Background</strong> — room, posters, unique objects</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mitigations</h3>
+        <ul>
+          <li><strong>Full solid fill + skeleton</strong> removes most residuals</li>
+          <li><strong>Audio replacement</strong> (TTS) eliminates voice entirely</li>
+          <li><strong>Background replacement</strong> — chroma key or inpainting</li>
+          <li><strong>Access control</strong> — tiered release; IRB-only for raw</li>
+          <li><strong>Time jitter</strong> — shift session timestamps to prevent linking</li>
+        </ul>
+        <div class="callout warning" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          No de-identification method is 100% proof against a determined adversary with auxiliary information.
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="5" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>Legal &amp; ethical framing</h2>
+    <div class="cols">
+      <div>
+        <h3>GDPR requirements</h3>
+        <ul>
+          <li><strong>Art. 4(1)</strong> — identified or <em>identifiable</em> natural person</li>
+          <li><strong>Art. 9</strong> — biometric &amp; health data as special category</li>
+          <li><strong>Art. 89</strong> — research exemption, but requires safeguards</li>
+          <li><strong>Recital 26</strong> — pseudonymisation ≠ anonymisation if re-linkable</li>
+        </ul>
+        <div class="callout" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+          </svg>
+          Video is personal data under GDPR by default. Consent ≠ free access to identifiable recordings.
+        </div>
+      </div>
+      <div>
+        <h3>Ethics committee checklist</h3>
+        <ul>
+          <li><span class="tag green">Required</span> Informed consent covering recording</li>
+          <li><span class="tag green">Required</span> Data management plan</li>
+          <li><span class="tag green">Required</span> Storage location (EU/EEA preferred)</li>
+          <li><span class="tag blue">Recommended</span> De-identification before sharing</li>
+          <li><span class="tag blue">Recommended</span> Access-controlled repository (DANS, OSF private)</li>
+          <li><span class="tag">Optional</span> Right-to-erasure workflow for each participant</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section data-time="6" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Discussion</p>
+    <h2>Where do we draw the line?</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">
+      Group exercise — 10 minutes
+    </p>
+  </section>
+  <section data-time="10" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>Discussion scenarios</h2>
+    <div class="cols-3">
+      <div style="background:var(--cds-layer);border-top:3px solid #42be65;padding:1em">
+        <p class="eyebrow" style="color:#42be65">Scenario A</p>
+        <p class="small" style="font-size:0.78em;color:var(--cds-text-secondary)">
+          You have <strong>30-minute design sessions</strong> with three participants per group.
+          You want to share <strong>5-minute excerpts</strong> as open-access supplementary material.
+          What strategy do you choose?
+        </p>
+      </div>
+      <div style="background:var(--cds-layer);border-top:3px solid #f1c21b;padding:1em">
+        <p class="eyebrow" style="color:#f1c21b">Scenario B</p>
+        <p class="small" style="font-size:0.78em;color:var(--cds-text-secondary)">
+          A participant withdraws consent <strong>two years after recording</strong>.
+          The masked video is already in a repository with a DOI.
+          How do you handle the withdrawal?
+        </p>
+      </div>
+      <div style="background:var(--cds-layer);border-top:3px solid #fa4d56;padding:1em">
+        <p class="eyebrow" style="color:#fa4d56">Scenario C</p>
+        <p class="small" style="font-size:0.78em;color:var(--cds-text-secondary)">
+          A reviewer requests access to <strong>raw (unmasked) video</strong>
+          to verify annotation quality.
+          What access control mechanism do you put in place?
+        </p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:1em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+      </svg>
+      There is no universally correct answer. The right choice depends on your data sensitivity, participant consent scope, and intended audience.
+    </div>
+  </section>
+  <section data-time="5" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>A practical decision framework</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Audience</th><th>Video access</th><th>Audio access</th>
+          <th>Recommended strategy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Research team only</td>
+          <td><span class="tag red">Raw</span></td>
+          <td><span class="tag red">Raw</span></td>
+          <td>Secure institutional storage; no sharing</td>
+        </tr>
+        <tr>
+          <td>Restricted collaborators</td>
+          <td><span class="tag yellow">Blur</span></td>
+          <td><span class="tag yellow">Original + NDA</span></td>
+          <td>DANS Data Station SSH / OSF private</td>
+        </tr>
+        <tr>
+          <td>Peer review</td>
+          <td><span class="tag blue">Solid fill</span></td>
+          <td><span class="tag blue">Pitch-shifted</span></td>
+          <td>Embargoed DOI; reviewer access link</td>
+        </tr>
+        <tr>
+          <td>Open access</td>
+          <td><span class="tag green">Silhouette</span></td>
+          <td><span class="tag green">TTS replacement</span></td>
+          <td>DataverseNL / Zenodo public</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout success" style="margin-top:0.7em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      The Envision triadic dataset uses <strong>solid fill + skeleton overlay</strong> for internal sharing and <strong>skeleton-only export</strong> for open access.
+    </div>
+  </section>
+  <section data-time="5" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00">
+    <h2>Key takeaways</h2>
+    <ul>
+      <li><strong>De-identification ≠ anonymisation</strong> — GDPR still applies unless re-linkage is truly impossible</li>
+      <li><strong>No one-size-fits-all</strong> — match strategy to audience and data sensitivity</li>
+      <li><strong>Body keypoints survive masking</strong> — MaskBench shows PCK &gt; 88% for wrists/shoulders</li>
+      <li><strong>Audio is often the weakest link</strong> — pitch shift alone is insufficient; consider TTS or suppression</li>
+      <li><strong>Design for layered access</strong> — keep raw data under strict control, release progressively masked versions</li>
+    </ul>
+    <div class="callout" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      Next: <strong>04_audio_masking</strong> — practical audio de-identification with librosa, Whisper, and pyannote
+    </div>
+  </section>
+  <section data-time="5" data-session="Privacy–Utility Dilemma" data-session-budget="45" data-schedule-time="15:15 – 16:00" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Up next · 16:15</p>
+    <h2>Audio De-identification</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">
+      Open <code style="background:rgba(255,255,255,0.15);color:#fff;padding:0.2em 0.5em">04_audio_deidentification.ipynb</code>
+    </p>
+  </section>
+  <section data-background-color="#001141" class="divider" data-session="Masking Taxonomy" data-session-budget="0" data-session-start="1" data-schedule-time="Reference">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.5)">Session 4 of 5 &nbsp;·&nbsp; Reference&nbsp;·&nbsp; Reference</p>
+    <h2 style="font-size:2.2em">Masking Taxonomy</h2>
+  </section>
+  <section data-time="0" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <div class="title-slide">
+      <p class="eyebrow">Reference · Thursday · Tilburg Multiscale Summerschool 2026</p>
+
+      <!-- Layers / taxonomy pictogram -->
+      <svg width="72" height="72" viewBox="0 0 32 32" fill="none" style="display:block;margin-bottom:0.5em" aria-hidden="true">
+        <rect x="4"  y="6"  width="24" height="5" rx="0.5" fill="#0f62fe" opacity="0.9"/>
+        <rect x="4"  y="13" width="24" height="5" rx="0.5" fill="#4589ff" opacity="0.8"/>
+        <rect x="4"  y="20" width="24" height="5" rx="0.5" fill="#78a9ff" opacity="0.7"/>
+        <line x1="8"  y1="6" x2="8"  y2="25" stroke="#000000" stroke-width="0.5"/>
+        <line x1="16" y1="6" x2="16" y2="25" stroke="#000000" stroke-width="0.5"/>
+        <line x1="24" y1="6" x2="24" y2="25" stroke="#000000" stroke-width="0.5"/>
+      </svg>
+
+      <h1>A Taxonomy of Video Masking</h1>
+      <p class="subtitle">Organising de-identification methods by mechanism, modality, and reversibility</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        Reference slide deck · Thursday Masking Day
+      </p>
+    </div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Why organise by taxonomy?</h2>
+    <div class="cols">
+      <div>
+        <p style="font-size:0.85em;color:var(--cds-text-secondary)">
+          The literature uses <span class="em">blur</span>, <span class="em">anonymisation</span>,
+          <span class="em">de-identification</span>, and <span class="em">obfuscation</span>
+          interchangeably — and often imprecisely.
+        </p>
+        <p style="font-size:0.85em;color:var(--cds-text-secondary);margin-top:0.5em">
+          A taxonomy lets us:
+        </p>
+        <ul>
+          <li>Choose the right method for a given threat model</li>
+          <li>Compare methods in MaskBench on equal terms</li>
+          <li>Communicate clearly to ethics boards</li>
+          <li>Design reproducible de-identification pipelines</li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+          </svg>
+          <span>We distinguish three orthogonal axes: <strong>mechanism</strong> (how), <strong>modality</strong> (what), and <strong>reversibility</strong> (can it be undone?).</span>
+        </div>
+        <div class="callout warning" style="margin-top:0.5em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          <span><strong>Irreversible</strong> ≠ anonymised: gait and body proportions are stable identifiers that no pixel-level method removes.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Axis 1 — Mechanism</h2>
+    <p class="small">How is the transformation applied?</p>
+
+    <div class="tree-node l1"><strong>Signal degradation</strong> <span>— reduce information content in pixel space</span></div>
+    <div class="tree-node l2"><strong>Spatial blur</strong> <span>— Gaussian, box, motion blur</span></div>
+    <div class="tree-node l2"><strong>Spatial quantisation</strong> <span>— pixelation, mosaic</span></div>
+    <div class="tree-node l2"><strong>Noise injection</strong> <span>— Gaussian, salt-and-pepper</span></div>
+
+    <div class="tree-node l1" style="margin-top:0.5em"><strong>Region replacement</strong> <span>— substitute person region</span></div>
+    <div class="tree-node l2"><strong>Solid fill</strong> <span>— colour constant, configurable</span></div>
+    <div class="tree-node l2"><strong>Inpainting</strong> <span>— generative background fill (LaMa, Stable Diffusion)</span></div>
+    <div class="tree-node l2"><strong>Silhouette / contour</strong> <span>— shape outline only</span></div>
+
+    <div class="tree-node l1" style="margin-top:0.5em"><strong>Representation replacement</strong> <span>— replace with abstract signal</span></div>
+    <div class="tree-node l2"><strong>Skeleton overlay</strong> <span>— stick figure from keypoints only</span></div>
+    <div class="tree-node l2"><strong>Pose re-rendering</strong> <span>— neural avatar driven by pose (NeRF, UV-maps)</span></div>
+    <div class="tree-node l2"><strong>Face swapping</strong> <span>— synthetic face replacement (DeepFaceLab)</span></div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Axis 2 — Modality</h2>
+    <p class="small">What signal is being de-identified?</p>
+
+    <div class="cols">
+      <div>
+        <div class="tree-node l1"><strong>Visual</strong></div>
+        <div class="tree-node l2"><strong>Face</strong> <span>— primary identity signal</span></div>
+        <div class="tree-node l2"><strong>Whole body</strong> <span>— full person region</span></div>
+        <div class="tree-node l2"><strong>Hands</strong> <span>— fingerprints, ring patterns</span></div>
+        <div class="tree-node l2"><strong>Background</strong> <span>— location, posters, labels</span></div>
+        <div class="tree-node l2"><strong>Screen content</strong> <span>— slides, documents in frame</span></div>
+      </div>
+      <div>
+        <div class="tree-node l1"><strong>Audio</strong></div>
+        <div class="tree-node l2"><strong>Voice</strong> <span>— pitch, timbre, accent</span></div>
+        <div class="tree-node l2"><strong>Paralanguage</strong> <span>— laughter, breathing, prosody</span></div>
+        <div class="tree-node l2"><strong>Background audio</strong> <span>— identifiable sounds</span></div>
+
+        <div class="tree-node l1" style="margin-top:0.5em"><strong>Metadata</strong></div>
+        <div class="tree-node l2"><strong>Timestamps</strong> <span>— date, time, session order</span></div>
+        <div class="tree-node l2"><strong>Filename / path</strong> <span>— participant ID in filename</span></div>
+      </div>
+    </div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Axis 3 — Reversibility</h2>
+    <div class="cols">
+      <div>
+        <h3>Irreversible (destructive)</h3>
+        <ul>
+          <li><strong>Blur, pixelate, solid fill</strong> — pixel information destroyed</li>
+          <li><strong>Audio deletion</strong> — silence or noise</li>
+          <li><strong>Face inpainting</strong> — background painted over</li>
+        </ul>
+        <div class="callout danger" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          Once destroyed, original data is unrecoverable — keep raw master under strict access control.
+        </div>
+      </div>
+      <div>
+        <h3>Reversible (with key)</h3>
+        <ul>
+          <li><strong>Encryption-based</strong> — encrypted region, decryptable by authorised party</li>
+          <li><strong>Pseudonymisation</strong> — participant code table held separately</li>
+          <li><strong>Alpha-channel masking</strong> — original stored as separate layer</li>
+        </ul>
+        <div class="callout success" style="margin-top:0.6em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Reversible masking enables withdrawal compliance — participant data can be fully erased post-deposit.
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Part 2</p>
+    <h2>Method comparison</h2>
+    <p style="color:#c6c6c6;font-size:0.9em">Video, audio, and combined approaches</p>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Video de-identification methods</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th><th>Mechanism</th><th>Reversible?</th>
+          <th>Pose preserved?</th><th>GPU?</th><th>Tool</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gaussian blur</td><td>Signal degradation</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>MaskAnyone, ffmpeg</td>
+        </tr>
+        <tr>
+          <td>Pixelation</td><td>Quantisation</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>MaskAnyone, OpenCV</td>
+        </tr>
+        <tr>
+          <td>Solid fill</td><td>Region replacement</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v2</td>
+        </tr>
+        <tr>
+          <td>Silhouette</td><td>Region replacement</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v2</td>
+        </tr>
+        <tr>
+          <td>Skeleton only</td><td>Representation replacement</td>
+          <td><span class="tag red">No</span></td>
+          <td><span class="tag green">Abstract</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>MediaPipe, YOLO</td>
+        </tr>
+        <tr>
+          <td>Face swap (synthetic)</td><td>Representation replacement</td>
+          <td><span class="tag blue">With key</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag red">Yes</span></td>
+          <td>DeepFaceLab, SimSwap</td>
+        </tr>
+        <tr>
+          <td>Neural avatar</td><td>Representation replacement</td>
+          <td><span class="tag blue">Partial</span></td>
+          <td><span class="tag green">Yes (driven)</span></td>
+          <td><span class="tag red">Yes</span></td>
+          <td>NeRF, Human4DiT</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Audio de-identification methods</h2>
+    <div class="cols-3">
+      <div class="method-card" style="border-top:3px solid #42be65">
+        <h3>Signal processing</h3>
+        <p><span class="tag green">Low compute</span></p>
+        <ul style="font-size:0.75em;margin-top:0.4em">
+          <li>Pitch shifting (librosa)</li>
+          <li>Noise injection</li>
+          <li>Formant scrambling</li>
+          <li>Time stretching</li>
+          <li>Low-pass filtering</li>
+        </ul>
+        <p style="margin-top:0.5em"><span class="tag yellow">Moderate privacy</span></p>
+        <p>Preserves prosody and timing. Speaker style partially retained.</p>
+      </div>
+      <div class="method-card" style="border-top:3px solid #4589ff">
+        <h3>Voice conversion</h3>
+        <p><span class="tag blue">Medium compute</span></p>
+        <ul style="font-size:0.75em;margin-top:0.4em">
+          <li>GAN-based VC (StarGAN-VC)</li>
+          <li>VITS / YourTTS</li>
+          <li>RVC (Real-time VC)</li>
+          <li>Emotion-preserving VC</li>
+        </ul>
+        <p style="margin-top:0.5em"><span class="tag blue">High privacy</span></p>
+        <p>Converts to a different speaker voice. May preserve linguistic content.</p>
+      </div>
+      <div class="method-card" style="border-top:3px solid #fa4d56">
+        <h3>Speech re-synthesis</h3>
+        <p><span class="tag red">High compute</span></p>
+        <ul style="font-size:0.75em;margin-top:0.4em">
+          <li>Whisper ASR → text</li>
+          <li>pyttsx3 / Coqui TTS</li>
+          <li>Bark / Tortoise TTS</li>
+          <li>Pyannote diarization</li>
+        </ul>
+        <p style="margin-top:0.5em"><span class="tag red">Highest privacy</span></p>
+        <p>Completely new voice. Content preserved, not speaker identity.</p>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M17 22v-8h-4v2h2v6h-3v2h8v-2h-3zm-1-18a2 2 0 100 4 2 2 0 000-4z"/>
+      </svg>
+      We cover methods 1 and 3 in <code>04_audio_deidentification.ipynb</code>. Voice conversion requires dedicated setup (e.g. RVC inference server).
+    </div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Segmentation backends compared</h2>
+    <p class="small">The segmenter determines mask quality — all strategies depend on it.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Backend</th><th>Approach</th><th>Quality</th>
+          <th>Speed</th><th>GPU req.</th><th>Used in</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MediaPipe Selfie</strong></td>
+          <td>CNN body segmenter</td>
+          <td><span class="tag blue">Good</span></td>
+          <td><span class="tag green">Real-time</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v1/v2</td>
+        </tr>
+        <tr>
+          <td><strong>BBox</strong></td>
+          <td>YOLO bounding box</td>
+          <td><span class="tag yellow">Coarse</span></td>
+          <td><span class="tag green">Real-time</span></td>
+          <td><span class="tag green">No</span></td>
+          <td>Masked-Piper v2</td>
+        </tr>
+        <tr>
+          <td><strong>SAM2-tiny</strong></td>
+          <td>Segment Anything (tiny)</td>
+          <td><span class="tag green">Excellent</span></td>
+          <td><span class="tag blue">~5 fps CPU</span></td>
+          <td><span class="tag yellow">Optional</span></td>
+          <td>Masked-Piper v2, MaskAnyone</td>
+        </tr>
+        <tr>
+          <td><strong>SAM2-large</strong></td>
+          <td>Segment Anything (large)</td>
+          <td><span class="tag green">Best</span></td>
+          <td><span class="tag red">Slow on CPU</span></td>
+          <td><span class="tag red">Recommended</span></td>
+          <td>MaskAnyone</td>
+        </tr>
+        <tr>
+          <td><strong>OpenPose mask</strong></td>
+          <td>Skeleton → convex hull</td>
+          <td><span class="tag yellow">Coarse</span></td>
+          <td><span class="tag blue">Medium</span></td>
+          <td><span class="tag yellow">Optional</span></td>
+          <td>MaskAnyone API</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Choosing the right method</h2>
+    <div class="cols">
+      <div>
+        <h3>Decision questions</h3>
+        <ol style="font-size:0.84em">
+          <li>Who will access the data? <span class="muted">(team / collaborators / public)</span></li>
+          <li>What analysis do you plan? <span class="muted">(gesture / gaze / speech)</span></li>
+          <li>Do you need audio? <span class="muted">(linguistic content vs. identity)</span></li>
+          <li>What is the re-identification risk? <span class="muted">(clinical vs. students)</span></li>
+          <li>Do you have GPU compute? <span class="muted">(SAM2 vs. MediaPipe)</span></li>
+        </ol>
+      </div>
+      <div>
+        <h3>Quick guide</h3>
+        <table style="font-size:0.7em">
+          <thead><tr><th>Goal</th><th>Recommended</th></tr></thead>
+          <tbody>
+            <tr><td>Gesture / body movement</td><td>Solid fill + skeleton JSON</td></tr>
+            <tr><td>Head movement / gaze</td><td>Blur (face keypoints survive)</td></tr>
+            <tr><td>Speech transcription</td><td>Whisper on original → publish text</td></tr>
+            <tr><td>Prosody / emotion</td><td>Pitch shift + formant scramble</td></tr>
+            <tr><td>Open-access video</td><td>Silhouette + TTS audio</td></tr>
+            <tr><td>Reviewer access</td><td>Solid fill + embargoed DOI</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference">
+    <h2>Full de-identification pipeline</h2>
+    <pre style="font-size:0.68em"><code>Raw MP4 (4-up composite)
+    │
+    ├─[00_dataset_preparation]─► Split streams: cam_p1, cam_p2, cam_p3, cam_overhead
+    │                             Trim to 5-min excerpt
+    │                             Re-encode H.264 if needed
+    │
+    ├─[02_maskanyone_hands_on]─► Detect persons (YOLO / MediaPipe)
+    │                             Segment (SAM2-tiny / MediaPipe Selfie)
+    │                             Apply strategy (blur / solid / silhouette)
+    │                             Export masked MP4 + COCO-17 JSON
+    │
+    ├─[03_maskbench_evaluation]─► Compare keypoints: raw vs masked
+    │                              Compute RMSE, PCK, velocity, acceleration
+    │                              Decide if signal quality is acceptable
+    │
+    ├─[04_audio_deidentification]► Pitch shift / TTS / noise injection on audio track
+    │                               Recombine with masked video
+    │
+    └─[05_av_archiving]──────────► Canonical naming + SHA-256 sidecar JSON
+                                    BagIt package
+                                    Deposit to DANS / DataverseNL</code></pre>
+  </section>
+  <section data-time="4" data-session="Masking Taxonomy" data-session-budget="0" data-schedule-time="Reference" data-background-color="#0043ce" class="divider">
+    <p class="eyebrow">Thursday Masking Day · SYNAPSIS</p>
+    <h2>Build reproducible, ethical video pipelines</h2>
+    <p style="color:#c6c6c6;font-size:0.85em">
+      synapsis.codeberg.page &nbsp;·&nbsp; envisionbox.org &nbsp;·&nbsp; github.com/MaskAnyone
+    </p>
+  </section>
+  <section data-background-color="#001141" class="divider" data-session="Audio De-identification" data-session-budget="30" data-session-start="1" data-schedule-time="16:15 – 16:45">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.5)">Session 5 of 5 &nbsp;·&nbsp; 16:15 – 16:45&nbsp;·&nbsp; 30 min</p>
+    <h2 style="font-size:2.2em">Audio De-identification</h2>
+  </section>
+  <section data-time="0" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <p class="eyebrow">16:15–16:45 · Thursday Masking Day · Tilburg 2026</p>
+    <h1>Audio Masking &amp;<br>Multi-Modal Considerations</h1>
+    <p style="color:var(--cds-link);font-size:0.9em;margin-bottom:1em">
+      Voice is biometric data. Masking the video is not enough.
+    </p>
+    <!-- audio waveform pictogram -->
+    <div style="margin:1em 0;display:flex;align-items:flex-end;gap:2px;height:40px">
+      <span class="wave-bar" style="width:4px;height:15px;opacity:0.4"></span>
+      <span class="wave-bar" style="width:4px;height:28px;opacity:0.6"></span>
+      <span class="wave-bar" style="width:4px;height:40px"></span>
+      <span class="wave-bar" style="width:4px;height:32px;opacity:0.8"></span>
+      <span class="wave-bar" style="width:4px;height:20px;opacity:0.6"></span>
+      <span class="wave-bar" style="width:4px;height:36px;opacity:0.9"></span>
+      <span class="wave-bar" style="width:4px;height:25px;opacity:0.7"></span>
+      <span class="wave-bar" style="width:4px;height:14px;opacity:0.4"></span>
+      <span class="wave-bar" style="width:4px;height:38px"></span>
+      <span class="wave-bar" style="width:4px;height:22px;opacity:0.6"></span>
+      <span class="wave-bar" style="width:4px;height:30px;opacity:0.8"></span>
+      <span class="wave-bar" style="width:4px;height:18px;opacity:0.5"></span>
+    </div>
+    <p class="small muted">Babajide Owoyele · Radboud University / SYNAPSIS</p>
+  </section>
+  <section data-time="4" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      Why isn't masking the video enough?
+    </h2>
+    <div class="cols">
+      <div>
+        <ul>
+          <li><strong>Voice is biometric</strong> — speaker identification works with &lt; 5 seconds of audio</li>
+          <li><strong>Existing tools</strong> — Microsoft Azure, Google Speech, AWS Transcribe all have speaker ID APIs</li>
+          <li><strong>GDPR, Art. 9</strong> — voice recordings are special-category biometric data</li>
+          <li><strong>Ethics boards increasingly require</strong> both video and audio anonymisation</li>
+        </ul>
+      </div>
+      <div>
+        <div class="callout danger">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+          </svg>
+          <span>A masked video with an unmodified audio track is <strong>not anonymised</strong> — the audio alone re-identifies the speaker.</span>
+        </div>
+        <div class="callout warning" style="margin-top:0.5em">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+          </svg>
+          <span>Even removing the audio track doesn't fully anonymise — lip movements and silent gestures can sometimes decode speech.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-time="5" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 8h24v2H4zm0 7h24v2H4zm0 7h24v2H4z"/>
+      </svg>
+      Three de-identification strategies
+    </h2>
+    <div class="cols-3">
+      <div class="method-card">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M16 4v24M4 16h24"/>
+          </svg>
+          1. Pitch shifting
+        </h4>
+        <p>Raise or lower F0 by ±4 semitones. Fast, reversible. Prosody largely preserved.</p>
+        <br>
+        <span class="tag blue">Privacy: low–med</span>
+      </div>
+      <div class="method-card medium">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M4 16h4l4-8 4 16 4-10 4 8h4"/>
+          </svg>
+          2. Noise + formant
+        </h4>
+        <p>Add calibrated noise, shift formants via resample. Confuses speaker ID models.</p>
+        <br>
+        <span class="tag" style="background:#3b2e00;color:#f1c21b">Privacy: medium</span>
+      </div>
+      <div class="method-card high">
+        <h4>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M16 4l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z"/>
+          </svg>
+          3. Speech → Text → Speech
+        </h4>
+        <p>Transcribe with Whisper, re-synthesise with TTS. Original voice is gone entirely.</p>
+        <br>
+        <span class="tag green">Privacy: high</span>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      <span>Open <code>notebooks/04_audio_deidentification.ipynb</code> to run all three methods on your own audio.</span>
+    </div>
+  </section>
+  <section data-time="5" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2L2 8v8c0 8 6 14 14 16 8-2 14-8 14-16V8L16 2z"/>
+      </svg>
+      The privacy–utility trade-off in audio
+    </h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Speaker ID blocked?</th>
+          <th>Pitch preserved?</th>
+          <th>Prosody preserved?</th>
+          <th>Intelligible?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pitch shift</td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">Partial</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No (shifted)</span></td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag green">Yes</span></td>
+        </tr>
+        <tr>
+          <td>Noise + formant</td>
+          <td><span class="tag green">Mostly</span></td>
+          <td><span class="tag green">Approx.</span></td>
+          <td><span class="tag" style="background:#3b2e00;color:#f1c21b">Partial</span></td>
+          <td><span class="tag green">Yes</span></td>
+        </tr>
+        <tr>
+          <td>S → T → S</td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No</span></td>
+          <td><span class="tag green">Yes (content)</span></td>
+        </tr>
+        <tr>
+          <td>Strip audio</td>
+          <td><span class="tag green">Yes</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">N/A</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">N/A</span></td>
+          <td><span class="tag" style="background:#2d0709;color:#ffb3b8">No audio</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-time="4" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 6a4 4 0 110 8 4 4 0 010-8zM6 8a3 3 0 110 6 3 3 0 010-6zM26 8a3 3 0 110 6 3 3 0 010-6zM16 18c-5 0-9 2-9 5v1h18v-1c0-3-4-5-9-5zM6 18c-3 0-6 1.5-6 3v1h6v-1c0-1.3.5-2.4 1.4-3.3C7 17.3 6.5 18 6 18zM26 18c-.5 0-1 .3-1.4.7C25.5 19.6 26 20.7 26 22v1h6v-1c0-1.5-3-3-6-3z"/>
+      </svg>
+      Multi-speaker sessions: diarise first
+    </h2>
+    <p class="small">The Envision triadic sessions have <span class="em">3 speakers</span>.
+      Apply a <strong>different</strong> anonymisation per speaker so they remain distinguishable.</p>
+    <pre><code class="language-python">
+# pyannote speaker diarization → per-speaker pitch shifts
+pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1")
+diarization = pipeline("group_07_cam_p1.wav")
+
+speaker_shifts = {}           # e.g. SPEAKER_00 → +4st, SPEAKER_01 → -4st
+shift_pool = [+4, -4, +6]
+
+for turn, _, speaker in diarization.itertracks(yield_label=True):
+    if speaker not in speaker_shifts:
+        speaker_shifts[speaker] = shift_pool[len(speaker_shifts)]
+    # apply pitch_shift() to this segment of audio
+    </code></pre>
+    <div class="callout warning">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+      </svg>
+      <span>Requires a HuggingFace token and accepting pyannote terms — see notebook cell for setup.</span>
+    </div>
+  </section>
+  <section data-time="5" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 16h24M20 10l6 6-6 6"/>
+      </svg>
+      Connection to Tuesday acoustic analysis
+    </h2>
+    <div class="cols">
+      <div>
+        <h3>What Tuesday measured</h3>
+        <ul>
+          <li>Fundamental frequency (F0) — pitch</li>
+          <li>Intensity / energy</li>
+          <li>Formant frequencies (F1, F2)</li>
+          <li>Speech rate, pauses</li>
+        </ul>
+      </div>
+      <div>
+        <h3>What de-id destroys</h3>
+        <ul>
+          <li><strong>Pitch shift</strong> — F0 values are invalid</li>
+          <li><strong>Noise injection</strong> — intensity and formants distorted</li>
+          <li><strong>S → T → S</strong> — all prosodic detail lost</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout success" style="margin-top:0.6em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      <span><strong>Best practice:</strong> extract and archive all acoustic features you need <em>before</em> de-identifying the audio.</span>
+    </div>
+  </section>
+  <section data-time="4" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 8h24v2H4zm0 7h24v2H4zm0 7h24v2H4z"/>
+      </svg>
+      Quick reference: audio operations with ffmpeg
+    </h2>
+    <pre><code class="language-bash">
+# Extract audio track as WAV (for analysis or de-id)
+ffmpeg -i session.mp4 -vn -acodec pcm_s16le audio.wav
+
+# Strip audio entirely (for open-tier archive)
+ffmpeg -i masked.mp4 -an -c:v copy masked_silent.mp4
+
+# Replace audio track with de-identified version
+ffmpeg -i masked_video.mp4 -i deid_audio.wav \
+  -map 0:v -map 1:a -c:v copy -c:a aac \
+  masked_with_deid_audio.mp4
+
+# Apply pitch shift via ffmpeg's rubberband filter (no Python needed)
+ffmpeg -i audio.wav -af "rubberband=pitch=1.26" shifted.wav
+    </code></pre>
+    <p class="small"><span class="tag teal">pitch 1.26 ≈ +4 semitones</span>
+    &nbsp; <span class="tag blue">pitch 0.79 ≈ −4 semitones</span></p>
+  </section>
+  <section data-time="3" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M2 6h28v4H2zM4 10v16h24V10H4zm8 4h8v2h-8zm0 4h8v2h-8z"/>
+      </svg>
+      Archiving decision tree
+    </h2>
+    <table>
+      <thead><tr><th>Content</th><th>Tier</th><th>Where</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Original audio (raw)</td>
+          <td><span class="tag red">Restricted</span></td>
+          <td>SYNAPSIS only — never shared</td>
+        </tr>
+        <tr>
+          <td>De-identified audio</td>
+          <td><span class="tag" style="background:#3b2e00;color:#f1c21b">Embargoed</span></td>
+          <td>DANS restricted collection</td>
+        </tr>
+        <tr>
+          <td>Silent masked video</td>
+          <td><span class="tag green">Open</span></td>
+          <td>DANS Data Station SSH (CC-BY-NC)</td>
+        </tr>
+        <tr>
+          <td>Acoustic feature CSVs</td>
+          <td><span class="tag green">Open</span></td>
+          <td>DANS + GitHub (no audio content)</td>
+        </tr>
+        <tr>
+          <td>Transcripts</td>
+          <td><span class="tag blue">Review</span></td>
+          <td>Depends on content — check with ethics board</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  <section data-time="3" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45">
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M26 16l-10 10L4 16l1.41-1.41L16 23.17l9.59-9.58z"/>
+      </svg>
+      Hands-on exercise
+    </h2>
+    <ol>
+      <li>Open <code>notebooks/04_audio_deidentification.ipynb</code> on Colab or locally</li>
+      <li>Upload your workshop clip's audio, or use the synthetic demo</li>
+      <li>Try all three methods and listen to the results</li>
+      <li>Compare F0 contours in the evaluation cell</li>
+      <li><strong>Discussion:</strong> which method would you use for your own data?</li>
+    </ol>
+    <div class="callout">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      <span>
+        <span class="tag teal">Colab</span> &nbsp;
+        <span class="tag blue">notebook 04</span> &nbsp;
+        Finish before 16:45 wrap-up
+      </span>
+    </div>
+  </section>
+  <section data-time="3" data-session="Audio De-identification" data-session-budget="30" data-schedule-time="16:15 – 16:45" data-background-color="#000000">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.6)">16:45–17:00 · Wrap-Up</p>
+    <h2 style="font-weight:300;font-size:2em;border:none;color:#fff">
+      Integration with Group Projects
+    </h2>
+    <p style="color:rgba(255,255,255,0.7);font-size:0.85em">
+      How does masking fit into <em>your</em> Friday project? ·
+      What did you mask, what did you preserve? · DANS deposit plan
+    </p>
+  </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720,
+    margin: 0.04, minScale: 0.2, maxScale: 2.0,
+    center: false, hash: true,
+    slideNumber: 'c/t',
+    controls: true, progress: true,
+    transition: 'fade', transitionSpeed: 'fast',
+    autoPlayMedia: true,
+  });
+</script>
+
+
+<script>
+(function () {
+  'use strict';
+
+  const panel   = document.getElementById('speaker-timer');
+  const dayClock = document.getElementById('day-clock');
+  let timerVisible = true;
+
+  // State
+  let dayStart     = Date.now();
+  let sessionStart = Date.now();
+  let slideStart   = Date.now();
+
+  function fmt(ms) {
+    const s = Math.floor(ms / 1000);
+    const m = Math.floor(s / 60);
+    const ss = s % 60;
+    return m + ':' + String(ss).padStart(2, '0');
+  }
+
+  function setColor(el, elapsed, budget) {
+    el.classList.remove('warn', 'alert');
+    if (budget <= 0) return;
+    const pct = elapsed / (budget * 60 * 1000);
+    if (pct >= 1.0)       el.classList.add('alert');
+    else if (pct >= 0.85) el.classList.add('warn');
+  }
+
+  function tick() {
+    const now = Date.now();
+
+    // Wall clock
+    const wc = new Date();
+    document.getElementById('dc-wallclock').textContent =
+      wc.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+    // Day elapsed
+    document.getElementById('t-day-elapsed').textContent = fmt(now - dayStart);
+
+    // Session elapsed
+    const sElapsed = now - sessionStart;
+    const sBudget  = parseInt(panel.dataset.sessionBudget || '0', 10);
+    const sEl = document.getElementById('t-session-elapsed');
+    sEl.textContent = fmt(sElapsed);
+    setColor(sEl, sElapsed, sBudget);
+
+    // Slide elapsed
+    const slElapsed = now - slideStart;
+    const slBudget  = parseInt(panel.dataset.slideBudget || '0', 10);
+    const slEl = document.getElementById('t-slide-elapsed');
+    slEl.textContent = fmt(slElapsed);
+    setColor(slEl, slElapsed, slBudget);
+
+    // Slide progress bar
+    const bar = document.getElementById('t-slide-bar');
+    if (slBudget > 0) {
+      const pct = Math.min(slElapsed / (slBudget * 60 * 1000) * 100, 100);
+      bar.style.width = pct + '%';
+      bar.style.background = pct >= 100 ? '#fa4d56' : pct >= 85 ? '#f1c21b' : '#0f62fe';
+    } else {
+      bar.style.width = '0%';
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  function onSlideChange(event) {
+    const slide = event.currentSlide;
+    slideStart = Date.now();
+
+    // data-time (minutes per slide)
+    const slMin = parseInt(slide.dataset.time || '0', 10);
+    panel.dataset.slideBudget = slMin;
+    document.getElementById('t-slide-budget').textContent =
+      slMin > 0 ? ('/ ' + slMin + 'm') : '';
+
+    // data-session / data-session-budget from injected divider
+    const sessionName = slide.dataset.session || panel.dataset.currentSession || '—';
+    const sessionBudget = parseInt(slide.dataset.sessionBudget || panel.dataset.sessionBudget || '0', 10);
+
+    if (slide.dataset.sessionStart === '1') {
+      // New session — reset session timer
+      sessionStart = Date.now();
+      panel.dataset.currentSession = sessionName;
+      panel.dataset.sessionBudget  = sessionBudget;
+    }
+
+    document.getElementById('t-session-name').textContent  = sessionName;
+    document.getElementById('dc-session-name').textContent = sessionName;
+    document.getElementById('t-session-budget').textContent =
+      sessionBudget > 0 ? ('/ ' + sessionBudget + 'm') : '';
+    document.getElementById('dc-schedule-time').textContent =
+      slide.dataset.scheduleTime || panel.dataset.scheduleTime || '';
+  }
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 't' || e.key === 'T') {
+      timerVisible = !timerVisible;
+      panel.classList.toggle('hidden', !timerVisible);
+      dayClock.classList.toggle('hidden', !timerVisible);
+    }
+    if ((e.key === 'r' || e.key === 'R') && !e.ctrlKey && !e.metaKey) {
+      sessionStart = Date.now();
+      slideStart   = Date.now();
+    }
+  });
+
+  // Hook into Reveal
+  Reveal.on('slidechanged', onSlideChange);
+  Reveal.on('ready', function(e) { onSlideChange(e); });
+
+  requestAnimationFrame(tick);
+})();
+</script>
+
+</body>
+</html>

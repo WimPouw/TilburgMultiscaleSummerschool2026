@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thursday: Masking &amp; Anonymizing Audiovisual Data</title>
+
+  <!-- IBM Plex fonts (Carbon Design System) -->
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+    /* ── Carbon Design System tokens ──────────────────────── */
+    :root {
+      --cds-background:         #000000;
+      --cds-layer:              #161616;
+      --cds-layer-accent:       #262626;
+      --cds-border-subtle:      #525252;
+      --cds-text-primary:       #f4f4f4;
+      --cds-text-secondary:     #c6c6c6;
+      --cds-text-placeholder:   #6f6f6f;
+      --cds-interactive:        #0f62fe;
+      --cds-support-success:    #42be65;
+      --cds-support-warning:    #f1c21b;
+      --cds-support-error:      #fa4d56;
+      --cds-support-info:       #4589ff;
+      --cds-link:               #78a9ff;
+      --cds-highlight:          #0043ce;
+      --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+      --font-mono: "IBM Plex Mono", "Consolas", monospace;
+    }
+
+    /* ── Reveal overrides ─────────────────────────────────── */
+    .reveal-viewport { background: var(--cds-background) !important; }
+
+    .reveal {
+      font-family: var(--font-body);
+      font-size: 22px;
+      color: var(--cds-text-primary);
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--cds-text-primary);
+      text-transform: none;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5em;
+    }
+
+    .reveal h1 { font-size: 2.4em; font-weight: 300; line-height: 1.15; }
+    .reveal h2 { font-size: 1.4em; font-weight: 600;
+                 border-bottom: 1px solid var(--cds-border-subtle);
+                 padding-bottom: 0.3em; }
+    .reveal h3 { font-size: 1em; font-weight: 600; color: var(--cds-link); }
+
+    .reveal section { padding: 0 2.5em; overflow: hidden; }
+    .reveal .slides { text-align: left; }
+
+    .reveal .slide-number {
+      color: var(--cds-text-placeholder);
+      font-family: var(--font-mono);
+      font-size: 0.65em;
+      background: transparent;
+    }
+
+    /* ── Lists ────────────────────────────────────────────── */
+    .reveal ul, .reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: 0.3em; font-size: 0.88em; color: var(--cds-text-secondary); }
+    .reveal li strong { color: var(--cds-text-primary); font-weight: 600; }
+
+    /* ── Tables ───────────────────────────────────────────── */
+    .reveal table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.72em;
+      font-family: var(--font-body);
+    }
+    .reveal table th {
+      background: var(--cds-layer-accent);
+      color: var(--cds-text-primary);
+      font-weight: 600;
+      padding: 0.5em 0.9em;
+      text-align: left;
+      border-bottom: 2px solid var(--cds-interactive);
+    }
+    .reveal table td {
+      padding: 0.4em 0.9em;
+      border-bottom: 1px solid var(--cds-layer-accent);
+      color: var(--cds-text-secondary);
+    }
+    .reveal table tr:nth-child(even) td { background: var(--cds-layer); }
+
+    /* ── Code ─────────────────────────────────────────────── */
+    .reveal pre {
+      font-family: var(--font-mono);
+      background: var(--cds-layer);
+      border: 1px solid var(--cds-layer-accent);
+      border-left: 3px solid var(--cds-interactive);
+      border-radius: 0;
+      padding: 0.8em 1em;
+      font-size: 0.7em;
+      box-shadow: none;
+      width: 100%;
+    }
+    .reveal code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      color: var(--cds-support-info);
+      background: var(--cds-layer);
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+    }
+    .reveal pre code { color: var(--cds-text-primary); font-size: 1em; background: none; }
+
+    /* ── Carbon notification / callout boxes ──────────────── */
+    .callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7em;
+      background: var(--cds-layer);
+      border-left: 3px solid var(--cds-interactive);
+      padding: 0.7em 1em;
+      margin: 0.7em 0;
+      font-size: 0.78em;
+      color: var(--cds-text-secondary);
+    }
+    .callout.success { border-color: var(--cds-support-success); }
+    .callout.warning { border-color: var(--cds-support-warning); }
+    .callout.danger  { border-color: var(--cds-support-error); }
+    .callout .icon   { flex-shrink: 0; margin-top: 0.1em; }
+
+    /* ── Tags / labels ────────────────────────────────────── */
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3em;
+      background: var(--cds-layer-accent);
+      color: var(--cds-text-secondary);
+      font-size: 0.65em;
+      font-weight: 600;
+      padding: 0.2em 0.6em;
+      border-radius: 0;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .tag.blue    { background: #002d9c; color: #a6c8ff; }
+    .tag.green   { background: #022d0d; color: #6fdc8c; }
+    .tag.purple  { background: #1c0f30; color: #d4bbff; }
+    .tag.red     { background: #2d0709; color: #ffb3b8; }
+    .tag.teal    { background: #081a1c; color: #3ddbd9; }
+
+    /* ── Layout helpers ───────────────────────────────────── */
+    .cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .cols-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5em; }
+    .cols-13{ display: grid; grid-template-columns: 1fr 2fr; gap: 2em; align-items: start; }
+
+    /* ── Media embeds ─────────────────────────────────────── */
+    .reveal video, .reveal img.gif {
+      max-height: 52vh;
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+    .reveal img { max-width: 100%; max-height: 52vh; }
+
+    /* ── Typography utilities ─────────────────────────────── */
+    .small   { font-size: 0.68em; color: var(--cds-text-secondary); }
+    .muted   { color: var(--cds-text-placeholder); }
+    .em      { color: var(--cds-link); font-weight: 600; }
+    .mono    { font-family: var(--font-mono); font-size: 0.85em; }
+    .eyebrow {
+      font-size: 0.65em;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cds-text-placeholder);
+      margin-bottom: 0.3em;
+    }
+
+    /* ── Carbon icon helpers (inline SVG) ─────────────────── */
+    .icon-inline { vertical-align: middle; display: inline-block; width: 1em; height: 1em; }
+
+    /* ── Title slide ──────────────────────────────────────── */
+    .title-slide { display: flex; flex-direction: column; justify-content: center;
+                   min-height: 65vh; }
+    .title-slide h1 { font-size: 2.6em; font-weight: 300; margin-bottom: 0.2em; }
+    .title-slide .subtitle { font-size: 1em; color: var(--cds-link); margin-bottom: 1em; }
+    .title-slide .meta { font-size: 0.7em; color: var(--cds-text-placeholder); }
+
+    /* ── Section divider slide ────────────────────────────── */
+    .divider { background: var(--cds-highlight) !important; }
+    .divider h2 { font-size: 2em; font-weight: 300; border: none; color: #fff; }
+    .divider .eyebrow { color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- ── TITLE SLIDE ───────────────────────────────────────── -->
+  <section>
+    <div class="title-slide">
+      <p class="eyebrow">Thursday · Tilburg Multiscale Summerschool 2026</p>
+      <h1>Session Title</h1>
+      <p class="subtitle">Subtitle or session framing goes here</p>
+      <p class="meta">
+        Babajide Owoyele &nbsp;·&nbsp; Radboud University / SYNAPSIS<br>
+        09:00 – 09:30
+      </p>
+    </div>
+  </section>
+
+  <!-- ── SECTION DIVIDER (dark blue bg, no border) ─────────── -->
+  <section data-background-color="#0043ce" class="divider">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.6)">Part 1</p>
+    <h2>Section heading</h2>
+  </section>
+
+  <!-- ── PLAIN TEXT SLIDE ──────────────────────────────────── -->
+  <section>
+    <h2>Slide heading</h2>
+    <ul>
+      <li><strong>Key point one</strong> — explanation here</li>
+      <li><strong>Key point two</strong> — with <span class="em">emphasis</span></li>
+      <li><strong>Key point three</strong> — another point</li>
+    </ul>
+    <div class="callout">
+      <!-- Lock icon -->
+      <svg class="icon" width="16" height="16" viewBox="0 0 32 32" fill="currentColor"
+           style="color:var(--cds-interactive);flex-shrink:0;margin-top:2px">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      <span>Key concept callout — info panel with blue left border</span>
+    </div>
+  </section>
+
+  <!-- ── TWO-COLUMN SLIDE ───────────────────────────────────── -->
+  <section>
+    <h2>Two-column layout</h2>
+    <div class="cols">
+      <div>
+        <h3>Left panel</h3>
+        <ul>
+          <li>Point one</li>
+          <li>Point two</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Right panel</h3>
+        <p class="small">Image, video, or more text here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GIF SLIDE ─────────────────────────────────────────── -->
+  <section>
+    <h2>Animated GIF example</h2>
+    <!-- Place .gif in the same folder as this HTML -->
+    <img class="gif" src="your-animation.gif" alt="Demo animation" />
+    <p class="small">Caption — describe what the animation shows</p>
+  </section>
+
+  <!-- ── VIDEO SLIDE ───────────────────────────────────────── -->
+  <section>
+    <h2>Video example</h2>
+    <!-- data-autoplay: plays when slide becomes active
+         Remove muted + add controls to allow audio  -->
+    <video data-autoplay loop muted src="your-clip.mp4"></video>
+    <p class="small">Caption. Remove <code>muted</code> to allow audio.</p>
+  </section>
+
+  <!-- ── TABLE SLIDE ───────────────────────────────────────── -->
+  <section>
+    <h2>Table example</h2>
+    <table>
+      <thead><tr><th>Column A</th><th>Column B</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Row 1</td><td>Value</td><td><span class="tag green">Done</span></td></tr>
+        <tr><td>Row 2</td><td>Value</td><td><span class="tag blue">In progress</span></td></tr>
+        <tr><td>Row 3</td><td>Value</td><td><span class="tag red">Blocked</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── CODE SLIDE ────────────────────────────────────────── -->
+  <section>
+    <h2>Code example</h2>
+    <pre><code class="language-bash">
+ffmpeg -i composite.mp4 \
+  -vf "crop=iw/2:ih/2:0:0" \
+  cam_p1.mp4
+    </code></pre>
+    <p class="small">Explanation of what the command does.</p>
+  </section>
+
+  <!-- ── WARNING CALLOUT EXAMPLE ───────────────────────────── -->
+  <section>
+    <h2>Notification styles</h2>
+    <div class="callout">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      Info — default blue border
+    </div>
+    <div class="callout success">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      Success — green border, use for completed steps
+    </div>
+    <div class="callout warning">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+      </svg>
+      Warning — yellow border, use for cautions
+    </div>
+    <div class="callout danger">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 8h2v8h-2zm1 13a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+      </svg>
+      Danger — red border, use for blockers
+    </div>
+  </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width:       1280,
+    height:      720,
+    margin:      0.04,
+    minScale:    0.2,
+    maxScale:    2.0,
+    hash:        true,
+    slideNumber: "c/t",
+    transition:  "fade",
+    backgroundTransition: "fade",
+    controls:    true,
+    progress:    true,
+    center:      false,
+    autoPlayMedia: true,
+  });
+</script>
+</body>
+</html>

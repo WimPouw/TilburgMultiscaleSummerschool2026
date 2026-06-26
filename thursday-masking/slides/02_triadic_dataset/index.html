@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Triadic Concept Generation Dataset</title>
+
+  <link rel="preconnect" href="https://fonts.bunny.net" />
+  <link href="https://fonts.bunny.net/css?family=ibm-plex-sans:300,400,600,700|ibm-plex-mono:400,600" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" />
+
+  <style>
+    :root {
+      --cds-background:#000000; --cds-layer:#262626; --cds-layer-accent:#393939;
+      --cds-border-subtle:#525252; --cds-text-primary:#f4f4f4;
+      --cds-text-secondary:#c6c6c6; --cds-text-placeholder:#6f6f6f;
+      --cds-interactive:#0f62fe; --cds-support-success:#42be65;
+      --cds-support-warning:#f1c21b; --cds-support-error:#fa4d56;
+      --cds-support-info:#4589ff; --cds-link:#78a9ff;
+      --cds-highlight:#0043ce;
+      --font-body:"IBM Plex Sans","Segoe UI",sans-serif;
+      --font-mono:"IBM Plex Mono","Consolas",monospace;
+    }
+    .reveal-viewport { background: var(--cds-background) !important; }
+    .reveal { font-family: var(--font-body); font-size: 22px; color: var(--cds-text-primary); }
+    .reveal h1,.reveal h2,.reveal h3,.reveal h4 {
+      font-family: var(--font-body); text-transform: none; letter-spacing: -0.01em;
+      color: var(--cds-text-primary); margin-bottom: 0.5em;
+    }
+    .reveal h1 { font-size: 2.4em; font-weight: 300; line-height: 1.15; }
+    .reveal h2 { font-size: 1.4em; font-weight: 600;
+                 border-bottom: 1px solid var(--cds-border-subtle); padding-bottom: 0.3em; }
+    .reveal h3 { font-size: 1em; font-weight: 600; color: var(--cds-link); }
+    .reveal section { padding: 0 2.5em; overflow: hidden; }
+    .reveal .slides { text-align: left; }
+    .reveal .slide-number { color: var(--cds-text-placeholder); font-family: var(--font-mono);
+                             font-size: 0.65em; background: transparent; }
+    .reveal ul,.reveal ol { margin-left: 1.2em; }
+    .reveal li { margin-bottom: 0.3em; font-size: 0.88em; color: var(--cds-text-secondary); }
+    .reveal li strong { color: var(--cds-text-primary); font-weight: 600; }
+    .reveal table { border-collapse: collapse; width: 100%; font-size: 0.72em; }
+    .reveal table th { background: var(--cds-layer-accent); color: var(--cds-text-primary);
+                       font-weight: 600; padding: 0.5em 0.9em; text-align: left;
+                       border-bottom: 2px solid var(--cds-interactive); }
+    .reveal table td { padding: 0.4em 0.9em; border-bottom: 1px solid var(--cds-layer-accent);
+                       color: var(--cds-text-secondary); }
+    .reveal table tr:nth-child(even) td { background: var(--cds-layer); }
+    .reveal pre { font-family: var(--font-mono); background: var(--cds-layer);
+                  border: 1px solid var(--cds-layer-accent);
+                  border-left: 3px solid var(--cds-interactive); border-radius: 0;
+                  padding: 0.8em 1em; font-size: 0.7em; box-shadow: none; width: 100%; }
+    .reveal code { font-family: var(--font-mono); font-size: 0.85em; color: var(--cds-support-info);
+                   background: var(--cds-layer); padding: 0.1em 0.3em; border-radius: 2px; }
+    .reveal pre code { color: var(--cds-text-primary); font-size: 1em; background: none; }
+
+    .callout { display: flex; align-items: flex-start; gap: 0.7em;
+               background: var(--cds-layer); border-left: 3px solid var(--cds-interactive);
+               padding: 0.7em 1em; margin: 0.7em 0;
+               font-size: 0.78em; color: var(--cds-text-secondary); }
+    .callout.success { border-color: var(--cds-support-success); }
+    .callout.warning { border-color: var(--cds-support-warning); }
+
+    .tag { display: inline-flex; align-items: center; gap: 0.3em;
+           background: var(--cds-layer-accent); color: var(--cds-text-secondary);
+           font-size: 0.65em; font-weight: 600; padding: 0.2em 0.7em;
+           border-radius: 0; letter-spacing: 0.04em; text-transform: uppercase; }
+    .tag.blue   { background: #002d9c; color: #a6c8ff; }
+    .tag.green  { background: #022d0d; color: #6fdc8c; }
+    .tag.purple { background: #1c0f30; color: #d4bbff; }
+    .tag.red    { background: #2d0709; color: #ffb3b8; }
+    .tag.teal   { background: #081a1c; color: #3ddbd9; }
+
+    .cols  { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .cols-13 { display: grid; grid-template-columns: 1fr 2fr; gap: 2em; align-items: start; }
+
+    .reveal video, .reveal img.gif { max-height: 52vh; max-width: 100%; display: block; margin: 0 auto; }
+    .reveal img { max-width: 100%; max-height: 52vh; }
+
+    .small  { font-size: 0.68em; color: var(--cds-text-secondary); }
+    .muted  { color: var(--cds-text-placeholder); }
+    .em     { color: var(--cds-link); font-weight: 600; }
+    .eyebrow { font-size: 0.65em; font-weight: 600; letter-spacing: 0.1em;
+               text-transform: uppercase; color: var(--cds-text-placeholder); margin-bottom: 0.3em; }
+
+    /* pictogram container */
+    .pictogram { display: flex; align-items: center; gap: 0.5em; margin-bottom: 0.4em; }
+    .pictogram svg { flex-shrink: 0; }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+  <!-- TITLE -->
+  <section>
+    <p class="eyebrow">09:30–09:50 · Thursday Masking Day · Tilburg 2026</p>
+    <h1>The Triadic Concept<br>Generation Dataset</h1>
+    <p style="color:var(--cds-link);font-size:0.9em;margin-bottom:1em">
+      The video data we use for masking practice today
+    </p>
+    <!-- camera pictogram -->
+    <svg width="48" height="48" viewBox="0 0 32 32" fill="var(--cds-border-subtle)">
+      <path d="M29 8h-4.31l-2.23-3H9.54L7.31 8H2a2 2 0 00-2 2v16a2 2 0 002 2h27a2 2 0 002-2V10a2 2 0 00-2-2zm0 18H2V10h6.19l2.23-3h11.16l2.23 3H29v16zM16 12a6 6 0 100 12 6 6 0 000-12zm0 10a4 4 0 110-8 4 4 0 010 8z"/>
+    </svg>
+    <p class="small muted" style="margin-top:0.8em">Babajide Owoyele · Radboud University / SYNAPSIS</p>
+  </section>
+
+  <!-- WHERE FROM -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      Where does it come from?
+    </h2>
+    <div class="cols">
+      <div>
+        <p class="small">Edelman (2011) recorded design teams at Stanford's
+          <span class="em">Center for Design Research</span> in the <em>Design Observatory</em>.</p>
+        <p class="small">The study is called <span class="em">Envision</span> —
+          though participants were not told the name.</p>
+        <div class="callout">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+            <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+          </svg>
+          <span><strong>Research question:</strong> Under what conditions do small design teams make a radical departure from the given artefact?</span>
+        </div>
+      </div>
+      <div>
+        <p class="small muted" style="border-left:2px solid var(--cds-border-subtle);padding-left:0.8em">
+          Edelman, J.A. (2011).<br>
+          <em>Understanding Radical Breaks: Media and Behavior in Small Teams Engaged in Redesign Scenarios.</em><br>
+          PhD dissertation, Stanford University.<br>
+          CC-BY-NC 3.0
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MASKING IN ACTION — GIF SLIDE -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      Masking in action
+    </h2>
+    <!-- gif lives at thursday-masking/mask_many.gif; from this HTML: ../../mask_many.gif -->
+    <img class="gif" src="../../mask_many.gif" alt="MaskAnyone masking multiple people" />
+    <p class="small" style="text-align:center">
+      <span class="tag teal">MaskAnyone</span>
+      &nbsp; YOLO + SAM2 instance segmentation — body silhouette masking
+    </p>
+  </section>
+
+  <!-- RECORDING SETUP -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M29 8h-4.31l-2.23-3H9.54L7.31 8H2a2 2 0 00-2 2v16a2 2 0 002 2h27a2 2 0 002-2V10a2 2 0 00-2-2zm0 18H2V10h6.19l2.23-3h11.16l2.23 3H29v16zM16 12a6 6 0 100 12 6 6 0 000-12zm0 10a4 4 0 110-8 4 4 0 010 8z"/>
+      </svg>
+      4 cameras · 5 microphones
+    </h2>
+    <div class="cols-13">
+      <div>
+        <table>
+          <thead><tr><th>Stream</th><th>View</th></tr></thead>
+          <tbody>
+            <tr><td><code>cam_p1</code></td><td>Participant 1</td></tr>
+            <tr><td><code>cam_p2</code></td><td>Participant 2</td></tr>
+            <tr><td><code>cam_p3</code></td><td>Participant 3</td></tr>
+            <tr><td><code>cam_overhead</code></td><td>Top-down table view</td></tr>
+          </tbody>
+        </table>
+        <p class="small" style="margin-top:0.6em;color:var(--cds-text-placeholder)">
+          All 4 streams composited into one <span class="em">four-up MP4</span> via FinalCut Pro.<br>
+          Timecode burned lower-right.
+        </p>
+      </div>
+      <div>
+        <video data-autoplay loop muted src="../../__design.mp4" style="width:100%;border:1px solid var(--cds-layer-accent)"></video>
+        <p class="small" style="text-align:center">Sample four-up composite clip</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DATASET SCALE -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 2h14l8 8v20H4V2zm14 0v8h8M12 13H8v2h4zm8 4H8v2h12zm0 4H8v2h12z"/>
+      </svg>
+      Dataset at a glance
+    </h2>
+    <div class="cols">
+      <table>
+        <thead><tr><th>Item</th><th>Count</th></tr></thead>
+        <tbody>
+          <tr><td>Triadic groups</td><td><span class="em">14</span></td></tr>
+          <tr><td>Participants</td><td>42 (ages 19–77)</td></tr>
+          <tr><td>Camera streams</td><td><span class="em">56</span> (4 × 14)</td></tr>
+          <tr><td>Total video</td><td>~14 hours</td></tr>
+          <tr><td>Transcripts</td><td>1,047 pages</td></tr>
+          <tr><td>Sketches / notes</td><td>74 pages</td></tr>
+        </tbody>
+      </table>
+      <div>
+        <!-- dataset icon -->
+        <svg width="80" height="80" viewBox="0 0 32 32" fill="var(--cds-layer-accent)" style="margin:0 auto;display:block">
+          <ellipse cx="16" cy="8" rx="12" ry="4" fill="var(--cds-layer-accent)" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+          <path d="M4 8v5c0 2.21 5.37 4 12 4s12-1.79 12-4V8" fill="none" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+          <path d="M4 13v5c0 2.21 5.37 4 12 4s12-1.79 12-4v-5" fill="none" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+          <path d="M4 18v5c0 2.21 5.37 4 12 4s12-1.79 12-4v-5" fill="none" stroke="var(--cds-border-subtle)" stroke-width="1.5"/>
+        </svg>
+        <p class="small muted" style="text-align:center;margin-top:0.5em">
+          Today we work with<br><span class="em">4 selected groups</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUR CASES -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 6a2 2 0 110 4 2 2 0 010-4M7 6a2 2 0 110 4 2 2 0 010-4M25 6a2 2 0 110 4 2 2 0 010-4M16 22a2 2 0 110 4 2 2 0 010-4M7 16a9 9 0 019-9M25 16a9 9 0 01-9-9M7 16v7M25 16v7M16 22v-4"/>
+      </svg>
+      The four workshop groups
+    </h2>
+    <table>
+      <thead><tr><th>Group</th><th>Nickname</th><th>Outcome</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="tag blue">Group 2</span></td>
+          <td>Optimizers</td>
+          <td>Incremental — stays close to the given device</td>
+        </tr>
+        <tr>
+          <td><span class="tag purple">Group 7</span></td>
+          <td>Wild Ideas</td>
+          <td>Radical departure — entirely new concept</td>
+        </tr>
+        <tr>
+          <td><span class="tag green">Group 9</span></td>
+          <td>User-Centered</td>
+          <td>Moderate redesign focused on use context</td>
+        </tr>
+        <tr>
+          <td><span class="tag red">Group 10</span></td>
+          <td>Breakers</td>
+          <td>Strongest radical break in the dataset</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout success" style="margin-top:0.8em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="flex-shrink:0;margin-top:2px">
+        <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+      </svg>
+      <span>These 4 groups span the full spectrum — incremental → radical. Ideal for demonstrating masking trade-offs.</span>
+    </div>
+  </section>
+
+  <!-- WHY THIS DATASET -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      Why this dataset for masking?
+    </h2>
+    <ul>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><circle cx="8" cy="16" r="4"/><circle cx="16" cy="16" r="4"/><circle cx="24" cy="16" r="4"/></svg>
+          <strong>Multi-person</strong> — 3 participants, each with a dedicated camera stream
+        </div>
+      </li>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><path d="M4 28l7-7 5 5 10-14"/></svg>
+          <strong>Gesture-rich</strong> — sketching, pointing, enacting — throughout
+        </div>
+      </li>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><path d="M16 4v24M4 16h24"/></svg>
+          <strong>Multi-camera</strong> — tests masking across different angles and distances
+        </div>
+      </li>
+      <li>
+        <div class="pictogram">
+          <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-link)"><path d="M4 2h14l8 8v20H4V2z"/></svg>
+          <strong>Known ground truth</strong> — transcripts + VCode coding → MaskBench can verify pose
+        </div>
+      </li>
+    </ul>
+    <div class="callout warning" style="margin-top:0.6em">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-support-warning)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2L0 30h32L16 2zm-1 11h2v8h-2V13zm1 14a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"/>
+      </svg>
+      <span>The overhead camera is a <strong>bonus challenge</strong>: no faces but gestures and handwriting on sketches are visible — what should you mask?</span>
+    </div>
+  </section>
+
+  <!-- PRIVACY CHALLENGES -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2zm-10 8.72V25h4v-2.28a2 2 0 10-4 0zm2-12.72a4 4 0 014 4v4H12v-4a4 4 0 014-4z"/>
+      </svg>
+      The privacy–utility trade-off
+    </h2>
+    <div class="cols">
+      <div>
+        <h3>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-error)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M24 14h-2v-4a6 6 0 00-12 0v4H8a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V16a2 2 0 00-2-2z"/>
+          </svg>
+          Must remove
+        </h3>
+        <ul>
+          <li>Face, hair, clothing</li>
+          <li>Voice (microphones)</li>
+          <li>Handwriting on sketches</li>
+          <li>Background cues (Stanford lab)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="var(--cds-support-success)" style="vertical-align:middle;margin-right:0.3em">
+            <path d="M13 24L4 15l1.41-1.41L13 21.17l13.59-13.58L28 9z"/>
+          </svg>
+          Must preserve
+        </h3>
+        <ul>
+          <li>Body pose &amp; gesture trajectory</li>
+          <li>Hand movements (pointing, sketching)</li>
+          <li>Shared artefacts on the table</li>
+          <li>Temporal sync across 4 streams</li>
+        </ul>
+      </div>
+    </div>
+    <p class="small muted" style="margin-top:0.6em">More on this dilemma at 09:50 →</p>
+  </section>
+
+  <!-- TODAY'S PIPELINE -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M4 16h24M20 10l6 6-6 6"/>
+      </svg>
+      Today's pipeline
+    </h2>
+    <pre><code>
+four-up composite (group_07.mp4)
+        │
+        ▼  split + trim         notebook 00
+   cam_p1.mp4  cam_p2.mp4  cam_p3.mp4
+        │
+        ▼  MaskAnyone            hands-on 11:30–14:30
+   masked_cam_p1.mp4  …
+        │
+        ▼  MaskBench             14:30–15:15
+   pose_error.csv   re-id_risk_score
+        │
+        ▼  archive + DANS        notebook 05
+   BagIt bag → ssh.datastations.nl
+    </code></pre>
+  </section>
+
+  <!-- HANDS-ON PREP -->
+  <section>
+    <h2>
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="var(--cds-link)"
+           style="vertical-align:middle;margin-right:0.4em">
+        <path d="M26 16l-10 10L4 16l1.41-1.41L16 23.17l9.59-9.58z"/>
+      </svg>
+      Before 11:30 — prep your clip
+    </h2>
+    <ol>
+      <li>Open <code>notebooks/00_dataset_preparation.ipynb</code></li>
+      <li>Inspect your assigned group's composite video</li>
+      <li>Split → trim → compatibility check</li>
+      <li>Create a <strong>5-minute workshop clip</strong> from <code>cam_p1</code> or <code>cam_p2</code></li>
+    </ol>
+    <div class="callout">
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="var(--cds-interactive)" style="flex-shrink:0;margin-top:2px">
+        <path d="M16 2a14 14 0 100 28A14 14 0 0016 2zm-1 6h2v2h-2zm0 4h2v12h-2z"/>
+      </svg>
+      <span><strong>Assigned groups:</strong> check the whiteboard. Clips should be ready before the 10:30 coffee break.</span>
+    </div>
+    <p class="small muted" style="margin-top:0.5em">
+      <span class="tag teal">Notebook</span> &nbsp;
+      <span class="tag blue">SYNAPSIS server</span> &nbsp;
+      <span class="tag green">MaskAnyone</span>
+    </p>
+  </section>
+
+  <!-- NEXT -->
+  <section data-background-color="#000000">
+    <p class="eyebrow" style="color:rgba(255,255,255,0.6)">Coming up at 09:50</p>
+    <h2 style="font-weight:300;font-size:2em;border:none;color:#fff">
+      The Privacy–Utility Dilemma
+    </h2>
+    <p style="color:rgba(255,255,255,0.7);font-size:0.85em">
+      Why masking is never perfect · What you gain and what you lose ·<br>
+      How to make an informed decision for your research data
+    </p>
+  </section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280, height: 720, margin: 0.04,
+    minScale: 0.2, maxScale: 2.0,
+    hash: true, slideNumber: "c/t", transition: "fade",
+    backgroundTransition: "fade", controls: true, progress: true,
+    center: false, autoPlayMedia: true,
+  });
+</script>
+</body>
+</html>

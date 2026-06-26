@@ -1,0 +1,13 @@
+opencv-python>=4.8
+numpy>=1.24
+matplotlib>=3.7
+pandas>=2.0
+moviepy>=1.0.3
+# text de-identification (notebook 06)
+spacy>=3.7
+networkx>=3.0
+wordcloud>=1.9
+# ffmpeg must be installed separately (https://ffmpeg.org/download.html)
+# python -m spacy download en_core_web_sm   # NLP model for notebook 06
+# mediapipe==0.10  # optional: for Masked-Piper local demo
+# torch>=2.0       # optional: for SAM2 local demo (SYNAPSIS server preferred)
