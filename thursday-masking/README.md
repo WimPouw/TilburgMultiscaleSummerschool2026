@@ -46,12 +46,26 @@ No GPU or Docker installation required -- all masking runs on a remote server vi
 - **SYNAPSIS infrastructure** -- hosted on Radboud HPC (Ponyland)
 - **SYNAPSIS Card Decks** -- Data Tarot (35 cards) + Masking Lab Deck (30 cards); see `card_deck_exercise.md`
 - **spaCy + networkx + wordcloud** -- text de-identification pipeline; see `notebooks/06_text_deidentification.ipynb`
+- **Take-home NLP notebooks** -- three self-guided notebooks using the BalanceCorpus (see below)
 
 ## Key References
 
 - Owoyele et al. (2026). MaskingOPS: A Tutorial for Masking Operations in Behavioral Research. *Behavior Research Methods*. (under review)
 - Owoyele, Riedel, Shaik et al. (2026). MaskBench: Privacy-Preserving Pose Estimation Benchmarking. *Behavior Research Methods*. (under review)
 - Edelman, J. (2011). Understanding Radical Breaks: Media and Behavior in Small Teams Engaged in Redesign Scenarios. PhD dissertation, Stanford University.
+
+## Take-home NLP notebooks (BalanceCorpus)
+
+Three self-guided notebooks for after the session. Each stands alone; together they form a pipeline.
+
+| Notebook | Title | What it covers |
+|----------|-------|----------------|
+| `07_taboo_geometry.ipynb` | Can Math Play Taboo? | Word vectors, semantic neighbourhoods, constraint difficulty |
+| `08_balance_language.ipynb` | Does Balance Change How You Talk? | Whisper ASR, concreteness norms, POS, disfluency |
+| `09_text_masking_balance_corpus.ipynb` | Text Masking | NER de-identification applied to real BalanceCorpus transcripts |
+
+**No NLP background required** — each notebook introduces concepts through the data.  
+The arc: geometry → language → privacy.
 
 ## Connection to Other Days
 
