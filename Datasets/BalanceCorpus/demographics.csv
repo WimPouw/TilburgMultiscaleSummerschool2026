@@ -1,0 +1,61 @@
+﻿participant_id,height,weight,age_in_years_1_text,gender,english_native,other_languages,other_languages_1_text,dominant_hand,dominant_leg,hearing,balance_disorder,mobility_issue,sports_injury,pregnancy,relationship_to_interlocutor
+103,173,55,19,Female,Yes,No,,Right hand,I do not know,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+108,163,55,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+109,156,48,18,Female,No,Yes (please specify),Marathi,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+110,187,75,19,Male,Yes,No,,Right hand,Left leg,No,No,No,No,No,The person I am here with today is someone I have interacted with before (e.g. a friend).
+111,168,89,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+115,167,52,18,Female,No,Yes (please specify),Vietnamese,Right hand,I have no dominant leg or preference,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+116,165,51,18,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+118,187,83,19,Male,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+123,162,60,18,Female,No,Yes (please specify),Polish,Left hand,Left leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+128,173,65,18,Male,Yes,No,,Left hand,Left leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+129,185,74,18,Male,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+131,151,50,18,Female,No,Yes (please specify),Korean,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+133,176,66,19,Female,Yes,Yes (please specify),French,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+135,174,63,18,Male,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+136,175,78,20,Female,Yes,Yes (please specify),Sinhala,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+139,164,47,19,Prefer not to disclose,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+143,176,52,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+145,164,53,18,Female,No,Yes (please specify),Turkish,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+151,153,54,19,Female,Yes,No,,Left hand,I have no dominant leg or preference,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+157,164,71,19,Female,Yes,Yes (please specify),Yoruba,Right hand,Left leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+158,156,64,19,Female,No,Yes (please specify),Thai,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+163,168,74,18,Female,Yes,Yes (please specify),Greek,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+173,163,69,19,Non-binary / third gender,Yes,Yes (please specify),Hindi,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+176,161,53,19,Female,Yes,No,,Left hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+180,161,56,20,Female,No,Yes (please specify),Chinese,Right hand,I have no dominant leg or preference,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+182,161,62,24,Female,Yes,Yes (please specify),Hindi,Right hand,Left leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+185,167,64,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+188,154,51,27,Female,No,Yes (please specify),Hindi,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+191,157,49,22,Female,Yes,Yes (please specify),Malayalam,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+192,181,67,24,Male,Yes,Yes (please specify),"Hindi, Odia",Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+203,182,98,21,Male,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+208,165,63,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+209,191,85,18,Male,Yes,Yes (please specify),"French, German",Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+210,184,68,18,Male,No,Yes (please specify),Mandarin,Left hand,Left leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+211,162,72,20,Female,Yes,Yes (please specify),Romanian,Right hand,Left leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+215,156,53,18,Female,No,Yes (please specify),Vietnamese,Left hand,Left leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+216,149,45,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+218,186,72,18,Male,Yes,No,,Right hand,Left leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+223,158,54,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+228,169,60,18,Female,No,Yes (please specify),Mandarin,Right hand,I do not know,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+229,158,57,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+231,159,89,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+233,164,68,18,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+235,167,67,18,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+236,157,68,18,Female,Yes,Yes (please specify),"Sinhala, Chinese",Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+239,165,64,18,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+243,157,52,20,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+245,169,57,19,Female,No,Yes (please specify),Chinese,Left hand,I do not know,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+251,157,64,19,Female,Yes,Yes (please specify),Bengali,Right hand,I have no dominant leg or preference,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+257,148,47,19,Female,Yes,Yes (please specify),Swiss-German,Right hand,I do not know,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+258,163,59,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+263,164,66,18,Female,Yes,Yes (please specify),French,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+273,175,61,18,Male,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+276,175,74,20,Male,Yes,Yes (please specify),"Hindi, Punjabi",Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+280,159,52,21,Female,Yes,Yes (please specify),Bengali,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+282,176,82,23,Male,Yes,Yes (please specify),Hindi,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+285,165,67,19,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+288,171,56,21,Male,No,Yes (please specify),"Hindi, Marathi, Marwari",Right hand,Right leg,No,No,No,No,No,The person I am here with is someone I have interacted with before (e.g. a friend).
+291,158,55,18,Female,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).
+292,201,84,19,Male,Yes,No,,Right hand,Right leg,No,No,No,No,No,The person who is also in my session is someone I have never interacted with before (e.g. a stranger).

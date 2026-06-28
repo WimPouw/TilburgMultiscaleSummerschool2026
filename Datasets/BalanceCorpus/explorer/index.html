@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balance Corpus Explorer</title>
+<link rel="stylesheet" href="vendor/uPlot.min.css">
+<link rel="stylesheet" href="styles.css?v=4">
+</head>
+<body>
+<button id="sidebar-toggle" type="button" aria-label="Toggle sidebar" title="Toggle sidebar">
+  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2 L4 6 L8 10"/></svg>
+</button>
+
+<!-- folder picker (works on file:// in all major browsers) -->
+<input id="folder-input" type="file" webkitdirectory directory multiple hidden>
+
+<aside id="sidebar">
+  <header class="sidebar-head">
+    <div class="brand">
+      <span class="brand-dot"></span> <span class="brand-name" title="Balance Corpus Explorer">Balance Corpus Explorer</span>
+      <button data-open-folder type="button" class="icon-btn" aria-label="Open corpus folder" title="Open corpus folder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      </button>
+    </div>
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="search" type="search" placeholder="Search group, word, condition">
+    </div>
+  </header>
+  <nav id="groups"></nav>
+</aside>
+
+<main id="viewer">
+  <section id="viewer-empty">
+    Open a corpus folder to begin.
+    <div style="margin-top:14px">
+      <button data-open-folder type="button" class="btn-primary">Open corpus folder…</button>
+    </div>
+  </section>
+
+  <header id="meta" hidden></header>
+  <div id="video-grid" hidden></div>
+  <div id="vg-resize" hidden role="separator" aria-label="Resize video grid" title="Drag to resize the video grid · double-click to reset"></div>
+  <div id="scrub-bar" hidden></div>
+
+  <section id="waveform-panel" class="panel" hidden>
+    <div class="panel-head">
+      <h3>Audio &middot; TextGrid</h3>
+      <div class="panel-meta" id="waveform-meta"></div>
+    </div>
+    <div id="waveform"></div>
+    <div id="spectrogram"></div>
+    <div id="tier-rows" class="tiers"></div>
+  </section>
+
+  <section id="gyro-panel" class="panel" hidden>
+    <div class="panel-head">
+      <h3>Gyroscope</h3>
+      <div class="seg" id="gyro-mode" role="group" aria-label="Gyroscope signal">
+        <button type="button" data-gyro-mode="angvel">Ang. vel.</button>
+        <button type="button" data-gyro-mode="acc">Acceleration</button>
+        <button type="button" data-gyro-mode="tilt">Tilt</button>
+      </div>
+      <div class="panel-meta" id="gyro-meta"></div>
+    </div>
+    <div id="gyro-plot"></div>
+    <div class="gyro-legend">
+      <span><span class="swatch" style="background:#ef4444"></span><span class="gyro-leg-label"></span></span>
+      <span><span class="swatch" style="background:#10b981"></span><span class="gyro-leg-label"></span></span>
+      <span><span class="swatch" style="background:#3b82f6"></span><span class="gyro-leg-label"></span></span>
+      <span class="gyro-legend-note"></span>
+    </div>
+  </section>
+
+  <section id="metadata-panel" class="panel" hidden>
+    <div class="panel-head">
+      <h3>Metadata</h3>
+      <div class="panel-meta" id="metadata-meta"></div>
+    </div>
+    <div id="metadata-table"></div>
+  </section>
+
+  <section id="demographics-panel" class="panel" hidden>
+    <div class="panel-head">
+      <h3>Demographics</h3>
+      <div class="panel-meta" id="demographics-meta"></div>
+    </div>
+    <div id="demographics-table"></div>
+  </section>
+</main>
+
+<dialog id="cheatsheet">
+  <h2>Keyboard shortcuts</h2>
+  <ul>
+    <li><span>Play / pause</span><kbd>Space</kbd></li>
+    <li><span>Previous / next trial</span><span><kbd>J</kbd> / <kbd>K</kbd></span></li>
+    <li><span>Previous / next group</span><span><kbd>Shift+J</kbd> / <kbd>Shift+K</kbd></span></li>
+    <li><span>Scrub &plusmn;2 s</span><span><kbd>&larr;</kbd> / <kbd>&rarr;</kbd></span></li>
+    <li><span>This help</span><kbd>?</kbd></li>
+  </ul>
+  <form method="dialog"><button>Close</button></form>
+</dialog>
+
+<!-- vendor (classic / UMD / IIFE — no ES modules, so this loads from file://) -->
+<script src="vendor/uPlot.iife.min.js"></script>
+<script src="vendor/wavesurfer.min.js"></script>
+<script src="vendor/spectrogram.min.js"></script>
+
+<!-- app (classic scripts, dependency order) -->
+<script src="js/util.js?v=4"></script>
+<script src="js/corpus.js?v=4"></script>
+<script src="js/videoGrid.js?v=4"></script>
+<script src="js/waveform.js?v=4"></script>
+<script src="js/textgridPanel.js?v=4"></script>
+<script src="js/gyroPlot.js?v=4"></script>
+<script src="js/metadataPanel.js?v=4"></script>
+<script src="js/demographicsPanel.js?v=4"></script>
+<script src="js/sidebar.js?v=4"></script>
+<script src="js/app.js?v=4"></script>
+</body>
+</html>
