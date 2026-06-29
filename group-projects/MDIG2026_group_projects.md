@@ -38,9 +38,9 @@ By the end of the project, participants should be able to:
 
 1. Formulate a focused research question grounded in multiscale social dynamics, scoped realistically for a short project.
 2. Select and apply at least one analysis pipeline from the summer school (e.g., time-series analysis, recurrence quantification, network analysis, or similar complexity science tools) to multimodal data.
-3. Interpret multiscale patterns -- linking micro-level (e.g., individual movement, gaze, speech) to meso/macro-level (e.g., group coordination, role emergence) observations, or patterns across varying resolutions.
+3. Interpret multiscale patterns - linking micro-level (e.g., individual movement, gaze, speech) to meso/macro-level (e.g., group coordination, role emergence) observations, or patterns across varying resolutions.
 4. Critically evaluate their own pipeline choices, including limitations, assumptions, and what the method does and does not reveal.
-5. Apply open science practices -- organize and document code and data so that the project is transparent and reproducible by someone outside the group.
+5. Apply open science practices - organize and document code and data so that the project is transparent and reproducible by someone outside the group.
 6. Communicate findings accessibly to an interdisciplinary audience in a structured, time-bounded presentation.
 7. Respond to questions and defend methodological and analytic decisions.
 8. Draft the core components of a pre-registration: a research question, hypotheses, planned method, and analysis plan that could be submitted before running confirmatory analyses on the full dataset.
@@ -49,7 +49,7 @@ By the end of the project, participants should be able to:
 
 ## Daily Milestones
 
-### Day 1 -- Orient & Scope (~2 hrs)
+### Day 1 - Orient & Scope (~2 hrs)
 
 - Introductions within the group; identify complementary skills and assign initial roles, including a reproducibility lead
 - Agree on a dataset (provided or self-brought) and a broad phenomenon of interest
@@ -58,7 +58,7 @@ By the end of the project, participants should be able to:
 
 **Deliverable:** A one-paragraph project pitch shared with instructors, and a live shared repository that all group members can access and contribute to.
 
-### Day 2 -- Explore & Decide (~2 hrs)
+### Day 2 - Explore & Decide (~2 hrs)
 
 - Conduct exploratory data inspection (visualizations, basic descriptives)
 - Narrow the research question based on what the data can actually support
@@ -67,7 +67,7 @@ By the end of the project, participants should be able to:
 
 **Deliverable:** A simple analysis plan (question → data → method → expected output) committed to the repository, plus the first decision log entry.
 
-### Day 3 -- Analyze (~2 hrs)
+### Day 3 - Analyze (~2 hrs)
 
 - Run the core analysis pipeline; troubleshoot together
 - Write code with comments -- aim for someone outside the group being able to follow the logic without asking you
@@ -76,7 +76,7 @@ By the end of the project, participants should be able to:
 
 **Deliverable:** Analysis code pushed to the repository with at least basic inline documentation, and at least one figure with a written interpretation sentence.
 
-### Day 4 -- Interpret & Reflect (~2 hrs)
+### Day 4 - Interpret & Reflect (~2 hrs)
 
 - Deepen interpretation; connect findings back to the theoretical framing from lectures
 - Apply any relevant masking or anonymization to your data outputs and visualizations, using the techniques covered in the summer school
@@ -86,7 +86,7 @@ By the end of the project, participants should be able to:
 
 **Deliverable:** A clean, runnable repository with a populated readme (data source, dependencies, how to run); draft slide outline or story arc for the presentation; a working draft of the pre-registration components (research question, hypotheses, chosen methods, planned analysis).
 
-### Day 5 -- Present & Share (~2 hrs)
+### Day 5 - Present & Share (~2 hrs)
 
 - Final polish of slides/visuals
 - Do a final repository tidy: clear readme, organized folders, no dead code
@@ -104,10 +104,10 @@ The final presentation is 10 minutes long with 5 minutes for questions. It is ad
 
 **Suggested structure:**
 
-- **Context & question (1--2 min):** What social dynamic did you look at, and why does it matter? What was your specific research question?
-- **Data & method (2--3 min):** What data did you use, and where can others access it? Which pipeline(s) did you apply, and why were they appropriate for the question?
-- **Results (3--4 min):** What did you find? Lead with your best figure. What does it show at different scales?
-- **Interpretation & reflection (1--2 min):** What does this mean? What are the limitations? What would you do next with more time? Where is your code so others can build on it?
-- **Toward pre-registration (1--2 min):** What is your research question for the full dataset? What are your hypotheses and planned methods? What would you need to confirm before running those analyses?
+- **Context & question (1-2 min):** What social dynamic did you look at, and why does it matter? What was your specific research question?
+- **Data & method (2-3 min):** What data did you use, and where can others access it? Which pipeline(s) did you apply, and why were they appropriate for the question?
+- **Results (3-4 min):** What did you find? Lead with your best figure. What does it show at different scales?
+- **Interpretation & reflection (1-2 min):** What does this mean? What are the limitations? What would you do next with more time? Where is your code so others can build on it?
+- **Toward pre-registration (1-2 min):** What is your research question for the full dataset? What are your hypotheses and planned methods? What would you need to confirm before running those analyses?
 
 All group members should be visible contributors, either as speakers or as the person fielding specific questions. Slides or some other visual form (e.g., a Quarto notebook) are required. Groups are encouraged to include a short slide at the end detailing individual contributions (e.g., using the CRediT taxonomy), but no time in the presentation need be allocated to this.
