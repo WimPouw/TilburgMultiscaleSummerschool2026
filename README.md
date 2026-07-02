@@ -50,7 +50,6 @@ Here, you can either use [Github Desktop](https://desktop.github.com/download/) 
 **How to clone repository via Github?** After installing, launching Github Desktop, and signing in with your Github credentials, simply click on *File > Clone repository... > URL* and paste there the link to this repository, https://github.com/WimPouw/TilburgMultiscaleSummerschool2026
 
 If you don't want to install yet another software, you can just download the repository. At the top of this page, click on **<> Code** and then **Download ZIP**. This will download the repository.
-![alt text](imgs/image.png)
 
 
 ## Troubleshooting
