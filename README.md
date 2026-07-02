@@ -59,12 +59,10 @@ If you don't want to install yet another software, you can just download the rep
 If you are a Windows user, you might encounter an error message 'Filename too long'. To overcome this go to your Windows PowerShell (with left click open as Administrator) and type
 
 ```bash
-
 New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
 
 git config --global core.longpaths true
-
-​```
+```
 
 Restart your machine and clone again.
 
