@@ -1,0 +1,1315 @@
+---
+title: 'Envisionbox Summer School: Multimodal tools'
+author: "A. Paxton (University of Connecticut)"
+date: "11 July 2026"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For this tutorial, we'll be using a subset of the 
+[Santa Barbara Corpus of Spoken American English](https://www.linguistics.ucsb.edu/research/santa-barbara-corpus-spoken-american-english) 
+(CC-BY-ND 3.0, John W. Du Bois). I've chosen a series of dyadic conversations
+for our tutorials; all of those should already be downloaded and available if
+you've cloned the Summer School repository:
+
+* `TilburgMultiscaleSummerschool2026/Datasets/SantaBarbaraCorpus`
+  * `./metadata/`: Directory of participant metadata.
+    * `./TRN/`: Directory of transcripts, with filenames to match `.wav` files.
+    * `./WAV/`: Directory of audio files, with filenames to match `.trn` files.
+
+The entire corpus is a great resource for a variety of different kinds of
+conversations, including with larger groups than just dyads. I encourage you
+to look around more if you're interested in context effects of interaction.
+
+In addition, this code will require you to have the pretrained `word2vec` vectors
+from the Google News corpus (
+[Apache License 2.0](https://code.google.com/archive/p/word2vec/)
+). A zipped version of the `.bin` file is available in this Summer School repository:
+
+* `TilburgMultiscaleSummerschool2026/tuesday-multimodal/scripts`
+  * `GoogleNews-vectors-negative300.bin.gz`: Zipped pretrained vectors. 
+  Make sure that you unzip it prior to running this code. (Once successfully unzipped,
+  it will be merely `.bin`; it will not unzip further.)
+  
+**Date last modified**: 13 July 2026
+**Code written by**: A. Paxton (University of Connecticut)
+
+***
+
+# Preliminaries
+
+```{r prelim, message=FALSE}
+
+# clear the workspace
+rm(list=ls())
+
+# load in the libraries we'll need
+library(tidyverse) # for a lot of everything
+library(vader)
+library(ConversationAlign)
+library(word2vec)
+library(tuneR)
+library(knitr)
+library(lsa)
+
+# set seed for reproducibility
+set.seed(0713)
+
+```
+```{r import_correlation_transform_variable, echo=FALSE}
+
+# # This appears to have been part of a package that isn't CRAN-available, so
+# # I'm including it from here: https://rdrr.io/github/martinctc/surveytools/src/R/cor_to_df.R
+
+#' Convert correlation matrix into a tidy data frame
+#' 
+#' This function assumes that the input into cor() uses variable names, and available
+#' variable labels are not used.
+#' If either of the `label_table` or `id` arguments are unused, `cor_to_df`
+#' simply returns a tibble without label matching.
+#' Use the `label_table` and `id` arguments to match up variable names
+#'  with the variable labels.
+#' 
+#' @param cor_m Correlation matrix in the form of an output from cor().
+#' @param label_table A two-column table with one column used for matching and the other for returning labels.
+#' @param id A character vector specifying the name of the matching / id column in the label_table.
+#' @export
+cor_to_df <- function(cor_m, label_table = NULL, id = NULL){
+  if(is.null(label_table) | is.null(id)){
+    message("Returning a tibble without changing labels")
+    cor_m %>%
+      tibble::as_tibble(rownames = "cor_matrix") %>%
+      return()
+  } else {
+    if(ncol(label_table)!=2){
+      stop("Matching table must have an id column and a return column.")
+    } else {
+      matched_lab <- names(label_table)[names(label_table)!=id]
+      
+      cor_m %>%
+        tibble::as_tibble(rownames = "cor_matrix") %>%
+        dplyr::left_join(label_table,by=c("cor_matrix"=id)) %>%
+        dplyr::select(cor_matrix,matched_lab,everything())-> output_df
+      
+      labels <- output_df[[matched_lab]]
+      
+      names(output_df) <- c("cor_matrix",matched_lab,labels)
+      return(output_df)
+    }
+  }
+}
+```
+
+```{r directories}
+
+# specify directories that we'll need
+path_chat_transcript = "../../Datasets/SantaBarbaraCorpus/CHAT"
+path_wav_audio = "../../Datasets/SantaBarbaraCorpus/WAV"
+
+# figure out the files we have
+list_transcript_files = list.files(path_chat_transcript, 
+                                   pattern="*.cha",
+                                   ignore.case=TRUE,
+                                   full.names=TRUE)
+list_audio_files = list.files(path_wav_audio, 
+                              pattern="*.wav",
+                              ignore.case=TRUE,
+                              full.names=TRUE)
+
+```
+
+```{r read_in_semantic_vectors}
+
+# read in the word2vec vectors trained on the Google News corpus
+word2vec_pretrained_model = read.word2vec("../scripts/GoogleNews-vectors-negative300.bin")
+
+```
+
+***
+
+# Data loading
+
+Next, we'll cycle through all of the CHAT-formatted transcripts and convert them
+into a neat, usable format. We will be relying heavily on a tutorial from the
+[Language Technology and Data Analysis Laboratory](https://ladal.edu.au/) about
+[corpus linguistics in R](https://ladal.edu.au/tutorials/corpus_linguistics/corpus_linguistics.html).
+
+```{r load-cha-files}
+
+# loop over paths, load, collapse, and clean each file  
+corpus = sapply(list_transcript_files, function(next_file) {  
+  
+  # read the files as one big variable
+  read_file = scan(next_file, 
+                   what = "char", 
+                   sep = "", 
+                   quote = "", 
+                   quiet = TRUE, 
+                   skipNul = TRUE)  
+  
+  # collapse and try to remove unnecessary whitespaces
+  read_file = paste0(read_file, sep = " ", collapse = " ")  
+  read_file = stringr::str_squish(read_file)  
+})  
+
+# continue corpus cleanup
+corpus = sapply(corpus, function(raw_corpus) {  
+  
+  # clean up our single line of text per transcript
+  processing_corpus = stringr::str_trim(raw_corpus, side = "both")
+  processing_corpus = stringr::str_squish(processing_corpus)
+  processing_corpus = paste0(processing_corpus, collapse = " ")
+  
+  # insert split marker before each tier/speaker token, then split  
+  processing_corpus = strsplit(  
+    gsub("([%|*][a-z|A-Z]{2,4}[0-9]{0,1}:)", "~~~\\1", processing_corpus),  
+    "~~~"  
+  )  
+})  
+
+```
+
+We're still processing things, but let's take a look at what the corpus looks
+like, this far in.
+
+```{r processing_peek}
+
+# what does it look like right now?
+str(corpus[1:3])  
+
+```
+This might look like a mess, but it's a lot of rich data here. Corpus linguistics
+takes transcription and annotation very seriously, with specific codes for
+various kinds of behaviors (like breathing, turn timing, and precise timing of 
+overlapping speech). This specific dataset uses the coding system proposed by
+Du Bois and colleagues (1993), and more details about the system can be found in
+the PDF in the repository for this analysis.
+
+For the sake of this tutorial, we'll be ignoring most of the codes, but they're
+there in case you want to explore them.
+
+***
+
+# Data preparation
+
+## Create dataframe structure
+
+We'll start by pulling out the conversation metadata for each conversation,
+which is the first line of each conversation file in this corpus.
+
+```{r header-info}
+
+# extract header elements for each file
+conv_metadata = sapply(corpus, function(conv) conv[1])  
+
+```
+
+Then, let's split apart our corpus string by identifying new speaker turns.
+
+```{r content}
+
+# split content from the raw corpus string
+content = sapply(corpus, function(raw_corpus) {  
+  
+  # strip out the header info and re-collapse
+  processed_corpus = raw_corpus[2:length(raw_corpus)]  
+  processed_corpus = paste0(processed_corpus, collapse = " ")  
+  
+  # split along speaker turns
+  processed_corpus = stringr::str_split(  
+    stringr::str_replace_all(processed_corpus, "(\\*[A-Z])", "~~~\\1"),  
+    "~~~"  
+  )  
+})  
+
+# and then see what we've got
+content[[1]][1:6]  
+
+```
+
+Now, let's weave the header info with the content info to make our dataframe.
+
+```{r}
+
+# prepare dataframe elements with many rows we should have for each conversation
+elements   = sapply(content, length)  
+files_rep  = rep(names(elements), elements)  
+conv_metadata_r = rep(conv_metadata, elements)  
+rawcontent = as.vector(unlist(content))  
+
+# create our dataframe
+sbc_df = data.frame(  
+  id         = seq_along(rawcontent),  
+  file      = files_rep,  
+  metadata   = conv_metadata_r,  
+  rawcontent = rawcontent  
+)  
+
+# take a peek
+head(sbc_df)
+
+```
+
+It's looking great! Let's move on.
+
+## Extract metadata
+
+We'll start by making the metadata content a bit more intelligible.
+
+```{r clean_metadata}
+
+# separate metadata by delimiters
+sbc_df = sbc_df %>%
+  separate_wider_delim(cols = metadata,
+                       delim = " @",
+                       names = c("encoding",
+                                 "start",
+                                 "language",
+                                 "participants",
+                                 "options",
+                                 "ID1",
+                                 "ID2",
+                                 "ID3_or_media",
+                                 "ID4_or_not",
+                                 "media_or_not",
+                                 "comment1_or_not",
+                                 "comment2_or_not"),
+                       too_many = "merge",
+                       too_few = "align_start") %>%
+  
+  # drop the variables we don't actually need
+  dplyr::select(-ID1, -ID2, -encoding, -start, -language, -options,
+                -ID3_or_media) %>%
+  
+  # let's try solving for problematic labels
+  mutate(conv_label = if_else(grepl("Comment",ID4_or_not),
+                              ID4_or_not,
+                              if_else(grepl("Comment", media_or_not),
+                                      media_or_not,
+                                      comment1_or_not))) %>%
+  mutate(context = if_else(grepl("Comment", comment2_or_not),
+                           comment2_or_not,
+                           if_else(grepl("Comment", comment1_or_not),
+                                   comment1_or_not,
+                                   if_else(grepl("Comment", media_or_not),
+                                           media_or_not,
+                                           NA)))) %>%
+  
+  # strip out comment preface
+  mutate(context = str_remove_all(context,"Comment: ")) %>%
+  mutate(conv_label = str_remove_all(conv_label,"Comment: ")) %>%
+  
+  # and drop unneeded metadata
+  dplyr::select(-contains("or_not")) %>%
+  
+  # why not reorder, too?
+  relocate(id, file, conv_label, context, participants, rawcontent) %>%
+  
+  # clean file name: keep only the base name between the last / and .cha  
+  mutate(file = gsub(".*/(.*?)\\.cha", "\\1", file))
+
+# how are we looking?
+head(sbc_df)
+
+```
+
+## Sort out the speaker data
+
+Now, let's turn our attention to the content column. We'll start by extracting
+the speaker label.
+
+```{r extract_speaker}
+
+# prepare speaker column
+sbc_df = sbc_df %>% ungroup() %>%
+  
+  # keep everything before the first colon and strip remaining non-word characters  
+  mutate(  
+    speaker = stringr::str_remove_all(rawcontent, ":.*"),  
+    speaker = stringr::str_remove_all(speaker, "\\W")  
+  ) %>%
+  
+  # remove speakers from the content
+  mutate(
+    utterance = stringr::str_remove_all(rawcontent, "%mor:.*"),  
+    utterance = stringr::str_remove_all(utterance, "%.*"),  
+    utterance = stringr::str_remove_all(utterance, "\\*\\w{2,6}:"),  
+    utterance = stringr::str_squish(utterance)
+  )
+
+```
+
+## Extract non-linguistic verbal behaviors
+
+Now that's finished, let's extract what we want from the content. Remember,
+there are a lot of text-like comments that are, in fact, specific codes and not
+participant utterances. We need to be very careful in extracting this to remove
+codes and retain only speech. 
+
+At the same time, though, we'll keep some codes about non-linguistic speech
+characteristics. Again, these codes can be found in the Du Bois et al. (1993)
+PDF.
+
+```{r extract_nonlinguistic_stuff}
+
+sbc_df = sbc_df %>% ungroup() %>%
+  
+  # extract various non-language markers and create new columns for each
+  mutate(laughter = str_count(utterance, "@") + str_count(utterance, "\\&=laugh")) %>%
+  mutate(short_pauses = str_count(utterance, "\\(\\.\\)")) %>%
+  mutate(medium_pauses = str_count(utterance, "\\(\\.\\.\\)")) %>%
+  mutate(long_pauses = str_count(utterance, "\\.\\.\\.")) %>%
+  mutate(elongating = str_count(utterance, "\\:") + str_count(utterance, "\\&=length"))
+
+```
+
+## Ensure only text remains and extract timing
+
+``` {r}
+
+sbc_df = sbc_df %>% ungroup() %>%
+  
+  # extract start time
+  mutate(start_time = str_extract(utterance, "[[:digit:]]+(?=\\_)")) %>%
+  
+  # clean out codes
+  dplyr::mutate(  
+    utterance = stringr::str_remove_all(utterance,"\\&\\{l=[[:alpha:]]+"),
+    utterance = stringr::str_remove_all(utterance,"\\&\\{l="),
+    utterance = stringr::str_remove_all(utterance,"\\&=[_[[:alpha:]]]+"),
+    utterance = stringr::str_remove_all(utterance,"\\&\\}l=[[:alpha:]]+"),
+    utterance = stringr::str_remove_all(utterance, "⌉[[:digit:]]+"),
+    utterance = stringr::str_remove_all(utterance, "⌈[[:digit:]]+"),
+    utterance = stringr::str_remove_all(utterance, "⌊[[:digit:]]+"),
+    utterance = stringr::str_remove_all(utterance, "⌋[[:digit:]]+"),
+    utterance = stringr::str_remove_all(utterance, "[⌉⌈⌊⌋]"),
+    utterance = stringr::str_remove_all(utterance, "\\(\\.+\\)"),
+    utterance = stringr::str_remove_all(utterance, "\\+\\/\\."),
+    utterance = stringr::str_remove_all(utterance, "\\&\\{l=@"),
+    utterance = stringr::str_remove_all(utterance, "\\&\\}l=@"),
+    utterance = stringr::str_remove_all(utterance, "\\:"),
+    utterance = stringr::str_remove_all(utterance, "ʔ"),
+    utterance = stringr::str_remove_all(utterance, "\\+..."),
+    utterance = stringr::str_remove_all(utterance, "\\[\\% laugh\\]"),
+    utterance = stringr::str_remove_all(utterance, "@"),
+    utterance = stringr::str_remove_all(utterance, "[[:digit:]]+\\_"),
+    utterance = stringr::str_remove_all(utterance, "\\&\\{n=SNAP"),
+    utterance = stringr::str_squish(utterance),
+    utterance = stringr::str_replace_all(utterance, "\\s+", " "),
+    utterance = stringr::str_replace_all(utterance, "[[:blank:]]+", " "),
+    utterance = stringr::str_remove_all(utterance, "\\["),
+    utterance = stringr::str_remove_all(utterance, "@End")
+  ) %>%
+  
+  # extract the end time of the turn
+  mutate(end_time = stringi::stri_extract_last_regex(utterance, "\\d+")) %>%
+  
+  # finish cleaning up the utterance, now that it's done
+  mutate(
+    utterance = stringr::str_remove_all(utterance, "[[:digit:]]+"),
+    utterance = stringr::str_replace_all(utterance, "[^[:alpha:][:punct:]]", " "),
+    utterance = stringr::str_remove_all(utterance, "\\.")) %>%
+  
+  # remove what we don't need
+  dplyr::select(-rawcontent) %>%
+  
+  # filter out any turns with an NA start time
+  dplyr::filter(!is.na(start_time))
+
+# how's it look?
+head(sbc_df)
+
+```
+
+## Concatentate adjacent turns
+
+```{r compress_turns}
+
+# figure out which turns have the same speaker
+sbc_df = sbc_df %>%
+  group_by(conv_label) %>%
+  mutate(turn = row_number()) %>%
+  mutate(last_speaker = lag(speaker)) %>%
+  mutate(same_as_last = ifelse((last_speaker == speaker),
+                               1,
+                               0)) %>%
+  mutate(revised_turn = ifelse(same_as_last == 1,
+                               NA,
+                               turn)) %>%
+  mutate(revised_turn = ifelse(turn==min(turn, na.rm=TRUE),
+                               1,
+                               revised_turn)) %>%
+  fill(., revised_turn, 
+       .direction = "down") %>%
+  ungroup() %>%
+  
+  # compress utterances and take unique values of everything else
+  group_by(conv_label, speaker, revised_turn) %>%
+  mutate(utterance = paste0(utterance, collapse = " ")) %>%
+  mutate(start_time = min(start_time),
+         end_time = max(end_time),
+         laughter = sum(laughter),
+         short_pauses = sum(short_pauses),
+         medium_pauses = sum(medium_pauses),
+         long_pauses = sum(long_pauses),
+         elongating = sum(elongating),
+         id = min(id)
+  ) %>%
+  dplyr::select(-turn, -last_speaker, -same_as_last) %>%
+  unique() %>%
+  
+  # ditch revised turn and re-number
+  arrange(conv_label, revised_turn) %>%
+  mutate(turn = row_number()) %>%
+  ungroup() %>%
+  dplyr::select(-revised_turn) %>%
+  relocate(id, file, conv_label, context, participants, speaker, utterance) 
+
+# again, let's see how it looks
+head(sbc_df)
+
+```
+
+I hope you've noticed by now how often we're checking our data. Especially for
+complex, multiscale, multimodal data (but really for all data), it's imperative
+to stay in touch with your data.
+
+***
+
+# Operationalizations and extractions
+
+In this section, we're going to take our nicely cleaned data and start to
+get at the core theoretical ideas we want to analyze. Thoughtful operationalization
+is crucial, especially when you're working with large amounts of data
+that can be sliced and quantified in a variety of ways. Multimodal and multiscale
+data bring with them a lot of opportunities, but you're going to want to be
+*painfully* clear about what you decided to do *a priori* (that is, **before** 
+you started digging into the data) and *why* you chose to do that. As a domain
+expert (or emerging domain expert), you could probably make a number of
+arguments to explain why some quantification or another would be best suited
+to your data *and* your question, and you want to be explicit about what you
+intended to do from the outset.
+
+This isn't to say that exploratory analyses are a bad thing. Exploratory analyses
+can pave the way for new studies and can help pull apart nuances in the behavior
+of interest. However, you *must* be clear (to yourself and your audiences) about
+what was an an a priori hypothesis test and what was an exploratory analysis. 
+The statistical and theoretical strength of a true a priori hypothesis is much
+stronger than an exploratory analysis (see, e.g., 
+[Wagenmakers et al., 2012](https://journals.sagepub.com/doi/10.1177/1745691612463078)).
+
+With that in mind, we're planning some exploratory analyses here. For this 
+tutorial, I tried to choose a range of settings from the Santa Barbara Corpus
+that might show interesting dynamics:
+
+```{r show_settings, include=FALSE, echo=TRUE}
+
+unique(sbc_df$context)
+
+```
+
+## Prepare for alignment calculations with ConversationAlign
+
+This appears to take a while, so we're going to let it cache results. This is
+a very useful tool when you're actively developing the code, but *always*
+remember to clear the cache *before* you start interpreting or presenting
+your results.
+
+```{r rename_vars_for_conversationalign, cache=TRUE}
+
+# prepare for the ConversationAlign by renaming expected variables
+sbc_df = sbc_df %>% ungroup() %>%
+  dplyr::rename("Text_Raw" = utterance,
+                "Participant_ID" = speaker,
+                "Event_ID" = conv_label)
+
+```
+
+This next chunk needs to be run interactively, because it requires you to choose
+which kinds of metrics you'd like to choose. I've chosen to include emotional
+valence (`23`), log-scaled lexical frequency (`27`), and semantic diversity
+(`40`). When you run this chunk interactively, you'll be able to see a whole lot
+of other options that you can choose, but you can only choose up to 3 at a time.
+
+```{r prepare_dyads, eval=FALSE}
+
+# run preparation step to extract 
+align_df = prep_dyads(sbc_df)
+
+```
+
+```{r save_align, include=FALSE, eval=TRUE}
+
+# this is a secret chunk that will save the `align_df` dataframe for loading and rendering in RMarkdown
+if (exists("align_df")){
+  write.csv(x = align_df,
+            file = "~/GitHub/TilburgMultiscaleSummerschool2026/tuesday-multimodal/data/align_df.csv",
+            row.names = FALSE) 
+}
+
+```
+
+```{r load_align, include=FALSE, eval=TRUE}
+
+# this is a secret chunk that will load back in the `align_df` dataframe for loading and rendering
+align_df = read.csv(file = "~/GitHub/TilburgMultiscaleSummerschool2026/tuesday-multimodal/data/align_df.csv",
+                    header = TRUE)
+                     
+```
+
+## Extract timing-related variables
+
+Let's grab how long each turn was and how long it was from the end of the previous
+turn to the start of the next turn. This means that negative turns were likely
+interruptions; positive turns indicate a long gap in speech turns.
+
+```{r extract_timing_variables}
+
+align_df = align_df %>% ungroup() %>%
+  
+  # figure out how long each turn is
+  mutate(end_time = as.numeric(end_time),
+         start_time = as.numeric(start_time),
+         turn_duration = end_time - start_time)
+
+# extract how long elapsed between the end of one turn and the start of the next
+inter_turn_intervals_df = align_df %>% ungroup() %>%
+  dplyr::select(Event_ID, Turn_Count, start_time, end_time) %>%
+  unique() %>%
+  ungroup() %>%
+  
+  # and how long the breaks are between speakers' turns
+  dplyr::group_by(Event_ID) %>%
+  mutate(last_end = lag(end_time)) %>%
+  dplyr::filter(!is.na(last_end)) %>%
+  mutate(between_speaker_time = start_time - last_end) %>%
+  ungroup()
+
+# join with the main dataframe
+align_df = dplyr::full_join(align_df, inter_turn_intervals_df,
+                            by = join_by(Event_ID, Turn_Count, start_time, end_time))
+
+```
+
+In addition to inspecting the dataframe itself (which is good for language and 
+harder for other modalities), you can also use plots to help understand what's going on.
+
+```{r plot_timing_variables}
+
+# what's our distribution of turn lengths?
+ggplot(data = align_df,
+       aes(x = turn_duration)) +
+  geom_histogram() +
+  ggtitle("Histogram of turn lengths")
+
+# what's our distribution of onset-offset times?
+ggplot(data = align_df,
+       aes(x = between_speaker_time)) +
+  geom_histogram() +
+  ggtitle("Histogram of times between speaker turns")
+
+```
+
+Huh, we have some *very* far-off tails in these. See if you can figure out why!
+Is it just a bug, or is there something happening in a corpus entry?
+
+## Get turn-level aggregates across word norms
+
+The `ConversationAlign` package calculates metrics at the (stemmed) lexical item
+level, so if we want to see what a whole turns looks like, we need to do something
+to unify them. You could make a case for some other method, but here, we're
+going to go ahead and use mean (dropping `NA`).
+
+```{r turn_level_norms}
+
+turn_df = align_df %>% ungroup() %>%
+  summarize(turn_length = n(),
+            across(is.numeric|is.integer, ~ mean(., na.rm=TRUE)),
+            .by = c(id, file, context, participants, Event_ID, Participant_ID, 
+                    Exchange_Count, Turn_Count))
+
+```
+
+## Extract semantic vectors and similarities
+
+We might also want to know the meaning (or semantic content) of what people are
+saying in conversation. We could do that by annotating and hand-coding, but we
+can also do that through vector space semantic analysis. There are lots of 
+different ways of capturing this (starting back in the 1990s), but for now,
+let's choose to use `word2vec`. 
+
+For easier analysis, we're going to identify all unique words in our corpus,
+look up the 300-dimensional vector for each in word2vec, and then re-constitute
+using table joining. This will save us time and effort.
+
+```{r extract_word2vec_dimensions}
+
+# grab the unique words and their embeddings
+unique_words = unique(align_df$Text_Prep)
+embedding_matrix = matrix(NA,
+                          nrow = length(unique_words),
+                          ncol = 301)
+for (i in c(1:length(unique_words))){
+  next_word = unique_words[i]
+  embedding_matrix[i,] = c(predict(word2vec_pretrained_model, 
+                                   next_word, 
+                                   type = "embedding"),
+                           next_word)
+}
+
+# rename vector space variables in our matrix
+embedding_matrix_df = data.frame(embedding_matrix) %>%
+  rename(Text_Prep = X301) %>%
+  rename_with(function(x) str_replace(x, "X","vector_"))
+
+```
+
+```{r reconstitute_word2vec_turns}
+
+# re-embed the vectors into a whole space
+vector_embeddings_df = dplyr::full_join(align_df, embedding_matrix_df,
+                             by = c("Text_Prep")) %>%
+  dplyr::mutate_at(vars(starts_with("vector_")), as.numeric) %>%
+  dplyr::summarise(across(starts_with("vector_"),
+                          function(x) mean(x, na.rm=TRUE)),
+                   .by = c(Event_ID, Participant_ID, Exchange_Count, Turn_Count))
+
+```
+
+Now that we have our 300-dimensional vector, we can calculate the turn-to-turn
+similarity by calculating the cosine similarity of the two turns. 
+
+```{r extract_cosine_similarity, cache=TRUE}
+
+# convert utterance-level to matrix
+embedding_matrix = vector_embeddings_df %>% ungroup() %>%
+  dplyr::select(starts_with("vector")) %>%
+  mutate_all(as.numeric) %>%
+  as.matrix(.)
+
+# create utterance-to-utterance cosine similarity matrix
+similarity_matrix = lsa::cosine(t(embedding_matrix))
+
+# convert it to a longform dataframe 
+similarity_df = cor_to_df(similarity_matrix) %>%
+  pivot_longer(cols = starts_with("V"),
+               names_to="turn_2",
+               values_to="cos_similarity") %>%
+  rename("turn_1" = cor_matrix) %>%
+  mutate(turn_2 = str_remove_all(turn_2,"[[:alpha:]]"))
+
+```
+
+```{r label_similarity_matrix}
+
+# extract conversation metadata for each turn
+identifying_labels_df = vector_embeddings_df %>% ungroup() %>%
+  rownames_to_column("rowname") %>%
+  mutate(rowname = as.numeric(rowname)) %>%
+  dplyr::select(-starts_with("vector"))
+
+# merge with similarity
+labeled_similarity_df = similarity_df %>% ungroup() %>%
+  dplyr::mutate(turn_1 = as.numeric(turn_1),
+                turn_2 = as.numeric(turn_2)) %>%
+  dplyr::full_join(., identifying_labels_df,
+                   by=c("turn_1"="rowname")) %>%
+  dplyr::full_join(., 
+                   identifying_labels_df,
+                   by=c("turn_2"="rowname"),
+                   suffix=c("_1","_2"))
+
+```
+
+Now that we've created a whole matrix of turn-to-turn similarity, we probably
+want to do something useful with it. One useful thing (although not the only
+useful thing) that we could do would be to see the average turn-to-turn similarity
+in a specified window, excluding self-similarity. I'm arbitrarily choosing 3 windows,
+but you could choose something else if you wanted.
+
+```{r window_similarity}
+
+# winnow to only include similarity for turns that are part of the same conversation
+windowed_similarity_df = labeled_similarity_df %>% ungroup() %>%
+  dplyr::filter(Event_ID_1 == Event_ID_2) %>%
+  
+  # remove same turns
+  dplyr::filter(turn_1 != turn_2) %>%
+  dplyr::filter(abs(turn_1-turn_2) <= 3) %>%
+  
+  # remove what we don't need
+  select(-Event_ID_2, 
+         -starts_with("Participant_"), 
+         -starts_with("Exchange_"),
+         -turn_2) %>%
+  rename("Event_ID" = Event_ID_1,
+         "Turn_Count" = Turn_Count_1) %>%
+  
+  # group to make the +/- 3-turn average 
+  summarize(windowed_similarity = mean(cos_similarity, na.rm = TRUE),
+            .by = c(Event_ID, Turn_Count))
+
+```
+
+```{r add_windowed_similarity}
+
+# now, let's merge these values into the turn-level dataframe
+turn_df = turn_df %>% ungroup() %>%
+  dplyr::full_join(., windowed_similarity_df,
+                   by = join_by(Event_ID, Turn_Count))
+
+```
+
+You'll probably guess what I'm about to suggest next. Let's take a look at our
+data!
+
+```{r plot_similarity_histogram, echo=FALSE}
+
+ggplot(data = turn_df,
+       aes(x = windowed_similarity)) +
+  geom_histogram(bins = 30)
+
+```
+
+**Histogram of cosine similarity of turns (using 3-turn windows).**
+
+## Identify fundamental frequency
+
+I thought about adding a speech-based analysis here... but then I worried I was
+already throwing too much into this tutorial. If you're interested, you could 
+use the `start_turn` and `end_turn` numbers to identify the boundaries of each 
+turn and then extract the F0 from that window. You could do any number of things 
+with those data---like getting a slope for each person's F0 across the conversation, 
+seeing whether the two co-vary, or even look at their turn-to-turn variability. This
+[`wrassp` R package tutorial](https://ips-lmu.github.io/The-EMU-SDMS-Manual/chap-wrassp.html)
+and 
+[this Kaggle competition entry](https://www.kaggle.com/code/rtatman/time-aligned-spectrograms-with-chat-files-in-r)
+would be good starting places.
+
+***
+
+# Data analysis
+
+Congrats---we have our data ready to go! (Well, it's more than we actually need 
+at this point, but we'll get to that later.) Now's a new fun part: trying out
+permutation tests. 
+
+Permutation tests might sound complicated, but don't worry. They are, truly,
+one of the most straightforward hypothesis tests that you can do. Rather than
+assuming that your data conform to some set of abstract distributions, your
+data serve as their own baseline---even in the case of small or imbalanced
+samples! 
+
+The most difficult part of the permutation test is clearly specifying the null
+hypothesis. It's a bit tricky, because null hypotheses something that many
+behavioral scientists think of as being basic. In this case, the specifics of
+your null hypothesis (and, conversely, your alternate hypothesis) are critical
+to making sense of your data *and* getting useful results.
+
+In this case, I'm going to focus on how **relationship context** (between
+interlocutors) changes **language dynamics**, **turn-taking dynamics**, and **laughter**. 
+
+* For the independent variable, I'm specifying "relationship context" as mutually
+exclusive factors: 
+friends (`SBC017`, `SBC044`), 
+romantic partners (`SBC024`, `SBC034`, `SBC009`),
+family (`SBC006`,`SBC047`, `SBC043`), and 
+work (`SBC046`).
+Notice that these are not balanced, nor are these the only divions that I *could*
+have made. (For example, I was on the fence about an alternate division that 
+would be more focused on topics of conversation, maybe with divisions for 
+task-related conversations and personal experiences. But this is what I went with.)
+* We'll be defining "laughter" as the turn-level presence or absence of laughter.
+* We'll be defining "turn-taking dynamics" as the average turn overlap within a conversation.
+* We'll be looking at "language dynamics" as the average windowed 3-turn similarity.
+
+```{r label_categories}
+
+analysis_df = turn_df %>% ungroup() %>%
+  
+  # label relationship context
+  mutate(relationship = if_else(str_detect("SBC017|SBC044",
+                                           file),
+                                "friends",
+                                if_else(str_detect("SBC024|SBC034|SBC009", 
+                                                   file),
+                                        "romantic",
+                                        if_else(str_detect("SBC006|SBC047|SBC043", 
+                                                           file),
+                                                "family",
+                                                if_else(str_detect("SBC046", 
+                                                                   file),
+                                                        "work",
+                                                        NA))))) %>%
+  
+  # convert laughter to a binary
+  mutate(laughter_binary = if_else(laughter == 0,
+                                   0,
+                                   1))
+
+```
+
+## Summarize dataset
+
+Let's first see what our observed data look like.
+
+```{r summarize_dataset}
+
+# turns with laughter
+describe_laughter_df = analysis_df %>% ungroup() %>%
+  summarize(turns_with_laugh = sum(laughter_binary),
+            .by = c(Event_ID, relationship))
+head(describe_laughter_df)
+
+# mean overlap of turns
+describe_turn_overlap_df = analysis_df %>% ungroup() %>%
+  summarize(average_overlap = mean(between_speaker_time, na.rm=TRUE),
+            .by = c(Event_ID, relationship, Participant_ID))
+head(describe_turn_overlap_df)
+
+# mean windowed similarity
+describe_windowed_coherence_df = analysis_df %>% ungroup() %>%
+  summarize(average_semantic_coherence = mean(windowed_similarity, na.rm=TRUE),
+            .by = c(Event_ID, relationship, Participant_ID))
+head(describe_windowed_coherence_df)
+
+```
+
+If you look at the data, it turns out that we have some participants who
+aren't in the target dyadic conversation! (Since these recordings are of
+relatively "wild" conversations, there are other noises and people who were
+captured.) Let's remove them before we continue.
+
+```{r identify_nontarget_speakers}
+
+# grab anyone who hasn't contributed more than 10 turns
+observed_nontarget_speakers = analysis_df %>% ungroup() %>%
+  summarize(total_turns = n(),
+            .by = c(Event_ID, Participant_ID)) %>%
+  dplyr::filter(total_turns <= 10) %>%
+  dplyr::select(Participant_ID) %>%
+  unique() %>%
+  .$Participant_ID
+
+# remove them from everything
+analysis_df = analysis_df %>% ungroup() %>%
+  dplyr::filter(!(Participant_ID %in% observed_nontarget_speakers))
+
+```
+
+But we need to summarize by relationship, not conversation.
+
+```{r summarize_observed}
+
+# turns with laughter
+observed_laughter_df = analysis_df %>% ungroup() %>%
+  summarize(observed_n = sum(laughter_binary),
+            .by = c(relationship))
+
+# turn overlap
+observed_turn_overlap_df = analysis_df %>% ungroup() %>%
+  summarize(observed_time = mean(between_speaker_time, na.rm=TRUE),
+            .by = c(relationship))
+
+# semantic coherence
+observed_coherence_df = analysis_df %>% ungroup() %>%
+  summarize(observed_coherence = mean(windowed_similarity, na.rm=TRUE),
+            .by = c(relationship))
+
+```
+
+## Permutation tests
+
+Each permutation test will require that we calculate it at the appropriate scale.
+In other words, if our null hypothesis is at the level of the conversation versus
+at the level of the participant, we will need to do different permutations. Rather
+than re-run the permutation test each time, we're going to run them once, save them,
+and re-use them each time we process.
+
+Generally speaking, it's a best practice to randomize the independent variable,
+rather the dependent variable. In our case, this means we're going to be
+permuting along `relationship`.
+
+```{r permutations}
+
+# specify the total number of permutations
+total_permutations = 2000
+
+# specify where our baselines should live, if they exist
+baseline_conversation_path = "../data/baseline_df.csv"
+
+# load the permuted baselines, if we have them already
+if (file.exists(baseline_conversation_path)){
+  baseline_conversation_df = read.csv(baseline_conversation_path)
+  
+} else { # and if not, let's run them
+  
+  # subset only the variables we need from the analysis (to save on space)
+  permutation_df = analysis_df %>% ungroup() %>%
+    dplyr::select(Event_ID, Participant_ID, relationship, 
+                  laughter_binary, between_speaker_time, windowed_similarity) 
+  
+  # cycle through our desired runs of permutations
+  set.seed(0714)
+  
+  # let's make some containers
+  baseline_conversation_df = data.frame()
+  
+  # and then cycle through everything
+  for (permute_run in c(1:total_permutations)){
+    
+    # shuffle for relationship (between-dyads condition)
+    next_conversation_permute = permutation_df %>% ungroup() %>%
+      mutate(relationship = sample(relationship, length(relationship))) %>%
+      mutate(run = permute_run) %>%
+      mutate(permute_type = "conversation")
+    baseline_conversation_df = rbind.data.frame(baseline_conversation_df,
+                                                next_conversation_permute)
+  }
+  
+  # add baseline designation
+  baseline_conversation_df = baseline_conversation_df %>% ungroup() %>%
+    mutate(data = "baseline")
+  
+  # write baseline dataframes to file
+  write.csv(x = baseline_conversation_df,
+            file = baseline_conversation_path,
+            row.names = FALSE)
+}
+```
+
+## Run significance tests
+
+### Effects of relationship type on turns with laughter
+
+```{r laughter_significance_tests}
+
+# summarize number of turns with laughter by relationship for each run
+laughter_baseline_df = baseline_conversation_df %>% ungroup() %>%
+  dplyr::select(Event_ID, relationship, laughter_binary, data, run) %>%
+  summarize(baseline_n = sum(laughter_binary),
+            .by = c(relationship, run))
+
+# see whether the data was higher or less than the baseline in each run
+summary_laughter_comparison_df = dplyr::full_join(laughter_baseline_df, 
+                                                  observed_laughter_df,
+                                                  by = join_by(relationship)) %>% ungroup() %>%
+  mutate_at(vars(observed_n, baseline_n), replace_na, 0) %>%
+  mutate(diff = observed_n - baseline_n) %>%
+  mutate(greater_than_chance = if_else(observed_n > baseline_n,
+                                       1,
+                                       0)) %>%
+  mutate(less_than_chance = if_else(observed_n < baseline_n,
+                                    1,
+                                    0)) %>%
+  mutate(at_chance = if_else(observed_n == baseline_n,
+                             1,
+                             0))
+
+# extract summary statistics
+test_laughter_stats_df = summary_laughter_comparison_df %>% ungroup() %>%
+  dplyr::group_by(relationship) %>%
+  dplyr::summarize(greater_than_chance = sum(greater_than_chance),
+                   less_than_chance = sum(less_than_chance),
+                   at_chance = sum(at_chance)) %>%
+
+  rowwise() %>%
+  mutate(total_obs = greater_than_chance + at_chance + less_than_chance) %>% 
+  mutate(runs_without_combination = total_permutations - total_obs) %>%
+  mutate(corrected_greater_than = greater_than_chance + runs_without_combination) %>%
+  
+  # to avoid p = 0 issues, we correct the "total observations" to include reality
+  # (this isn't the best way to do it, but this is fairly conservative)
+  dplyr::mutate(p_greater_than_chance = 1 - (corrected_greater_than/(total_permutations + 1)),
+                p_less_than_chance = 1 - (less_than_chance/(total_permutations + 1))) 
+
+# filter significant values with an alpha criterion of .05
+significant_laughter_values_only = test_laughter_stats_df %>% ungroup() %>%
+  dplyr::filter(p_greater_than_chance <= .05 |
+                  p_less_than_chance <= .05)
+
+# make some nicer tables
+sig_laughter_key_df = test_laughter_stats_df %>% ungroup() %>%
+  pivot_longer(cols = starts_with("p_"),
+               names_to = "direction",
+               values_to = "p_val") %>%
+  dplyr::filter(p_val <= .05)
+neat_sig_laughter_df = test_laughter_stats_df %>% ungroup() %>%
+  mutate(color_cluster = relationship) %>%
+  dplyr::filter(relationship %in% sig_laughter_key_df$relationship)
+
+```
+
+### Effects of relationship type on turn overlap
+
+```{r overlap_significance_tests}
+
+# summarize turn overlap by relationship for each run
+overlap_baseline_df = baseline_conversation_df %>% ungroup() %>%
+  dplyr::select(Event_ID, relationship, between_speaker_time, data, run) %>%
+  summarize(baseline_time = mean(between_speaker_time, na.rm=TRUE),
+            .by = c(relationship, run))
+
+# see whether the data was higher or less than the baseline in each run
+summary_overlap_comparison_df = dplyr::full_join(overlap_baseline_df, 
+                                                  observed_turn_overlap_df,
+                                                  by = join_by(relationship)) %>% ungroup() %>%
+  mutate_at(vars(observed_time, baseline_time), replace_na, 0) %>%
+  mutate(diff = observed_time - baseline_time) %>%
+  mutate(greater_than_chance = if_else(observed_time > baseline_time,
+                                       1,
+                                       0)) %>%
+  mutate(less_than_chance = if_else(observed_time < baseline_time,
+                                    1,
+                                    0)) %>%
+  mutate(at_chance = if_else(observed_time == baseline_time,
+                             1,
+                             0))
+
+# extract summary statistics
+test_overlap_stats_df = summary_overlap_comparison_df %>% ungroup() %>%
+  dplyr::group_by(relationship) %>%
+  dplyr::summarize(greater_than_chance = sum(greater_than_chance),
+                   less_than_chance = sum(less_than_chance),
+                   at_chance = sum(at_chance)) %>%
+
+  rowwise() %>%
+  mutate(total_obs = greater_than_chance + at_chance + less_than_chance) %>% 
+  mutate(runs_without_combination = total_permutations - total_obs) %>%
+  mutate(corrected_greater_than = greater_than_chance + runs_without_combination) %>%
+  
+  # to avoid p = 0 issues, we correct the "total observations" to include reality
+  # (this isn't the best way to do it, but this is fairly conservative)
+  dplyr::mutate(p_greater_than_chance = 1 - (corrected_greater_than/(total_permutations + 1)),
+                p_less_than_chance = 1 - (less_than_chance/(total_permutations + 1))) 
+
+# filter significant values with an alpha criterion of .05
+significant_overlap_values_only = test_overlap_stats_df %>% ungroup() %>%
+  dplyr::filter(p_greater_than_chance <= .05 |
+                  p_less_than_chance <= .05)
+
+# make some nicer tables
+sig_overlap_key_df = test_overlap_stats_df %>% ungroup() %>%
+  pivot_longer(cols = starts_with("p_"),
+               names_to = "direction",
+               values_to = "p_val") %>%
+  dplyr::filter(p_val <= .05)
+neat_sig_overlap_df = test_overlap_stats_df %>% ungroup() %>%
+  mutate(color_cluster = relationship) %>%
+  dplyr::filter(relationship %in% sig_laughter_key_df$relationship)
+
+```
+
+### Effects of relationship type on semantic coherence
+
+```{r coherence_significance_tests}
+
+# summarize coherence overlap by relationship for each run
+coherence_baseline_df = baseline_conversation_df %>% ungroup() %>%
+  dplyr::select(Event_ID, relationship, windowed_similarity, data, run) %>%
+  summarize(baseline_coherence = mean(windowed_similarity, na.rm=TRUE),
+            .by = c(relationship, run))
+
+# see whether the data was higher or less than the baseline in each run
+summary_coherence_comparison_df = dplyr::full_join(coherence_baseline_df, 
+                                                  observed_coherence_df,
+                                                  by = join_by(relationship)) %>% ungroup() %>%
+  mutate_at(vars(observed_coherence, baseline_coherence), replace_na, 0) %>%
+  mutate(diff = observed_coherence - baseline_coherence) %>%
+  mutate(greater_than_chance = if_else(observed_coherence > baseline_coherence,
+                                       1,
+                                       0)) %>%
+  mutate(less_than_chance = if_else(observed_coherence < baseline_coherence,
+                                    1,
+                                    0)) %>%
+  mutate(at_chance = if_else(observed_coherence == baseline_coherence,
+                             1,
+                             0))
+
+# extract summary statistics
+test_coherence_stats_df = summary_coherence_comparison_df %>% ungroup() %>%
+  dplyr::group_by(relationship) %>%
+  dplyr::summarize(greater_than_chance = sum(greater_than_chance),
+                   less_than_chance = sum(less_than_chance),
+                   at_chance = sum(at_chance)) %>%
+
+  rowwise() %>%
+  mutate(total_obs = greater_than_chance + at_chance + less_than_chance) %>% 
+  mutate(runs_without_combination = total_permutations - total_obs) %>%
+  mutate(corrected_greater_than = greater_than_chance + runs_without_combination) %>%
+  
+  # to avoid p = 0 issues (which are bad if we need to correct for multiple comparisons), 
+  # we can correct the "total observations" to include reality in the denominator (+ 1)
+  dplyr::mutate(p_greater_than_chance = 1 - (corrected_greater_than/(total_permutations + 1)),
+                p_less_than_chance = 1 - (less_than_chance/(total_permutations + 1))) 
+
+# filter significant values with an alpha criterion of .05
+significant_coherence_values_only = test_coherence_stats_df %>% ungroup() %>%
+  dplyr::filter(p_greater_than_chance <= .05 |
+                  p_less_than_chance <= .05)
+
+# make some nicer tables
+sig_coherence_key_df = test_coherence_stats_df %>% ungroup() %>%
+  pivot_longer(cols = starts_with("p_"),
+               names_to = "direction",
+               values_to = "p_val") %>%
+  dplyr::filter(p_val <= .05)
+neat_sig_coherence_df = test_coherence_stats_df %>% ungroup() %>%
+  mutate(color_cluster = relationship) %>%
+  dplyr::filter(relationship %in% sig_laughter_key_df$relationship)
+
+```
+
+## Results tables
+
+```{r create_results_tables}
+
+# laughter results table
+readable_laughter_table = dplyr::left_join(neat_sig_laughter_df,
+                                          observed_laughter_df,
+                                          by = "relationship") %>%
+  dplyr::select(relationship, observed_n, contains("p_"))
+
+# turn overlap results table
+readable_overlap_table = dplyr::left_join(neat_sig_overlap_df,
+                                          observed_turn_overlap_df,
+                                          by = "relationship") %>%
+  dplyr::select(relationship, observed_time, contains("p_"))
+
+# semantic coherence results table
+readable_coherence_table = dplyr::left_join(neat_sig_coherence_df,
+                                          observed_coherence_df,
+                                          by = "relationship") %>%
+  dplyr::select(relationship, observed_coherence, contains("p_"))
+
+```
+
+```{r show_results_tables, echo=FALSE}
+
+kable(readable_overlap_table, 
+      caption = paste0("**Results for turn overlap analysis.** Mean overlap ",
+                  "in ms per conversation. Mean observed overlap by each ",
+                  "relationship type included as `observed_time` variable. ",
+                  "Only relationship types with significant values included."))
+
+kable(readable_laughter_table, 
+      caption = paste0("**Results for laughter analysis.** Number of turns ",
+                  "with laughter per conversation. Total number of observed turns by each ",
+                  "relationship type included as `observed_n` variable. ",
+                  "Only relationship types with significant values included."))
+
+kable(readable_laughter_table, 
+      caption = paste0("**Results for windowed coherence analysis.** Mean semantic coherence ",
+                  "in a +/- 3-turn window. Mean observed coherence by each ",
+                  "relationship type included as `observed_coherence` variable. ",
+                  "Only relationship types with significant values included."))
+```
+
+***
+
+# Data visualization
+
+We've already examined the significance values, but let's take a look at some
+data visualizations. For these, we'll be showing the histogram of the entire
+permuted dataset (faceted by relationship type) and a single vertical line (in red) 
+to show where the observed data lie.
+
+```{r laugh_histogram, echo = FALSE}
+
+# histogram of permutation test baselines
+ggplot(data = summary_laughter_comparison_df,
+       aes(x = baseline_n,
+           fill = relationship)) +
+  facet_wrap(vars(relationship)) +
+  stat_bin(bins = 30) +
+  scale_fill_manual(breaks = c("family",
+                               "friends",
+                               "romantic",
+                               "work"),
+                    values = c("#F8766D",
+                               "#D89000",
+                               "#39B600",
+                               "#00B0F6"),
+                    guide = "none") +
+  geom_vline(data = . %>% 
+               group_by(relationship) %>% 
+               summarise(value=mean(observed_n)), 
+             aes(xintercept=value),
+             color = "red") +
+  labs(y = "Count",
+       x = "Turns with laughter",
+       title = "Turns with laughter by relationship type")
+
+```
+
+```{r overlap_histogram, echo = FALSE}
+
+# histogram of permutation test baselines
+ggplot(data = summary_overlap_comparison_df,
+       aes(x = baseline_time,
+           fill = relationship)) +
+  facet_wrap(vars(relationship)) +
+  stat_bin(bins = 30) +
+  scale_fill_manual(breaks = c("family",
+                               "friends",
+                               "romantic",
+                               "work"),
+                    values = c("#F8766D",
+                               "#D89000",
+                               "#39B600",
+                               "#00B0F6"),
+                    guide = "none") +
+  geom_vline(data = . %>% 
+               group_by(relationship) %>% 
+               summarise(value=mean(observed_time)), 
+             aes(xintercept=value),
+             color = "red") +
+  labs(y = "Count",
+       x = "Mean overlap between speakers' turns",
+       title = "Turns overlap by relationship type")
+
+```
+
+```{r coherence_histogram, echo = FALSE}
+
+# histogram of permutation test baselines
+ggplot(data = summary_coherence_comparison_df,
+       aes(x = baseline_coherence,
+           fill = relationship)) +
+  facet_wrap(vars(relationship)) +
+  stat_bin(bins = 30) +
+  scale_fill_manual(breaks = c("family",
+                               "friends",
+                               "romantic",
+                               "work"),
+                    values = c("#F8766D",
+                               "#D89000",
+                               "#39B600",
+                               "#00B0F6"),
+                    guide = "none") +
+  geom_vline(data = . %>% 
+               group_by(relationship) %>% 
+               summarise(value=mean(observed_coherence)), 
+             aes(xintercept=value),
+             color = "red") +
+  labs(y = "Count",
+       x = "Mean windowed semantic similarity",
+       title = "Windowed semantic coherence by relationship type")
+
+```
+
+These histograms---in addition to showing off the statistical significance---highlight
+the sensitivity of permutation tests to the properties of the real behavior.
+The number of turns in each type of conversation varied, for example, and that 
+gets accounted for *if* we choose the appropriate level of permutation
+for our null hypothesis. We don't have to wrestle with the appropriate linking
+functions or nested intercepts; we get this respect for the data "for free"
+with permutation tests.
+
+Out of curiosity---does anything strike you as interesting or unexpected about
+these results? If you read the transcripts (or, better yet, listen to the audio), 
+do you feel as though these analyses capture something important or useful about
+the conversations? Why or why not? What might you do differently?

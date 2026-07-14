@@ -1,0 +1,796 @@
+@UTF8
+@Begin
+@Languages:	eng
+@Participants:	ENV ENV Environment, REED REED Speaker, DARR DARREN Speaker, SALL SALLY Speaker
+@Options:	CA, caps, bullets
+@ID:	eng|SBCSAE|ENV|||||Environment|||
+@ID:	eng|SBCSAE|REED|||||Speaker|||
+@ID:	eng|SBCSAE|DARR|||||Speaker|||
+@ID:	eng|SBCSAE|SALL|||||Speaker|||
+@Media:	46, audio
+@Comment:	Flumpity-Bump Down the HIll
+@Comment:	Medical interaction, recorded in Shreveport, Louisiana. A
+	patient (Darren) is consulting with his orthopedist (Reed) regarding
+	a knee injury from a recent skiing accident.
+*ENV:	(..) &=DOOR_OPENING . 0_2589
+*REED:	(..) Hey man . 2589_4447
+*DARR:	Hey . 4447_4934
+*REED:	(..) Good to see you 4934_6420
+	&=laugh &=laugh 6420_6954
+	(..) we:ll 6954_8464
+	(..) I see you went ahead with your plans to do a little skiing there ? 8464_12328
+*DARR:	(.) I did . 12328_12879
+*DARR:	&=laugh &=laugh . 12879_13234
+*SALL:	&=laugh . 13234_13408
+*REED:	We:ll 13408_14046
+	I'm glad you didn't hurt yourself too bad . 14046_15579
+*DARR:	⌈ Me too ⌉ . 15579_16185
+*REED:	⌊ and she says ⌋ you're ⌈2 getting better ⌉2 already . 15637_17163
+*ENV:	                        ⌊2 &=DOOR_CLOSING ⌋2 . 16212_16788
+*REED:	so that's always a good sign . 17163_18591
+*DARR:	(.) Yeah 18591_18969
+	I mean I couldn't +/. 18969_19619
+*DARR:	(..) I couldn't begin to ⌈ &{l=X deal with &}l=X the slightest pressure ⌉ . 19619_21848
+*REED:	                         ⌊ Yeah 20757_21151
+	&{l=X give it &}l=X easy easy ⌋ 21151_22208
+	yeah don't +... 22208_22684
+*DARR:	(..) &=in Tha⌈t still hur⌉ts back here . 22684_24518
+*REED:	             ⌊ Yeah ⌋ 23404_23787
+	(.) yeah . 24518_25014
+*REED:	(..) Well 25014_25614
+	you don't want to (.) stretch 25614_26761
+	see what happened 26761_27550
+	you st- +/. 27550_27875
+*REED:	(..) Ch- +/. 27875_28764
+*REED:	(.) According to this other guy 28764_29780
+	you stretched your ligaments in there 29780_31355
+	&=in and the ligaments are the things that hold your joint together 31355_34240
+	keep it from flopping around so 34240_35856
+	&=in if they get 35856_36870
+	(..) you know 36870_37567
+	stretched just a little 37567_38624
+	when they try to peel down 38624_40126
+	and tighten up 40126_40875
+	and you don't want to 40875_41652
+	&=in (..) you know 41652_43080
+	get em too la:x while they're trying to tighten . 43080_45599
+*REED:	You know 45599_45924
+	you want to let em (.) heal as strong as they can . 45924_48201
+*REED:	I mean you can move it 48201_49087
+	I'm not saying you got to go around with it just totally 49087_51382
+	&=in &=lengthened but you don't wanna stretch those (..) ligaments very much when 51382_55798
+	while they're healing . 55798_56541
+*REED:	Just +/. 56541_56796
+*REED:	&=in (..) Just gra:dually bring it around . 56796_59450
+*DARR:	(.) ⌈ Okay ⌉ . 59450_60170
+*REED:	    ⌊ Are you u⌋sing any kind of walking aids . 59803_62042
+*DARR:	⌈2 Hm-mm ⌉2 . 62042_62509
+*REED:	⌊2 Nope ⌋2 . 62042_62509
+*REED:	(..) Just walking around . 62509_63809
+*REED:	Hunh ? 63809_64134
+*DARR:	(.) Yeah 64134_64715
+	I had 64715_64982
+	for the first two days I had a crutch or two . 64982_66828
+*REED:	(.) Okay . 66828_67524
+*DARR:	I switched from two to one 67524_68618
+	like a cane 68618_69268
+	and then I . 69268_69653
+*REED:	Yeah . 69653_69976
+*REED:	Okay . 69976_70394
+*DARR:	(..) Uh: 70394_71218
+	(.) it was really (.) icy there 71218_72598
+	so I 72598_73048
+	(.) it had a spike on it 73048_74208
+	so⌈: I ⌉ +... 74208_74708
+*REED:	  ⌊ Oh ⌋ 74406_74847
+	that was neat . 74847_75556
+*DARR:	(..) Yeah . 75556_76194
+*DARR:	Peg it in the ground [% laugh] . 76194_77970
+*REED:	(.) If you forget 77970_78763
+	and walk inside with your spike 78763_80273
+	I guess you're ⌈ not too ⌉ well appreciated . 80273_82065
+*DARR:	               ⌊ &=SNEEZE ⌋ 80823_81190
+	No⌈2: [% laugh] &=laugh ⌉2 . 82065_82723
+*REED:	  ⌊2 &{l=X Bet you &}l=X ⌋2 &=laugh . 82273_82999
+*DARR:	(.) No [% laugh] 82999_83533
+	&=laugh . 83533_83824
+*REED:	(.) Let me set you up there . 83824_85089
+*REED:	&=THROAT . 85089_85713
+*DARR:	Is it okay if I record this 85713_86990
+	I +/. 86990_87304
+*DARR:	I alread⌈y have ⌉ +... 87304_88081
+*REED:	        ⌊ Sure ⌋ . 87582_87965
+*DARR:	(..) It's ⌈2 for a ⌉2 pro⌈3ject ⌉3 . 87965_89289
+*REED:	          ⌊2 Sure ⌋2 . 88546_88824
+*REED:	                         ⌊3 &=THROAT ⌋3 89126_89486
+	Sure . 89486_90043
+*DARR:	(..) Cool . 90043_90977
+*REED:	(..) Alright 90977_92940
+	what are you doing over there . 92940_93834
+*REED:	I thought you were doing something &=ex (.) different . 93834_95970
+*REED:	I thought you were working with languages in +... 95970_97781
+*DARR:	(..) Okla⌈homa ⌉ ? 97781_98767
+*REED:	         ⌊ Hunh ⌋ ? 98612_98865
+*DARR:	(..) Or in California . 98865_100792
+*REED:	I mean 100792_101233
+	well yeah 101233_101712
+	y- California your basic pro⌈ject ⌉ . 101712_103416
+*DARR:	                            ⌊ I ⌋ wa:s in linguistics . 103276_104461
+*DARR:	That's ⌈2 what this project⌉2's for . 104461_105724
+*REED:	       ⌊2 Yeah that's ⌋2 +... 104646_105192
+*DARR:	but 105724_105974
+	(..) I did a year of it 105974_107181
+	an:d decided it wasn't quite 107181_108671
+	(.) what I ⌈ really l- ⌉ +... 108671_109585
+*REED:	           ⌊ Quite ⌋ 109271_109535
+	quite what you want 109585_110432
+	okay . 110432_110787
+*DARR:	Yeah 110787_111024
+	it was an unfortunate 111024_111732
+	cause I really don't know quite what I want [% laugh] &=laugh . 111732_113591
+*REED:	(..) We:ll that's alright . 113591_114660
+*REED:	(..) I mean 114660_115239
+	there's a lot of things out there 115239_116400
+	you'll find something . 116400_117341
+*DARR:	(.) I hope so &=ex . 117341_118239
+*REED:	You know 118239_118739
+	ʔuh +... 118739_118962
+*DARR:	(.) I ⌈ move to O⌉klahoma . 118962_120143
+*REED:	      ⌊ X ⌋ +/. 119312_119645
+*REED:	(..) Completely . 120143_120967
+*REED:	My son is still flopping around 120967_122747
+	he +/. 122747_122964
+*REED:	&=in (..) He uh graduated from medical school this year and uh 122964_127023
+	I mean he's in uh 127023_128141
+	(..) Soho in New York . 128141_129707
+*DARR:	(..) Reall⌈y ⌉ . 129707_130531
+*REED:	          ⌊ S⌋tarting an art (.) career 130427_131959
+	(..) &=laugh &=lengthened . 131948_133794
+*DARR:	&=laugh ⌈ &=laugh &=laugh &=laugh ⌉ &=laugh . 133794_135094
+*REED:	        ⌊ So: [% laugh] ⌋ 134072_134781
+	(.) so you see 135059_135791
+	I mean 135791_136058
+	a lot of people 136058_136859
+	&=in you know 136859_137697
+	I mean he's gonna paint for a year 137697_138975
+	and just see whether he can do well enough with th⌈at to ⌉ +... 138975_141338
+*DARR:	                                                  ⌊ Cause he ⌋ doesn't want to be a doctor after all ? 141134_142446
+*REED:	Well 142446_142725
+	he couldn't find anything he really wanted to do . 142725_145261
+*REED:	You know 145261_145696
+	I mean he . 145696_146317
+*DARR:	(..) Did he ⌈ spec⌉ialize ⌈2 &{l=X at all &}l=X ⌉2 ? 146317_147827
+*REED:	            ⌊ he ⌋ +/. 147014_147339
+*REED:	                          ⌊2 &=in ⌋2 Well that's what I mean 147577_148477
+	no 148477_148702
+	he hasn't specialized yet . 148702_149754
+*REED:	But he couldn't find anything that just really 149754_152156
+	(..) pulled him toward it 152156_153526
+	(..) a:nd so he said well 153526_155210
+	(.) &=in (..) you know &=ex 155210_157576
+	&=in I guess he got a lot out of always doing art when he was young and 157576_161268
+	he's gotta scratch that little itch 161268_163093
+	(.) I ⌈ think . 163093_163660
+*DARR:	      ⌊ Good for him ⌋ . 163381_164084
+*REED:	a:nd ⌉ 163660_164058
+	so he's up there 164058_164910
+	and he'll give it a year and 164910_166220
+	(.) see what happens . 166220_167265
+*REED:	And the same for you 167265_168043
+	you got +/. 168043_168391
+*REED:	&=in You got plenty of +/. 168391_169517
+*REED:	&=in There's: (.) uh 169517_170720
+	(.) fortunately 170720_171684
+	(..) this day and time I think it allows 171684_174076
+	(..) ʔuh one to 174076_175875
+	(.) proceed like you're and- 175875_177339
+	you're proceeding 177339_178207
+	and he's proceeding . 178207_179182
+*REED:	And I think it 179182_179657
+	I think it's the right thing to do . 179657_181132
+*REED:	I would've d- +/. 181132_181608
+*REED:	I would probably do the same thing were I 181608_184231
+	you know 184231_184580
+	another generation down the line . 184580_186242
+*REED:	&=in You know 186242_187235
+	although I r- ʔuh 187235_187935
+	(.) I didn't make the wrong decision for me . 187935_190243
+*REED:	(..) But 190243_190708
+	(..) I'm sure I would have been a lot more . 190708_193185
+*REED:	(..) Uh 193185_194114
+	(..) uh 194114_195449
+	(..) I guess 195449_196316
+	diligent in in 196316_197302
+	working it out beforehand but 197302_198800
+	&=in in 198800_199513
+	in my time 199513_200298
+	you know 200298_200623
+	you really kinda just +/. 200623_201768
+*REED:	(.) There wasn't too many things to do 201768_203519
+	you know 203519_204144
+	and 204144_204369
+	you- (.) too many opportunities 204369_205739
+	and so you just kinda 205739_206749
+	&=in chose between a few 206749_208443
+	and 208443_208693
+	(.) that was it . 208693_209422
+*DARR:	(..) Yeah . 209422_209933
+*DARR:	⌈ &=laugh &=laugh ⌉ . 209933_210351
+*REED:	⌊ &=laugh &=lengthened ⌋ &=lengthened . 209921_210757
+*DARR:	⌈2 &=laugh &=laugh ⌉2 &=in . 210757_211825
+*REED:	⌊2 So [% laugh] ⌋2 210966_211407
+	(..) a little simpler lifesty:le in those days . 211825_214684
+*REED:	&=in (.) Tell me where it hurts . 214684_216182
+*DARR:	(..) Uh 216182_217054
+	(.) still a little bit back here . 217054_218480
+*REED:	(.) Mm-kay . 218480_219061
+*DARR:	Doesn't feel quite normal (.) back there 219061_221073
+	(..) un⌈der ⌉ +... 221073_221708
+*REED:	       ⌊ Okay ⌋ . 221557_221917
+*DARR:	(..) It (.) originall⌈2y hurt ⌉2 +... 221917_223844
+*REED:	                     ⌊2 On the si⌋2:des 223264_224093
+	yeah 224093_224334
+	the ⌈ sides ⌉ don't hurt mu⌈2:ch ⌉2 ? 224334_225632
+*DARR:	    ⌊ It would ⌋ +/. 224434_224807
+*DARR:	                           ⌊2 Not a⌋2nymore . 225443_226075
+*DARR:	⌈3 I think it did at ⌉3 fir- +... 226075_226986
+*REED:	⌊3 Mm-kay ⌋3 . 226307_226778
+*DARR:	at ⌈4 first ⌉4 . 226981_227608
+*REED:	   ⌊4 great ⌋4 . 227224_227507
+*DARR:	(..) He drew some blood out 227507_228927
+	(.) from here ⌈ the first time ⌉ . 228927_230247
+*REED:	              ⌊ Yeah 229434_229667
+	I saw that ⌋ . 229655_230293
+*REED:	You got 230293_230677
+	ʔa little bit of blood 230677_231571
+	not too much 231571_232186
+	that's a good sign too . 232186_233285
+*REED:	(..) Cause 233285_233810
+	&=in usually when they're torn bad 233810_235185
+	they have a lot more blood than that . 235185_236645
+*REED:	(..) Is that doing anything . 236645_240232
+*DARR:	(.) Nothing bad really . 240232_241300
+*REED:	(..) Which one hurts more 241300_242997
+	(.) ba:ck 242997_243505
+	(..) or forward . 243505_244726
+*DARR:	(..) They're about the same . 244726_246039
+*REED:	About the same . 246039_246743
+*DARR:	There's just this sense of constantly not being quite right . 246743_249575
+*REED:	(.) Mm-kay ? 249575_250091
+*REED:	(..) &=in Well see 250091_251506
+	let me show you something over here . 251506_252710
+*REED:	(..) Watch this one . 252710_254236
+*REED:	(..) See I'm pushing ba:ck now . 254236_256637
+*DARR:	(.) Yeah . 256637_257094
+*REED:	(.) and I'm pulling forward 257094_258255
+	and it +/. 258255_258592
+*REED:	(..) You get a little bit of pull 258592_260527
+	(..) coming forward it 260527_261602
+	(.) it (.) moves out a little bit 261602_263227
+	(.) and 263227_263645
+	but when you go back 263645_264536
+	it kinda 264536_264986
+	(..) tight . 264986_266242
+*REED:	(..) It's got a good catch to it you know . 266242_268503
+*DARR:	Mhm . 268503_268898
+*REED:	over here 268898_269536
+	(..) &=in we're gonna pull 269536_271873
+	(..) pull it out . 271873_273079
+*DARR:	(..) Wow it doesn't have that same movement . 273079_275748
+*REED:	(..) It's got a little more (.) forward movement 275748_278500
+	(..) and it 278500_279314
+	(.) kinda 279314_279891
+	(..) has a 279891_280813
+	kind of a rubbery kinda end stop there 280813_284136
+	(.) so: uh 284136_284972
+	&=in chances are &=ex 284972_286537
+	(.) you've uh hurt that 286537_287846
+	(..) uh ligament in the back too . 287846_289755
+*REED:	&=in Uh . 289755_290613
+*DARR:	(.) The crossband ? 290613_291600
+*REED:	(.) M:hm yeah . 291600_292457
+*REED:	The +/. 292457_292719
+*REED:	(..) Call +/. 292719_294372
+*REED:	We call em the cruciate ligaments . 294372_295929
+*REED:	He calls em the ex-ban:ds 295929_297394
+	or whatever they ⌈ are . 297394_298257
+*DARR:	                 ⌊ Yeah 298029_298407
+	I don't know what ⌋ +... 298407_298745
+*REED:	th- they ⌉ +/. 298257_298745
+*REED:	They cross 298745_299585
+	(..) and one +/. 299585_300627
+*REED:	(.) &=in They cross because one's going forward and one's going backwards 300627_303816
+	and they keep you from going forwards and backwards 303816_305882
+	is basically ⌈ what they ⌉ do so . 305882_307438
+*DARR:	             ⌊ Hunh ⌋ . 306463_306782
+*REED:	⌈2 &=in ⌉2 Pretty logical arrangement there . 307438_309812
+*DARR:	⌊2 Mhm ⌋2 . 307886_308117
+*REED:	(..) &=THROAT 309812_312005
+	(..) Yeah 312005_318611
+	it is . 318611_319013
+*REED:	Your posterior's (..) messed up a little bit . 319013_322241
+*REED:	&=ex &=lengthened . 322241_323042
+*DARR:	(.) Well 323042_326014
+	can that get better ? 326014_326861
+*REED:	(..) U:h &=ex &=lengthened 326861_328918
+	(..) mm: 328918_330335
+	(..) &{l=P get a little better maybe &}l=P . 330335_332727
+*REED:	(..) It's not gonna get all the way right . 332727_335792
+*DARR:	(..) Mm . 335792_336365
+*REED:	It'll be (.) a little bit of a problem . 336365_338049
+*REED:	&=in I'm not sure you didn't maybe have some of that before 338049_341009
+	I don't really know 341009_341942
+	(..) uh 341942_342716
+	(.) let me see w- (.) how much this hurts here . 342716_344723
+*DARR:	(.) Mm . 344723_346011
+*REED:	(..) None ? 346011_347521
+*DARR:	(..) Mm-mm . 347521_348299
+*REED:	Good . 348299_348624
+*REED:	(..) &=in . 348624_350930
+*DARR:	(.) My main physical activity 350930_352430
+	for the past year and a half has been aikido . 352430_354392
+*ENV:	(..) &=DOOR_CLOSING . 354392_355530
+*DARR:	which is a pretty gent⌈le art ⌉ . 355530_357155
+*REED:	                      ⌊ Mm ⌋ . 356679_357039
+*REED:	(..) Mm-kay . 357155_358439
+*DARR:	(.) Lot of rolling 358439_359206
+	lot of +/. 359206_359565
+*DARR:	(..) The knees do take something from that 359565_361239
+	&{l=X I believe that they &}l=X +/. 361239_362005
+*DARR:	(..) A lot of work ⌈ on em ⌉ . 362005_363537
+*REED:	                   ⌊ Oh yeah ⌋ . 362886_363559
+*REED:	Sure . 363559_364024
+*REED:	Any of those (..) things gotta (.) &=in put some kinda (.) stress on your leg 364024_369118
+	you know ? 369118_369484
+*DARR:	(.) I definitely want to get back to it though . 369484_371020
+*DARR:	(..) I had to lay off it for a while . 371020_373295
+*DARR:	(..) That (..) hurts right over here . 373295_375598
+*SALL:	Okay . 375598_375897
+*REED:	Mm-kay . 375897_376444
+*REED:	(..) It's not too bad though . 376444_378198
+*SALL:	(..) &=SNIFF . 378198_378952
+*REED:	(.) It's just ve:ry mi:ld 378952_380856
+	&=in uh 380856_381715
+	that +/. 381715_382006
+*REED:	That one could probably +/. 382006_383201
+*REED:	(..) See look at the difference on here now . 383201_385047
+*REED:	what- (.) see +/. 385047_385792
+*REED:	(..) See how much of a jiggle you got there 385792_387818
+	you got just (..) a little laxity there . 387818_391295
+*REED:	righ⌈:t ⌉ ? 391295_391608
+*DARR:	    ⌊ M⌋hm . 391411_391817
+*REED:	(.) And this one's just (.) a hai:r different . 391817_394046
+*REED:	I mean it +/. 394046_394627
+*REED:	(..) But it hurts . 394627_398391
+*DARR:	(.) A bit . 398391_398902
+*REED:	(.) Uh 398902_399332
+	a little bit . 399332_399784
+*DARR:	(.) It ⌈ hurt a lot at first ⌉ . 399784_400969
+*REED:	       ⌊ But it's just a ⌋ hair 400121_401515
+	&=in and uh 401515_402479
+	(.) so 402479_402933
+	if you just let that one kinda heal 402933_404706
+	(..) you know 404706_406206
+	which I think it's gonna do 406206_407204
+	cause you don't even complain much of this over here . 407204_409767
+*REED:	&=in You know 409767_410251
+	when you're doing things 410251_411077
+	you're thinking more about this back one 411077_412792
+	and that's the posterior (..) ex-band 412792_415257
+	if you want to put it (.) like that 415257_416683
+	or posterior cruciate we call it . 416683_418076
+*DARR:	(..) &=SNIFF . 418076_419148
+*REED:	(..) &=tsk Uh 419148_420187
+	(..) seems to be the problem 420187_421835
+	(.) &=in but it's not uh 421835_423394
+	(..) I'm not sure you didn't have a little bit of that problem before . 423394_428007
+*DARR:	(..) It isn't +/. 428007_430538
+*DARR:	(..) All these years since the wreck 430538_432679
+	the (.) the leg's never felt 432679_433942
+	you know 433942_434269
+	like it 434269_434571
+	(..) it's ⌈ never been t⌉otally norm⌈2al but ⌉2 . 434571_436347
+*REED:	          ⌊ Mhm ⌋ . 435012_435407
+*REED:	                                    ⌊2 Mhm ⌋2 . 435907_436347
+*DARR:	I just ⌈3 got used to it ⌉3 . 436347_437218
+*REED:	       ⌊3 Did your knee ⌋3 436580_437381
+	did your knee feel ⌈4 like it ⌉4 would +... 437381_439296
+*DARR:	                   ⌊4 &=GASP ⌋4 438811_439041
+	(..) Sorr- ⌈5 that hurt⌉5s a bit . 439296_440355
+*REED:	           ⌊5 X ⌋5 439621_439889
+	(.) Where did that get you 440355_441424
+	over here ? 441424_441849
+*DARR:	Again ⌈ yeah ⌉ . 441849_442418
+*REED:	      ⌊ Right ⌋ . 442209_442429
+*REED:	Yeah okay . 442429_442963
+*REED:	That's okay . 442963_443480
+*REED:	(.) &=in Did your knee feel like it (..) had some play in it 443480_447671
+	you know 447671_447989
+	it wasn't real steady . 447989_449293
+*DARR:	(.) I don't remember . 449293_450343
+*DARR:	(..) That being a +... 450343_451493
+*REED:	Being a ⌈ (.) ⌉ complaint while you were doing your &=in martial arts stuff ? 451493_455789
+*SALL:	        ⌊ &=SNIFF ⌋ . 452424_452667
+*REED:	Still ⌈2 &{l=X hurt a little bit too &}l=X ⌉2 . 455789_457236
+*DARR:	      ⌊2 I injured the front of the ⌋2 knees when I was dancing for a while 456165_458928
+	I was dancing with Kristy Hannah here 458928_460593
+	(.) ⌈ few years ag⌉o and . 460593_461661
+*REED:	    ⌊ Mhm ⌋ . 460735_461360
+*DARR:	(.) there were some times I came down on it 461661_463066
+	⌈ and it did some ⌉ +... 463066_463995
+*REED:	⌊ XXXXX ⌋ ? 463078_463937
+*DARR:	(..) But that was (.) impact injury . 463937_467188
+*REED:	Yeah . 467188_467583
+*REED:	Right . 467583_467935
+*REED:	(..) Let's see (.) how rough that is . 467935_469927
+*REED:	Let your knee down . 469927_470821
+*REED:	(.) Alright now straighten your knee out . 470821_472284
+*REED:	(.) Yeah 472284_472586
+	you've got a little +/. 472586_473271
+*REED:	(..) ⌈ Put your ⌉ +... 473271_474699
+*DARR:	     ⌊ Yeah ⌋ . 474432_474687
+*REED:	Put your hand . 474699_475209
+*REED:	You feel it ? 475209_475651
+*DARR:	(.) Yeah 475651_476198
+	(.) ⌈ it's X ⌉ . 476198_476999
+*REED:	    ⌊ But that's ⌋ pretty typical . 476519_477672
+*REED:	How about this one . 477672_478389
+*REED:	You got anything over ⌈ here . 478389_479515
+*DARR:	                      ⌊ &{l=X I've got a &}l=X X ⌋ . 479271_479936
+*REED:	no that's ⌉ pretty slick . 479515_480656
+*REED:	Just a little click over ⌈2 there ⌉2 . 480656_482015
+*DARR:	                         ⌊2 Yeah ⌋2 . 481771_482038
+*REED:	(.) &=in (..) Alright &=ex ? 482038_484030
+*REED:	Uh 484030_484399
+	hold your (.) leg real strong there 484399_486257
+	let me pull on it . 486257_487023
+*REED:	And let's see if we got 487023_487859
+	(..) a pretty good muscle there ? 487859_490400
+*REED:	(..) Is that hurting anything ? 490400_491991
+*DARR:	Mm-⌈mm ⌉ . 491991_492921
+*REED:	   ⌊ Kay ⌋ . 492621_492921
+*REED:	(.) &=in Alright 492884_494075
+	well I- +/. 494075_494424
+*REED:	I think uhm 494424_495411
+	(..) &=tsk &=in (.) You know I +/. 495411_499190
+*REED:	I think 499190_499701
+	(.) probably 499701_500850
+	(..) it's mostly posterior cruciate 500850_503511
+	not so much anterior cruciate 503511_505136
+	which is good 505136_505950
+	&=in um 505950_507168
+	(..) the medial collateral ligament 507168_511315
+	that (.) l:igament here is just minimally hurt 511315_513420
+	(.) &=in (.) uh 513420_515158
+	I think so:me of that (..) posterior cruciate was probably already r- there 515158_519657
+	and the reason I'm saying that is 519657_521021
+	because it really (..) doesn't hurt that much when I pull on it . 521021_524746
+*REED:	&=in See the +/. 524746_525500
+*REED:	(.) This is the one that ⌈ pulls on that ⌉ +... 525500_527645
+*DARR:	                         ⌊ It feels tight though ⌋ a bit . 526670_527873
+*REED:	(.) Mhm . 527873_528469
+*REED:	(..) When I push back 528469_530083
+	(..) I'm pushing on it . 530083_531406
+*REED:	(..) That's +/. 531406_532353
+*REED:	(.) And 532353_532822
+	and that's not bothering you very much . 532822_534505
+*REED:	(..) But see this one 534505_535875
+	(..) has been hurt 535875_537060
+	and when I pull on this one . 537060_538604
+*DARR:	(..) That ⌈ does hurt ⌉ . 538604_539850
+*REED:	          ⌊ y- (.) it ⌋ it hurts . 539462_540530
+*REED:	So 540530_540780
+	I mean 540780_541029
+	you know 541029_541308
+	I mean 541308_541610
+	pretty simple 541610_542316
+	you know 542316_542608
+	if if they've been hurt 542608_543560
+	they gonna hurt when you stretch em . 543560_544835
+*REED:	you know 544835_545185
+	so 545185_545556
+	&=in &=lengthened that's why I'm thinking that (.) posterior is probably 545556_549078
+	(.) a lot of that's been there 549078_550673
+	(.) &=in you may have hurt it a little bit more 550673_553316
+	(.) you know 553316_554071
+	(.) and yʔ- +/. 554071_554674
+*REED:	So you got this one a little bit 554674_556114
+	and this one a little bit 556114_557300
+	&=in Both of em are a little 557300_558679
+	&=in both of em can probably heal up if you let em 558679_561789
+	(..) &=in a:nd . 561789_563447
+*DARR:	(.) No need for surgery to make it ⌈ better ⌉ ? 563447_565212
+*REED:	                                   ⌊ No ⌋ . 564852_565200
+*REED:	Unh-unh . 565212_565620
+*REED:	(..) And uh 565620_566978
+	(..) the: 566978_568406
+	(..) the outcome will probably be: 568406_572097
+	(..) pretty close to what you had before . 572097_574222
+*REED:	In other words 574222_574804
+	&=in &=lengthened ⌈ I ⌉ +... 574804_575603
+*DARR:	                  ⌊ I may ⌋ have lost a b:it 575349_576338
+	&{l=@ but it's⌈2: not &}l=@ ⌉2 +... 576338_577140
+*REED:	              ⌊2 Yeah ⌋2 . 576674_577140
+*REED:	I mean 577140_577523
+	you know 577523_577894
+	five percent or 577894_578970
+	(.) something . 578970_579647
+*REED:	You know what I mean 579647_580506
+	you know 580506_580739
+	I don't know . 580739_581342
+*REED:	You know 581342_581667
+	you'll just have to +/. 581667_582623
+*REED:	(.) &{l=X Try to &}l=X have to see how it plays out . 582623_584483
+*REED:	But it it's gonna be minimal . 584483_585981
+*REED:	(..) &=in And you can z- +/. 585981_587752
+*REED:	(..) You can overcome that a little bit 587752_589752
+	by getting your (.) muscle (.) in better shape . 589752_592227
+*REED:	(..) &=tsk There are two things that stabilize your knee . 592227_595030
+*REED:	&=in This is your knee brace 595030_596607
+	the big muscle above your knee is the brace for your knee 596607_599171
+	that's what holds it together when you're doing things . 599171_601548
+*REED:	&=in In fact 601548_602816
+	you know 602816_603025
+	all the sports players they +/. 603025_604362
+*REED:	Their ligaments have been stretched so much and 604362_606426
+	repaired 606426_607083
+	and stretched 607083_607663
+	and repaired 607663_608279
+	that they +/. 608279_608755
+*REED:	They're just not much good 608755_610246
+	&=in and they really &=in (.) have to (.) compensate with their muscle power 610246_614719
+	⌈ is what they do . 614719_615517
+*DARR:	⌊ They do a lot of leg lifts ⌋ ? 614719_616042
+*REED:	&=in S⌉o right . 615517_616587
+*REED:	(..) Uh: 616587_617396
+	(.) you know just 617396_618282
+	(..) just 618282_619234
+	(.) uh 619234_619660
+	you can do straight leg lifts 619660_620952
+	or &=in what we call just those (.) little short extensions 620952_624017
+	just &=in put a (.) bolster under behind your leg right here 624017_627500
+	&=in extend the last twenty to thirty degrees with weight on your leg 627500_631142
+	like this 631142_631687
+	do little short extensions with weight . 631687_633734
+*DARR:	(..) Mhm ? 633734_634697
+*REED:	&=in and keep working up on the weight . 634697_636241
+*DARR:	(..) Mhm ? 636241_637113
+*REED:	(..) you wanna b- +/. 637113_638812
+*REED:	You +/. 638812_638982
+*REED:	What you wanna do 638982_639690
+	and you can just do isometrics 639690_640998
+	you can just (.) l:ock your knee real stiff 640998_643111
+	and just tighten your muscle 643111_644161
+	hold it tight as you can for three seconds 644161_646170
+	and then let it rest for three seconds 646170_647818
+	and then tight for three seconds 647818_649467
+	and then rest . 649467_650042
+*REED:	&=in And you don't have to move it when you do that . 650042_651876
+*REED:	&=in Uh &=ex 651876_653614
+	(..) ʔuh: all kinda ways . 653614_655820
+*REED:	So just whatever the day will al- (.) permit 655820_657937
+	I mean 657937_658181
+	if you're sitting around 658181_659167
+	and you got some time to do some (..) isometrics 659167_661803
+	you can do that 661803_662546
+	and then when you have other time you can do the weights . 662546_664690
+*REED:	&=in &=lengthened But (.) keeping this strong will compensate for your ligaments is the (.) plan . 664690_669623
+*REED:	You know so uh 669623_670692
+	(..) &=in you know 670692_671829
+	I think 671829_672282
+	I think you'll find you 672282_673478
+	you do pretty well . 673478_674790
+*DARR:	(..) Do you think I can go back to (..) aikido and stuff ? 674790_678239
+*REED:	(.) Probably 678239_678785
+	(..) as long as it's not too (.) too violent . 678785_683586
+*REED:	(.) You know it's more form and 683586_685377
+	shape and 685377_686201
+	(..) stuff or it's 686201_687463
+	⌈ it's not too ⌉ much contact . 687463_689007
+*DARR:	⌊ It's about ⌋ +... 687463_688126
+*REED:	&=in . 689007_689367
+*DARR:	But no it's 689367_689925
+	ideally it's about (.) blending . 689925_691844
+*DARR:	(..) It's about blending with the attack 691844_693803
+	it's not about meeting the force with force so . 693803_695987
+*REED:	(.) Okay . 695987_696660
+*DARR:	(..) There's a lot of rolls . 696660_697911
+*REED:	(.) Okay 697911_699095
+	mm 699095_699501
+	well 699501_699830
+	&=in I guess if you got good at (.) at doing it 699830_702582
+	you know 702582_702953
+	where you didn't +/. 702953_703534
+*REED:	Wasn't getting yourself in awkward positions 703534_705790
+	ʔand you know 705790_706312
+	(.) getting your knee all twisted up underneath you or something 706312_709052
+	you know 709052_709319
+	you could probably handle it okay . 709319_710938
+*REED:	(.) &=in &=lengthened (..) I think 710938_713295
+	I think you'll (.) you'll be able to see for yourself . 713295_715713
+*REED:	(..) Because (.) once you get your (.) muscles strong 715713_718576
+	you get this thing controlling your knee well 718576_720588
+	you'll see what kind of knee control you have 720588_722282
+	it'll be pretty obvious to you whether you &=in you have the type of control (..) to do that . 722282_727831
+*DARR:	(..) What do you think the lesson should be from this . 727831_730292
+*DARR:	I mean 730292_730652
+	(.) ʔuh +/. 730652_731046
+*DARR:	This is the first time I've ever been on skis . 731046_732544
+*DARR:	I never did it before my wreck 732544_733733
+	so 733733_734158
+	(..) I guess the less +/. 734158_735128
+*DARR:	W- one lesson is I'll (..) probably shouldn't try skiing anymore . 735128_737860
+*REED:	(.) &=in (.) &=ex . 737860_739545
+*DARR:	ʔI ⌈ ʔuh ⌉ +... 739545_740032
+*REED:	   ⌊ ʔHe- ⌋ +/. 739800_740021
+*REED:	ʔuh +/. 740032_740218
+*REED:	(..) You know 740218_740973
+	if it were me personally 740973_742784
+	that would probably be the lesson I'd learn from it . 742784_744990
+*DARR:	(..) Cause I'm lucky it wasn't worse . 744990_746452
+*DARR:	⌈ When I ⌉ +... 746452_746779
+*REED:	⌊ Right ⌋ . 746510_746893
+*DARR:	(.) It was a ⌈2 pretty bad ⌉2 fall . 746893_748135
+*REED:	             ⌊2 Right ⌋2 . 747293_747685
+*DARR:	the +/. 748135_748286
+*DARR:	The incline was about 748286_749308
+	(..) I don't know what grade but 749308_750746
+	&=in there was a (.) turn in the wood- +/. 750746_752301
+*DARR:	It was this was in the woods . 752301_753327
+*REED:	⌈ Yeah right ⌉ . 753327_753869
+*DARR:	⌊ And it was cro⌋ss country 753327_754416
+	&=in ⌈2 &=lengthened ⌉2 . 754416_754821
+*REED:	     ⌊2 Yeah ⌋2 . 754566_754821
+*DARR:	So I didn't know what I was doing 754846_755728
+	my girlfriend had taught me 755728_756727
+	(.) I had been skiing for two and a half hours 756727_758201
+	I was tired . 758201_758926
+*REED:	(.) &=laugh &=laugh ⌈ &=laugh ⌉ . 758926_759866
+*DARR:	                    ⌊ and &{l=SM we were ⌋ getting close to getting back &}l=SM 759594_761085
+	(.) &=in and I got ʔuh (.) carried away . 761085_762768
+*DARR:	She showed me how when you're +/. 762768_763916
+*DARR:	In cross country 763916_764635
+	when you're about to fall 764635_765460
+	you just sit down . 765460_766356
+*REED:	Oh . 766356_766632
+*REED:	O⌈kay ⌉ . 766632_767108
+*DARR:	 ⌊ But I ⌋ didn't do it right . 766853_767770
+*DARR:	So 767770_768087
+	&=in there was a turn and then 768087_769161
+	&=in I +/. 769161_769695
+*DARR:	And the (.) skis don't (.) snap off ⌈ of course ⌉ . 769695_771634
+*REED:	                                    ⌊ Oh . 771042_771423
+*REED:	I ⌋ know . 771426_771878
+*DARR:	And so 771878_772262
+	(..) it stuck 772262_773190
+	and I ⌈ kept tw⌉isting . 773190_774177
+*REED:	      ⌊ You ⌋ +... 773481_773794
+*DARR:	and the ⌈2 knee ⌉2 took all the torque . 774177_775307
+*REED:	        ⌊2 ʔOh ⌋2 . 774340_774549
+*DARR:	&=in &=lengthened (.) And I didn't know what I'd done . 775307_777168
+*DARR:	(..) I screamed and 777168_778606
+	she helped me 778606_779234
+	and I manage to somehow 779234_780372
+	I don't know ʔuh +/. 780372_781022
+*DARR:	S- somehow managed to get up and 781022_782473
+	&=in hobble (..) on the ski pole 782473_784842
+	all the way ⌈ back to the cabin . 784842_786258
+*REED:	            ⌊ &=laugh Oh my God ⌋ . 785341_786653
+*DARR:	and then we had to ⌉ call the uh 786258_787164
+	s- the ambulance to take us sixty kilometers to &=in Oreille 787164_790287
+	which is a ski resort . 790287_791498
+*REED:	(..) ⌈ Geez ⌉ . 791498_792551
+*DARR:	     ⌊ We were in the m⌋iddle of nowhere . 792040_793201
+*DARR:	&=in &=ex &=in . 793201_794427
+*REED:	(.) Hunh . 794427_794838
+*DARR:	(.) I'm a little +/. 794838_795465
+*DARR:	ʔI I think it's been three weeks now 795465_797276
+	I +/. 797276_797404
+*DARR:	I was hoping that 797404_798174
+	you know 798174_798465
+	you told me or 798465_799126
+	doctor Smith told me that you know 799126_800404
+	with chronic osteo it could come back from impact 800404_802851
+	and I was +/. 802851_803222
+*DARR:	And I really hope this is not the time 803222_805057
+	you know 805057_805289
+	I've made it (.) ⌈ how many ⌉ +... 805289_806410
+*REED:	                 ⌊ Ah that's ⌋ (..) unlikely . 805939_807504
+*DARR:	(.) I've +/. 807504_807921
+*DARR:	I have not spiked any fever or 807921_809700
+	or seen any ⌈ signs ⌉ of . 809700_810785
+*REED:	            ⌊ Yeah ⌋ . 810262_810541
+*REED:	(.) No: it's 810785_811578
+	(..) it looks pretty g⌈ood ⌉ . 811578_813762
+*DARR:	                      ⌊ I ⌋ think I may have gotten lucky . 813588_814957
+*REED:	(..) Yeah 814957_817550
+	if it's not hurting up there 817550_818707
+	the pain would be &=in probably your first warning sign . 818707_821656
+*REED:	And you know . 821656_822132
+*DARR:	If that ever happ⌈ened ⌉ . 822132_823073
+*REED:	                 ⌊ Ri⌋ght . 822875_823200
+*REED:	(.) You could start (.) feeling some &=in &=lengthened (.) cha:nge in the &=ex (.) the status quo 823200_829762
+	you know ? 829762_830403
+*REED:	(.) ⌈ Changes ⌉ . 830403_831123
+*DARR:	    ⌊ I still feel ⌋ +... 830479_831146
+*REED:	(.) Yeah . 831146_831517
+*DARR:	It feels (.) b:- (.) pretty much like the other leg . 831517_833612
+*DARR:	⌈ I mean ⌉ . 833612_833983
+*REED:	⌊ Good ⌋ . 833612_833983
+*REED:	(.) That's great . 833983_834599
+*REED:	(.) Wonderful . 834599_835214
+*DARR:	Solid . 835214_835794
+*REED:	(..) Great . 835794_837095
+*DARR:	(..) Well . 837095_838107
+*REED:	(.) Love it . 838107_838954
+*REED:	(..) Well I'm glad you didn't hurt yourself 838954_841009
+	(..) it's a (.) cheap lesson . 841009_842809
+*REED:	Right ? 842809_843157
+*DARR:	That's right [% laugh] . 843157_843819
+*REED:	⌈ &=laugh &=lengthened ⌉ &=laugh ⌈2 &=laugh &=laugh &=laugh ⌉2 &=laugh . 843819_845700
+*SALL:	⌊ &=laugh &=lengthened ⌋ . 843924_844376
+*DARR:	                                 ⌊2 &=laugh (.) &=laugh ⌋2 844713_845270
+	(..) I'd say so . 845700_846861
+*REED:	(.) &=in Yeah 846861_847982
+	I +/. 847982_848331
+*REED:	I was out +/. 848331_849120
+*REED:	(..) We were out 849120_850257
+	and the kids were (.) skiing 850257_851864
+	you know 851864_852291
+	and I was watching em go down 852291_853650
+	and I &{l=WH was thinking 853650_854269
+	(.) God that would sure &}l=WH be fun . 854269_855927
+*REED:	You know ? 855927_856334
+*REED:	(..) And then s- 856334_857479
+	just barely my common sense (.) won out 857479_860285
+	and I decided not to do it 860285_861711
+	but you know I've had (.) two discs taken out of my back 861711_863982
+	my neck f:used for a bad disc 863982_865851
+	&=in I don't need to go (.) flumpity-bump down the hill . 865851_868556
+*REED:	You know 868556_868963
+	I don't need any of that 868963_869834
+	so 869834_870124
+	&=in (..) you just have to 870124_871958
+	&=ex 871958_872573
+	have to kind of draw a few lines . 872573_874137
+*DARR:	Mm⌈: ⌉ . 874137_875448
+*REED:	  ⌊ but I ⌋ came close to . 875173_876413
+*DARR:	(..) ⌈2 It's tempting ⌉2 . 876413_877652
+*REED:	     ⌊2 to trying it ⌋2 876932_877640
+	it's tempting . 877652_878364
+*REED:	It's ⌈ very tempting ⌉ . 878364_879514
+*DARR:	     ⌊ It was fun 878608_879270
+	I ⌋ can tell you 879270_879854
+	⌈2 till I fell ⌉2 +... 879854_880454
+*REED:	⌊2 Oh Go⌋2:d . 879929_880742
+*REED:	It's +/. 880742_880928
+*REED:	It's just great . 880928_881845
+*REED:	(.) You know 881845_882333
+	but 882333_882588
+	&=in then I'd have to pay for it for the rest of my life 882588_885007
+	but I didn't know whether I wanted to do ⌈ that ⌉ . 885007_886366
+*DARR:	                                         ⌊ Not a ⌋ fair ⌈2 trade ⌉2 . 886168_886987
+*REED:	                                                        ⌊2 &=COUGH ⌋2 886772_887004
+	Not ⌈3 a fair tr⌉3ade . 887004_888165
+*SALL:	    ⌊3 &{l=X No: [% laugh] &}l=X ⌋3 . 887329_887910
+*DARR:	⌈4 I wouldn't do it . 888165_888674
+*REED:	⌊4 &=laugh Ch:- ⌋4 . 888165_888781
+*DARR:	that⌉4's bad odds . 888674_889349
+*REED:	(..) Good to see you . 889349_890822
+*REED:	(..) Come see me . 890822_892174
+*REED:	You know whenever you're ⌈ in town ⌉ ? 892174_893501
+*DARR:	                         ⌊ I will ⌋ . 892998_893463
+*REED:	(..) And uh 893501_894600
+	(..) &=in let me know what you get into 894600_896794
+	I'm sure it'll be something fun . 896794_898286
+*DARR:	(.) I hope so . 898286_899165
+*REED:	(..) I think it will . 899165_900349
+*REED:	(..) See you . 900349_901151
+*DARR:	Bye-bye . 901151_901464
+*REED:	Okay . 901464_901894
+*SALL:	(.) Okay ? 901894_902520
+*SALL:	(.) Just (.) let us know 902520_903690
+	(..) if you need anything . 903690_905247
+*DARR:	(.) Okay . 905247_906058
+*SALL:	(.) Okay ? 906058_906801
+@End

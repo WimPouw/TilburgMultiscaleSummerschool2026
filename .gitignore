@@ -12,3 +12,6 @@ Datasets/StanfordTriad/data
 
 **/*.quarto_ipynb
 MMLab_MDIG_Dav_Sarka.pptx
+
+*.DS_Store
+*.Rhistory
