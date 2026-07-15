@@ -168,6 +168,20 @@ three ways: the **hosted pilot** (<https://synapsis-dev.cls.ru.nl/> — ⚠️ n
 - Ribaric, Ariyaeeinia & Pavesic (2016). De-identification for privacy protection in multimedia content: a survey. *Signal Processing: Image Communication.* doi:10.1016/j.image.2016.05.020
 - Cao et al. (2019). OpenPose. *IEEE TPAMI.* doi:10.1109/TPAMI.2019.2929257
 
+## Projects & funding
+
+This work sits across three connected projects:
+
+- **SYNAPSIS** — Synergy Network and Platform for Integrating Audiovisual Data Archiving and
+  Stewardship in Social Sciences and Humanities (NWO ICT.001.TDCC.013). Project proposal:
+  <https://zenodo.org/records/16996002> (doi:10.5281/zenodo.16996002).
+- **SMASH** — Synthesis and Multimodal Analytics System for Humanities (NWO 406.XS.24.01.043):
+  <https://www.ru.nl/en/research/research-projects/smash>.
+- **SMASHFIRE** — Privacy-Preserving Video Technology for Fire Services Applications (NWO Impact
+  Explorer 2025; Tilburg University × Rotterdam-Rijnmond fire services): applying SMASH's
+  privacy-preserving analytics + MaskAnyone to archived rescue-operation video.
+  <https://www.nwo.nl/en/news/six-projects-started-in-impact-explorer-2025>.
+
 ## Connection to other days
 
 | Day | Topic | Thursday connection |

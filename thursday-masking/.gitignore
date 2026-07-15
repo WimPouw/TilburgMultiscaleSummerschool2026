@@ -1,0 +1,4 @@
+# Local demo sites pulled from private project repos (smash-ssh, synapsis_postdoc).
+# Instructor-only, NEVER shared with students / never pushed. Un-ignore only after
+# a privacy vet (drone footage, GPS, participant data).
+demos/
