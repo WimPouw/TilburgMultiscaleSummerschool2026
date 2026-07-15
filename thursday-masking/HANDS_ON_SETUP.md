@@ -85,6 +85,11 @@ python --version
 
 ### Create an environment and install
 
+> Run these **from the repository root** — the folder that contains both `Datasets/` and
+> `thursday-masking/`. (If `pip install -r …requirements.txt` says *"Could not open requirements
+> file"*, you're one level down — `cd` up. Or skip this entirely: `masking-lite.ipynb` installs the
+> libraries for you when you run it.)
+
 **conda (recommended):**
 ```bash
 conda create -n masking-video python=3.11 -y
