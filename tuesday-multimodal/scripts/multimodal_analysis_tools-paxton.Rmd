@@ -564,6 +564,9 @@ align_df = prep_dyads(sbc_df)
 
 # this is a secret chunk that will save the `align_df` dataframe for loading and rendering in RMarkdown
 if (exists("align_df")){
+  if (!dir.exists("~/GitHub/TilburgMultiscaleSummerschool2026/tuesday-multimodal/data/")){
+    dir.create("~/GitHub/TilburgMultiscaleSummerschool2026/tuesday-multimodal/data/")
+  }
   write.csv(x = align_df,
             file = "../data/align_df.csv",
             row.names = FALSE) 
