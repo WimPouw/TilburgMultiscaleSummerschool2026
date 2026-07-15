@@ -24,6 +24,12 @@ By 14:00 you will have:
 - **A strategy** — a masking operation you can justify for your own research.
 - **A path to share** — a route from masked clip to a FAIR, deposited dataset.
 
+## Before the day (prep)
+
+Two things to set up beforehand — the **masking-lite notebook** and **MaskAnyone** (hosted pilot, or
+self-hosted with a GPU/no-GPU fork). The one-page checklist is **[`PREP.md`](PREP.md)**. Do at least
+the notebook; it needs no GPU and no Docker and is enough to follow the whole day.
+
 ## Quick start (zero to running)
 
 New to this? Four steps from nothing to a masked video on your own laptop:
@@ -127,14 +133,16 @@ Participants need:
 - For the local hands-on notebooks: **Python 3.9–3.12** (⚠️ not 3.13 — MediaPipe has no 3.13 wheels)
   and conda *or* venv. See [`HANDS_ON_SETUP.md`](HANDS_ON_SETUP.md).
 
-**No GPU needed** — everything runs CPU-only. MaskAnyone can run **locally via Docker** or be used on
-the **hosted SYNAPSIS infrastructure** (Radboud HPC / Ponyland); the notebooks run entirely on your
-laptop.
+**No GPU needed for the notebooks** — they run CPU-only on your laptop. **MaskAnyone** can be used
+three ways: the **hosted pilot** (<https://synapsis-dev.cls.ru.nl/> — ⚠️ not live for students yet, wait for the instructor), or
+**self-hosted with Docker** — a **no-GPU** build (`docker-compose-local.yml`, MediaPipe masking) or a
+**GPU** build (`docker-compose-local-gpu.yml`, full SAM2 + OpenPose). See **[`PREP.md`](PREP.md)**.
 
 ## Tools
 
-- **MaskAnyone** — open-source video masking platform (YOLO + SAM2 + pose estimation); local Docker
-  or hosted.
+- **MaskAnyone** — open-source video masking platform (YOLO + SAM2 + pose estimation). Hosted pilot:
+  <https://synapsis-dev.cls.ru.nl/> *(not live for students yet — wait for the instructor)* · self-host (GPU/no-GPU): <https://github.com/MaskAnyone/MaskAnyoneProdInfrastructure>
+  · CPU-only build: <https://github.com/MaskAnyone/MaskAnyone/tree/original>. Setup in [`PREP.md`](PREP.md).
 - **MaskBench** — benchmarking framework that picks the pose estimator preserving the most analytic
   utility on masked video.
 - **VIDEODROP** — local video downloader (yt-dlp + ffmpeg): <https://github.com/babajideowoyele/videodrop>
