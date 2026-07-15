@@ -1,7 +1,7 @@
 ---
 title: 'Envisionbox Summer School: Multimodal tools'
 author: "A. Paxton (University of Connecticut)"
-date: "11 July 2026"
+date: "14 July 2026"
 output: html_document
 ---
 
@@ -34,7 +34,14 @@ from the Google News corpus (
   Make sure that you unzip it prior to running this code. (Once successfully unzipped,
   it will be merely `.bin`; it will not unzip further.)
   
-**Date last modified**: 13 July 2026
+Due to the size of the binary, you will need to have `git-lfs` to download the
+vector file.
+
+**Remember: This is a breadcrumb trail for you to follow; you aren't expected
+to be ready to do all of this yet.** You *can* do this. Be *patient* with yourself
+as you continue to learn!
+  
+**Date last modified**: 15 July 2026
 **Code written by**: A. Paxton (University of Connecticut)
 
 ***
@@ -120,6 +127,10 @@ list_audio_files = list.files(path_wav_audio,
                               full.names=TRUE)
 
 ```
+
+Remember, make sure that you unzip it prior to running this code. 
+(Once successfully unzipped, it will be merely `.bin`; it will not unzip further.)
+It should be under the `tuesday-multimodal/scripts/` folder directory.
 
 ```{r read_in_semantic_vectors}
 
@@ -232,7 +243,7 @@ content[[1]][1:6]
 
 Now, let's weave the header info with the content info to make our dataframe.
 
-```{r}
+```{r reconstitute_metadata}
 
 # prepare dataframe elements with many rows we should have for each conversation
 elements   = sapply(content, length)  
@@ -368,7 +379,7 @@ sbc_df = sbc_df %>% ungroup() %>%
 
 ## Ensure only text remains and extract timing
 
-``` {r}
+``` {r misc_cleaning}
 
 sbc_df = sbc_df %>% ungroup() %>%
   
