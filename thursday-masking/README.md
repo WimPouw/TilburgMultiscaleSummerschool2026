@@ -24,6 +24,12 @@ By 14:00 you will have:
 - **A strategy** — a masking operation you can justify for your own research.
 - **A path to share** — a route from masked clip to a FAIR, deposited dataset.
 
+## Before the day (prep)
+
+Two things to set up beforehand — the **masking-lite notebook** and **MaskAnyone** (hosted pilot, or
+self-hosted with a GPU/no-GPU fork). The one-page checklist is **[`PREP.md`](PREP.md)**. Do at least
+the notebook; it needs no GPU and no Docker and is enough to follow the whole day.
+
 ## Quick start (zero to running)
 
 New to this? Four steps from nothing to a masked video on your own laptop:
@@ -127,14 +133,16 @@ Participants need:
 - For the local hands-on notebooks: **Python 3.9–3.12** (⚠️ not 3.13 — MediaPipe has no 3.13 wheels)
   and conda *or* venv. See [`HANDS_ON_SETUP.md`](HANDS_ON_SETUP.md).
 
-**No GPU needed** — everything runs CPU-only. MaskAnyone can run **locally via Docker** or be used on
-the **hosted SYNAPSIS infrastructure** (Radboud HPC / Ponyland); the notebooks run entirely on your
-laptop.
+**No GPU needed for the notebooks** — they run CPU-only on your laptop. **MaskAnyone** can be used
+three ways: the **hosted pilot** (<https://synapsis-dev.cls.ru.nl/> — ⚠️ not live for students yet, wait for the instructor), or
+**self-hosted with Docker** — a **no-GPU** build (`docker-compose-local.yml`, MediaPipe masking) or a
+**GPU** build (`docker-compose-local-gpu.yml`, full SAM2 + OpenPose). See **[`PREP.md`](PREP.md)**.
 
 ## Tools
 
-- **MaskAnyone** — open-source video masking platform (YOLO + SAM2 + pose estimation); local Docker
-  or hosted.
+- **MaskAnyone** — open-source video masking platform (YOLO + SAM2 + pose estimation). Hosted pilot:
+  <https://synapsis-dev.cls.ru.nl/> *(not live for students yet — wait for the instructor)* · self-host (GPU/no-GPU): <https://github.com/MaskAnyone/MaskAnyoneProdInfrastructure>
+  · CPU-only build: <https://github.com/MaskAnyone/MaskAnyone/tree/original>. Setup in [`PREP.md`](PREP.md).
 - **MaskBench** — benchmarking framework that picks the pose estimator preserving the most analytic
   utility on masked video.
 - **VIDEODROP** — local video downloader (yt-dlp + ffmpeg): <https://github.com/babajideowoyele/videodrop>
@@ -159,6 +167,20 @@ laptop.
 - Sweeney (2002). k-anonymity. *Int. J. Uncertainty, Fuzziness & Knowledge-Based Systems.* doi:10.1142/S0218488502001648
 - Ribaric, Ariyaeeinia & Pavesic (2016). De-identification for privacy protection in multimedia content: a survey. *Signal Processing: Image Communication.* doi:10.1016/j.image.2016.05.020
 - Cao et al. (2019). OpenPose. *IEEE TPAMI.* doi:10.1109/TPAMI.2019.2929257
+
+## Projects & funding
+
+This work sits across three connected projects:
+
+- **SYNAPSIS** — Synergy Network and Platform for Integrating Audiovisual Data Archiving and
+  Stewardship in Social Sciences and Humanities (NWO ICT.001.TDCC.013). Project proposal:
+  <https://zenodo.org/records/16996002> (doi:10.5281/zenodo.16996002).
+- **SMASH** — Synthesis and Multimodal Analytics System for Humanities (NWO 406.XS.24.01.043):
+  <https://www.ru.nl/en/research/research-projects/smash>.
+- **SMASHFIRE** — Privacy-Preserving Video Technology for Fire Services Applications (NWO Impact
+  Explorer 2025; Tilburg University × Rotterdam-Rijnmond fire services): applying SMASH's
+  privacy-preserving analytics + MaskAnyone to archived rescue-operation video.
+  <https://www.nwo.nl/en/news/six-projects-started-in-impact-explorer-2025>.
 
 ## Connection to other days
 

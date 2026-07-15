@@ -6,8 +6,8 @@ numpy>=1.24
 pandas>=2.0
 jupyter
 ipykernel
-moviepy==2.1.1
-envisionhgdetector==3.0.1
-jupyter
 ipython
-ipykernel
+
+# NOTE: the gesture detector `envisionhgdetector` is a SEPARATE tool with its own
+# environment. It pins mediapipe==0.10.7, which conflicts with the 0.10.10 the
+# masking notebook needs, so it is intentionally NOT installed here.
