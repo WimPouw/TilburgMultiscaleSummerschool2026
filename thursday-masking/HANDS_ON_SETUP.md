@@ -19,6 +19,55 @@ already built the NLP track's `mdig-nlp` environment, you can reuse it for the a
 
 ---
 
+## Getting a video to mask — VIDEODROP
+
+Before you can mask a clip you need one. **VIDEODROP** is a small local web tool (built for this
+school; **yt-dlp + ffmpeg** under the hood) that fetches source video **on your own machine** — no
+upload, nothing leaves your laptop.
+
+**Repo:** <https://github.com/babajideowoyele/videodrop>
+
+### Run it
+
+```powershell
+git clone https://github.com/babajideowoyele/videodrop
+cd videodrop
+python app.py          # stdlib server, no pip install; needs yt-dlp, ffmpeg, node on PATH
+```
+
+It opens **`http://127.0.0.1:7654`** in your browser. `Ctrl+C` in the terminal stops it
+(`run.ps1` does the same on Windows).
+
+### Use it
+
+- **Drop a URL**, click *Fetch* to see available resolutions/subtitles, then pick **resolution,
+  frame rate**, or **audio-only** (MP3/M4A).
+- Optionally **trim** a start→end clip or **split** into chunks (by time, count, size, or chapters)
+  — handy for keeping test clips short.
+- **Batch / playlist** mode takes many URLs (or a playlist link) through a job queue.
+- For sign-in-gated sites it **borrows your browser's cookies** (Firefox by default; switch in the
+  header, or set `VIDEODROP_BROWSER=chrome`).
+- Save the resulting **`.mp4`** into `Datasets/BalanceCorpus/videos/` — the folder the video-masking
+  notebook reads (see below).
+
+> Only download material you have the right to use, and remember the whole point of the day: once
+> you have a clip, **mask it before you share it**.
+
+### Preparing & checking media — MediaPrep
+
+A companion SYNAPSIS tool, **MediaPrep** (<https://github.com/babajideowoyele/mediaprep>), is a local
+collect-and-prepare-media workbench: **transcribe** (Whisper), **archive-check** files against DANS
+formats, and **scrub EXIF/GPS metadata** before deposit — one Carbon UI, nothing uploaded. Useful
+between masking and the archiving step.
+
+```powershell
+git clone https://github.com/babajideowoyele/mediaprep
+cd mediaprep
+python app.py          # opens http://127.0.0.1:7655  (needs ffmpeg; pip install faster-whisper Pillow)
+```
+
+---
+
 ## 0 · Prerequisites
 
 - **Python 3.9–3.12** (⚠️ **not 3.13** — MediaPipe has no 3.13 wheels yet).
