@@ -1,0 +1,27 @@
+# The LaTeX sources stay local — only the stitched masking-day-full.pdf is shared.
+*.tex
+*.sty
+Makefile
+logos/
+# per-deck PDFs (rebuilt from the .tex sources)
+01-*.pdf
+02-*.pdf
+03-*.pdf
+04-*.pdf
+05-*.pdf
+06-*.pdf
+07-*.pdf
+bonus-*.pdf
+# flat handout build (rebuilt from the same .tex sources)
+handout/
+masking-day-handout.pdf
+# LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.fls
+*.fdb_latexmk
