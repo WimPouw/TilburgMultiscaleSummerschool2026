@@ -530,7 +530,7 @@ body {
 </ul>
 <p>In this script, we perform so-called diarization, which is the process of separating the audio into segments and attributing each segment to a speaker. As an output, we have a csv file for each wav file that tells us timestamps and the speaker.</p>
 <p>The code is adapted from Marianne de Heer Kloots’ tutorial: https://www.envisionbox.org/embedded_Speaker_diarization_pyannote.html</p>
-<div id="ef69d5ac" class="cell" data-execution_count="2">
+<div id="ef69d5ac" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code to load packages and prepare the environment</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># packages</span></span>
@@ -567,10 +567,10 @@ body {
 <span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    os.makedirs(ACfolder_processed)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Number of audio files found:  80</code></pre>
+<pre><code>Number of audio files found:  120</code></pre>
 </div>
 </div>
-<div id="fe8f607b" class="cell" data-execution_count="5">
+<div id="fe8f607b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> audio_player(audio_file):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ipd.display(Audio(audio_file))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -670,48 +670,51 @@ start=16.2s stop=16.6s speaker=SPEAKER_00</code></pre>
 <div id="3a005463" class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> wav <span class="kw">in</span> wavtotrack:</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    basename <span class="op">=</span> os.path.basename(wav)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"working on "</span>, basename)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'116_216'</span> <span class="kw">not</span> <span class="kw">in</span> wav:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    audio_path <span class="op">=</span> wav</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    audio, sr <span class="op">=</span> sf.read(audio_path, dtype<span class="op">=</span><span class="st">"float32"</span>, always_2d<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    waveform <span class="op">=</span> torch.from_numpy(audio.T)  <span class="co"># (channel, time)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    basename <span class="op">=</span> os.path.basename(wav)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"working on "</span>, basename)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    audio_path <span class="op">=</span> wav</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline.from_pretrained(</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pyannote/speaker-diarization-community-1"</span> <span class="co"># You need to get your own token at HuggingFaces </span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add: ,token="XXXXXXX"</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># send pipeline to GPU if available</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    device <span class="op">=</span> torch.device(<span class="st">"cuda:0"</span>) <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> torch.device(<span class="st">"cpu"</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    pipeline.to(device)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> pipeline(</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"waveform"</span>: waveform, <span class="st">"sample_rate"</span>: sr},</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        min_speakers<span class="op">=</span><span class="dv">1</span>, max_speakers<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    diarization <span class="op">=</span> output.speaker_diarization  <span class="co"># &lt;- this is the Annotation</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> turn, _, speaker <span class="kw">in</span> diarization.itertracks(yield_label<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"start=</span><span class="sc">{</span>turn<span class="sc">.</span>start<span class="sc">:.1f}</span><span class="ss">s stop=</span><span class="sc">{</span>turn<span class="sc">.</span>end<span class="sc">:.1f}</span><span class="ss">s speaker=</span><span class="sc">{</span>speaker<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    audio, sr <span class="op">=</span> sf.read(audio_path, dtype<span class="op">=</span><span class="st">"float32"</span>, always_2d<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    waveform <span class="op">=</span> torch.from_numpy(audio.T)  <span class="co"># (channel, time)</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    pipeline <span class="op">=</span> Pipeline.from_pretrained(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pyannote/speaker-diarization-community-1"</span> <span class="co"># You need to get your own token at HuggingFaces </span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add: ,token="XXXXXXX"</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># send pipeline to GPU if available</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    device <span class="op">=</span> torch.device(<span class="st">"cuda:0"</span>) <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> torch.device(<span class="st">"cpu"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    pipeline.to(device)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    output <span class="op">=</span> pipeline(</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"waveform"</span>: waveform, <span class="st">"sample_rate"</span>: sr},</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        min_speakers<span class="op">=</span><span class="dv">1</span>, max_speakers<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    diarization <span class="op">=</span> output.speaker_diarization  <span class="co"># &lt;- this is the Annotation</span></span>
 <span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create csv documentation</span></span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> turn, _, speaker <span class="kw">in</span> diarization.itertracks(yield_label<span class="op">=</span><span class="va">True</span>):</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>            <span class="st">"speaker"</span>: speaker,</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>            <span class="st">"start"</span>: <span class="bu">round</span>(turn.start, <span class="dv">3</span>),</span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>            <span class="st">"end"</span>: <span class="bu">round</span>(turn.end, <span class="dv">3</span>),</span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">"duration"</span>: <span class="bu">round</span>(turn.end <span class="op">-</span> turn.start, <span class="dv">3</span>)</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    diar_df <span class="op">=</span> pd.DataFrame(rows)</span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    diarname <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>basename<span class="sc">}</span><span class="ss">_diarization.csv"</span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    diar_df.to_csv(os.path.join(<span class="st">"diarization"</span>, diarname), index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> turn, _, speaker <span class="kw">in</span> diarization.itertracks(yield_label<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"start=</span><span class="sc">{</span>turn<span class="sc">.</span>start<span class="sc">:.1f}</span><span class="ss">s stop=</span><span class="sc">{</span>turn<span class="sc">.</span>end<span class="sc">:.1f}</span><span class="ss">s speaker=</span><span class="sc">{</span>speaker<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create csv documentation</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> turn, _, speaker <span class="kw">in</span> diarization.itertracks(yield_label<span class="op">=</span><span class="va">True</span>):</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        rows.append({</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            <span class="st">"speaker"</span>: speaker,</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>            <span class="st">"start"</span>: <span class="bu">round</span>(turn.start, <span class="dv">3</span>),</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>            <span class="st">"end"</span>: <span class="bu">round</span>(turn.end, <span class="dv">3</span>),</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>            <span class="st">"duration"</span>: <span class="bu">round</span>(turn.end <span class="op">-</span> turn.start, <span class="dv">3</span>)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    diar_df <span class="op">=</span> pd.DataFrame(rows)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    diarname <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>basename<span class="sc">}</span><span class="ss">_diarization.csv"</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    diar_df.to_csv(os.path.join(<span class="st">"diarization"</span>, diarname), index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

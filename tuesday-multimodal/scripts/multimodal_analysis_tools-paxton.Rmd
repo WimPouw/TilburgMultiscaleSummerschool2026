@@ -3,6 +3,8 @@ title: 'Envisionbox Summer School: Multimodal tools'
 author: "A. Paxton (University of Connecticut)"
 date: "14 July 2026"
 output: html_document
+execute:
+  enabled: false
 ---
 
 ```{r setup, include=FALSE}

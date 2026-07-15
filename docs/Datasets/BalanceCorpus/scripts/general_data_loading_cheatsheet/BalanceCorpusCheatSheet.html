@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-07-14">
+<meta name="dcterms.date" content="2026-07-15">
 
 <title>Cheatsheet: Loading the BalanceCorpus</title>
 <style>
@@ -532,7 +532,7 @@ body {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 14, 2026</p>
+      <p class="date">July 15, 2026</p>
     </div>
   </div>
   
@@ -732,7 +732,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>voicing<span class="sc">.</span>groupby([<span class="st">'pair'</span>,<span class="st">'trial'</span>])<span class="sc">.</span>ngroups<span class="sc">}</span><span class="ss"> trials, </span><span class="sc">{</span><span class="bu">len</span>(voicing)<span class="sc">}</span><span class="ss"> voiced segments"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>80 trials, 2317 voiced segments</code></pre>
+<pre><code>120 trials, 3879 voiced segments</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>voicing.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1120,7 +1120,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> ax.scatter(umap_kin[<span class="st">"x"</span>], umap_kin[<span class="st">"y"</span>], c<span class="op">=</span>umap_kin[<span class="st">"hand_peak_speed"</span>], s<span class="op">=</span><span class="dv">12</span>, cmap<span class="op">=</span><span class="st">"viridis"</span>)</span>
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>fig.colorbar(sc, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"hand peak speed"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;matplotlib.colorbar.Colorbar object at 0x0000026294EFC2F0&gt;</code></pre>
+<pre><code>&lt;matplotlib.colorbar.Colorbar object at 0x000002B0005C70B0&gt;</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
