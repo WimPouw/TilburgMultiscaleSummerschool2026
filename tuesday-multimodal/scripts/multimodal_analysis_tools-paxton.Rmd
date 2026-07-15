@@ -124,8 +124,14 @@ list_audio_files = list.files(path_wav_audio,
 ```{r read_in_semantic_vectors}
 
 # read in the word2vec vectors trained on the Google News corpus
-word2vec_pretrained_model = read.word2vec("../scripts/GoogleNews-vectors-negative300.bin")
+#word2vec_pretrained_model = read.word2vec("../scripts/GoogleNews-vectors-negative300.bin")
 
+# if you get error that file is empty
+word2vec_pretrained_model <- word2vec::read.wordvectors(
+  file = "../scripts/GoogleNews-vectors-negative300.txt",
+  type = "txt",
+  encoding = "UTF-8"
+)
 ```
 
 ***
@@ -546,7 +552,7 @@ align_df = prep_dyads(sbc_df)
 # this is a secret chunk that will save the `align_df` dataframe for loading and rendering in RMarkdown
 if (exists("align_df")){
   write.csv(x = align_df,
-            file = "~/GitHub/TilburgMultiscaleSummerschool2026/tuesday-multimodal/data/align_df.csv",
+            file = "../data/align_df.csv",
             row.names = FALSE) 
 }
 
@@ -555,7 +561,7 @@ if (exists("align_df")){
 ```{r load_align, include=FALSE, eval=TRUE}
 
 # this is a secret chunk that will load back in the `align_df` dataframe for loading and rendering
-align_df = read.csv(file = "~/GitHub/TilburgMultiscaleSummerschool2026/tuesday-multimodal/data/align_df.csv",
+align_df = read.csv(file = "../data/align_df.csv",
                     header = TRUE)
                      
 ```

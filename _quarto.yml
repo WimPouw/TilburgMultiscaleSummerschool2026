@@ -53,7 +53,7 @@ website:
         contents:
           - section: "Alex Paxton: State of the Art Multimodal Analysis (ALIGN R package)"
             contents:
-              - "tba"
+              - "tuesday-multimodal/scripts/multimodal_analysis_tools-paxton.Rmd"
           - section: "Wim Pouw: Intrapersonal Coupling Using Empirical Mode Decomposition"
             contents:
               - Datasets/BalanceCorpus/scripts/analysis_multiscaleintracoupling/envelope_emd_demo.ipynb
