@@ -1,0 +1,6 @@
+# Per-user runtime artifacts produced by masking-lite.ipynb — not shared.
+my_videos/
+masking_output/
+_testrun.ipynb
+__pycache__/
+.ipynb_checkpoints/
