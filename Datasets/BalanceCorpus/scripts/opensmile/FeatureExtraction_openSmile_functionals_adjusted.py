@@ -12,14 +12,14 @@ import subprocess
 smilelld = opensmile.Smile(
     feature_set='ComParE_2016.conf', #feature set
     #lowLevelDescriptors 
-    feature_level=opensmile.FeatureLevel.LowLevelDescriptors, #feature level
+    #feature_level=opensmile.FeatureLevel.LowLevelDescriptors, #feature level
     #Functionals
-    #feature_level=opensmile.FeatureLevel.Functionals, #feature level
+    feature_level=opensmile.FeatureLevel.Functionals, #feature level
     loglevel=2, 
     logfile='smile.log'
 )
 
-Batch = "108_208"
+Batch = "116_216"
 
 for file1 in os.listdir(os.path.join(AUDIO_PATH, Batch)):
     print(file1)
@@ -44,6 +44,6 @@ for file1 in os.listdir(os.path.join(AUDIO_PATH, Batch)):
     #output_LLD['frame_number'] = range(0,output_LLD.shape[0])
     file_conv = file1.replace('.wav', '')
     #if extracting LLD
-    output_functionals.to_csv(os.path.join(OUTPUT_PATH, Batch, 'Compare_LLD_{}.csv'.format(file_conv)))
+    #output_functionals.to_csv(os.path.join(OUTPUT_PATH, Batch, 'Compare_LLD_{}.csv'.format(file_conv)))
     #if extracting Functionals
-    #output_functionals.to_csv(os.path.join(OUTPUT_PATH, Batch, 'Compare_Functionals_{}.csv'.format(file_conv)))
+    output_functionals.to_csv(os.path.join(OUTPUT_PATH, Batch, 'Compare_Functionals_{}.csv'.format(file_conv)))

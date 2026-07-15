@@ -1,12 +1,12 @@
-[ 01.07.2026 - 14:52:10 ]
+[ 15.07.2026 - 09:43:58 ]
     (MSG) [2] SMILEapi: openSMILE starting!
-[ 01.07.2026 - 14:52:10 ]
-    (MSG) [2] SMILEapi: config file is: /Users/tiffanymatejhrkalovic/Documents/GitHub/TilburgMultiscaleSummerschool2026/Datasets/BalanceCorpus/opensmile/ComParE_2016.conf
-[ 01.07.2026 - 14:52:10 ]
+[ 15.07.2026 - 09:43:58 ]
+    (MSG) [2] SMILEapi: config file is: /Users/tiffanymatejhrkalovic/Documents/GitHub/TilburgMultiscaleSummerschool2026/Datasets/BalanceCorpus/scripts/opensmile/ComParE_2016.conf
+[ 15.07.2026 - 09:43:58 ]
     (MSG) [2] cComponentManager: successfully registered 102 component types.
-[ 01.07.2026 - 14:52:10 ]
+[ 15.07.2026 - 09:43:58 ]
     (MSG) [2] cComponentManager: successfully finished createInstances (43 component instances were finalised, 1 data memories were finalised)
-[ 01.07.2026 - 14:52:10 ]
+[ 15.07.2026 - 09:43:58 ]
     (MSG) [2] cComponentManager: starting single thread processing loop
-[ 01.07.2026 - 14:52:10 ]
-    (MSG) [2] cComponentManager: Processing finished! System ran for 369 ticks.
+[ 15.07.2026 - 09:43:58 ]
+    (MSG) [2] cComponentManager: Processing finished! System ran for 479 ticks.
