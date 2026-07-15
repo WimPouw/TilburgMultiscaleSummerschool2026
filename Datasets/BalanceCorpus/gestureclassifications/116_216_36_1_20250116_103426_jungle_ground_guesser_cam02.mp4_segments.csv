@@ -1,0 +1,3 @@
+start_time,end_time,label,labelid,duration,model
+0.8,1.9666666666666666,Gesture,1,1.1666666666666665,CNN
+0.8,1.5333333333333334,Gesture,1,0.7333333333333334,LightGBM
