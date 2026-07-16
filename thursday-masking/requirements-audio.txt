@@ -1,0 +1,31 @@
+# MDIG2026 — Masking day, audio track: notebooks/audio_deidentification.ipynb
+# CPU-only; no GPU required. Python 3.9+ — including 3.13 (verified resolving there).
+# (This is the AUDIO stack, so the "not 3.13" rule from the video notebook does NOT
+# apply here — that limit is mediapipe's, and nothing below depends on mediapipe.
+# The video notebook uses requirements.txt; keep the two environments separate.)
+#
+#   pip install -r thursday-masking/requirements-audio.txt
+
+librosa>=0.10        # audio load/resample, LPC (Part B), MFCC (C2), pitch_shift (A2), display
+soundfile>=0.12      # wav I/O backend for librosa
+scipy>=1.10          # lfilter / butter / sosfiltfilt — the DSP in Parts A and B
+numpy>=1.24
+matplotlib>=3.7      # spectrogram plots
+ipython>=8.0         # display() + Audio() players in the notebook
+jupyter
+ipykernel
+
+# --- Optional: Part C evaluation ---------------------------------------------
+# Both cells are wrapped in try/except — without these, they print an install hint
+# and the rest of the notebook still runs. Uncomment, or pip install separately.
+#
+# faster-whisper>=1.0   # C1 intelligibility check (ASR). Already in the NLP track's mdig-nlp env.
+#
+# C3 speaker-embedding check — resemblyzer. NOT a plain pip install on Windows:
+#   pip install webrtcvad-wheels        # resemblyzer's webrtcvad dep needs MSVC to build;
+#                                       # this ships prebuilt wheels instead
+#   pip install --no-deps resemblyzer   # --no-deps on purpose: resemblyzer requires the old
+#                                       # `typing` backport, which shadows stdlib typing on
+#                                       # 3.9+ and breaks the env. Its real deps (torch,
+#                                       # librosa, numpy, scipy) are already satisfied above.
+# Verified working this way on Python 3.11 (mdig-nlp).
