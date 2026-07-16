@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ANNOTATION_DOCUMENT AUTHOR="" DATE="2026-06-25-02-23-11" FORMAT="3.0" VERSION="3.0"
+<ANNOTATION_DOCUMENT AUTHOR="" DATE="2026-07-14-22-45-54" FORMAT="3.0" VERSION="3.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.mpi.nl/tools/elan/EAFv3.0.xsd">
     <HEADER MEDIA_FILE="" TIME_UNITS="milliseconds">
-        <MEDIA_DESCRIPTOR MEDIA_URL="file://d:\Research_projects\TilburgMultiscaleSummerschool2026\Datasets\BalanceCorpus\videos\103_203\clue_giver\tmp4g006i41\108_208_50_1_20250114_163655_picture_board_clueGiver_cam02.mp4"
+        <MEDIA_DESCRIPTOR MEDIA_URL="file://d:\Research_projects\TilburgMultiscaleSummerschool2026\Datasets\BalanceCorpus\videos\103_203\clue_giver\tmpu4m1dxy0\108_208_50_1_20250114_163655_picture_board_clueGiver_cam02.mp4"
             MIME_TYPE="video/mp4" RELATIVE_MEDIA_URL=""/>
         <PROPERTY NAME="lastUsedAnnotationId">0</PROPERTY>
     </HEADER>
