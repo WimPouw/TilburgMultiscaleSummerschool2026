@@ -85,6 +85,11 @@ python --version
 
 ### Create an environment and install
 
+> Run these **from the repository root** — the folder that contains both `Datasets/` and
+> `thursday-masking/`. (If `pip install -r …requirements.txt` says *"Could not open requirements
+> file"*, you're one level down — `cd` up. Or skip this entirely: `masking-lite.ipynb` installs the
+> libraries for you when you run it.)
+
 **conda (recommended):**
 ```bash
 conda create -n masking-video python=3.11 -y
@@ -132,30 +137,46 @@ Datasets/BalanceCorpus/
 
 ## 2 · Audio de-identification notebook
 
-This one shares its stack with the NLP track. **If you already made `mdig-nlp`, just use it** and
-skip the install.
+This one shares its stack with the NLP track. **If you already made `mdig-nlp`, just use it** — it
+already has everything the notebook needs (librosa, soundfile, scipy, faster-whisper). No install:
 
-**Reuse the NLP environment:**
 ```bash
-conda activate mdig-nlp        # already has librosa, soundfile, faster-whisper
+conda activate mdig-nlp
 ```
 
-**Or a fresh minimal environment:**
+Then open `thursday-masking/notebooks/audio_deidentification.ipynb`, pick the **"Python (mdig-nlp)"**
+kernel, and run top to bottom. It finds a sample clip from the corpus automatically (and falls back to
+a synthetic voice if the corpus isn't present, so it runs anywhere).
+
+**No `mdig-nlp`? A fresh environment:**
 ```bash
 conda create -n masking-audio python=3.11 -y
 conda activate masking-audio
-pip install librosa soundfile scipy numpy matplotlib
-pip install faster-whisper        # optional: the "does the content survive?" ASR check
+pip install -r thursday-masking/requirements-audio.txt
 python -m ipykernel install --user --name masking-audio --display-name "Python (masking-audio)"
 ```
 
-Then open `thursday-masking/notebooks/audio_deidentification.ipynb`, pick the matching kernel, and run
-top to bottom. It finds a sample clip from the corpus automatically (and falls back to a synthetic
-voice if the corpus isn't present, so it runs anywhere).
+> Unlike the video notebook, the audio stack has **no MediaPipe**, so the "not Python 3.13" rule
+> above does **not** apply here — 3.13 is fine. You can also just add the audio libraries to your
+> existing `masking-video` env (`pip install -r thursday-masking/requirements-audio.txt`); they are
+> purely additive and don't disturb mediapipe/numpy.
 
-> Optional Part C also uses `resemblyzer` for a real speaker-embedding privacy check
-> (`pip install resemblyzer`). Without it, that one cell prints an install hint and is skipped — the
-> rest runs fine.
+### Optional — Part C's speaker-embedding check (`resemblyzer`)
+
+Part C3 measures privacy with a real speaker embedding. Without it that one cell prints an install
+hint and is skipped — **the rest of the notebook runs fine**, so don't burn session time on it.
+
+⚠️ **`pip install resemblyzer` fails on most Windows machines.** It needs to compile `webrtcvad`, which
+requires MS Visual C++ Build Tools. Use prebuilt wheels instead:
+
+```bash
+pip install webrtcvad-wheels          # prebuilt — no compiler needed
+pip install --no-deps resemblyzer     # --no-deps is deliberate: see below
+```
+
+`--no-deps` is **not** a shortcut — resemblyzer declares a dependency on the ancient `typing` backport,
+which on Python 3.11 shadows the standard library's `typing` and can break the environment. Every real
+dependency (torch, librosa, numpy, scipy) is already in `mdig-nlp`, so skipping deps is the safe path.
 
 ---
 
@@ -163,12 +184,15 @@ voice if the corpus isn't present, so it runs anywhere).
 
 | Symptom | Fix |
 |---|---|
-| `ERROR: Could not find a version that satisfies mediapipe` | You're on Python 3.13 (or 3.8). Use 3.9–3.12. |
+| `ERROR: Could not find a version that satisfies mediapipe` | You're on Python 3.13 (or 3.8). Use 3.9–3.12. **Video notebook only** — the audio one is happy on 3.13. |
 | Kernel "Python (masking-video)" not in the list | Re-run the `ipykernel install …` line, then reload the Jupyter/VS Code window. |
 | `ModuleNotFoundError: mediapipe` inside the notebook | Wrong kernel selected — pick the masking-video kernel, not "base". |
 | Video won't open / 0 frames | Ensure the `.mp4` is a real file (not a Git-LFS pointer). `git lfs pull` if needed. |
 | Output video is empty / codec error | Some OpenCV builds lack the MP4V codec; install `opencv-python` (not `-headless`), or change the `fourcc` to `*'mp4v'`/`*'XVID'`. |
 | First audio cell is slow | It's a one-time model download (Whisper / encoder). Subsequent runs are cached and fast. |
+| `Microsoft Visual C++ 14.0 or greater is required` when installing `resemblyzer` | Its `webrtcvad` dep builds from source on Windows. Don't install Build Tools — use `pip install webrtcvad-wheels` then `pip install --no-deps resemblyzer`. |
+| `ModuleNotFoundError: librosa` in the audio notebook | Wrong kernel — pick "Python (mdig-nlp)" (or your masking-audio kernel), not "base"/"Python (masking-video)". |
+| Part C3 prints "Skipping speaker-embedding check" | `resemblyzer` isn't installed. This is **optional** — the notebook is designed to run without it. |
 
 ---
 

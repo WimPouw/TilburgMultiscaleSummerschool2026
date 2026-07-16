@@ -2,7 +2,11 @@
 *.tex
 *.sty
 Makefile
+*.sh
 logos/
+# Image / GIF / video build assets (screenshots, EnvisionBOX posters + frames,
+# animation POC). Embedded into the PDFs at build time, so the sources stay local.
+img/
 # per-deck PDFs (rebuilt from the .tex sources)
 01-*.pdf
 02-*.pdf
@@ -12,6 +16,7 @@ logos/
 06-*.pdf
 07-*.pdf
 bonus-*.pdf
+poc-*.pdf
 # flat handout build (rebuilt from the same .tex sources)
 handout/
 masking-day-handout.pdf
