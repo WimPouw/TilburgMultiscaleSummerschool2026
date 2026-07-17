@@ -453,7 +453,7 @@ body {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../thursday-masking/notebooks/masking-lite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">▶ How to run this — for everyone (no coding needed)</span></a>
+ <span class="menu-text">Masking-lite — Media-Pipe full-body tracking, masking, blurring &amp; movement tracing</span></a>
   </div>
 </li>
       </ul>
@@ -495,23 +495,14 @@ body {
   <ul>
   <li><a href="#masking-day-hands-on-setup-guide" id="toc-masking-day-hands-on-setup-guide" class="nav-link active" data-scroll-target="#masking-day-hands-on-setup-guide">Masking day — hands-on setup guide</a>
   <ul class="collapse">
-  <li><a href="#getting-a-video-to-mask-videodrop" id="toc-getting-a-video-to-mask-videodrop" class="nav-link" data-scroll-target="#getting-a-video-to-mask-videodrop">Getting a video to mask — VIDEODROP</a>
-  <ul class="collapse">
-  <li><a href="#run-it" id="toc-run-it" class="nav-link" data-scroll-target="#run-it">Run it</a></li>
-  <li><a href="#use-it" id="toc-use-it" class="nav-link" data-scroll-target="#use-it">Use it</a></li>
-  <li><a href="#preparing-checking-media-mediaprep" id="toc-preparing-checking-media-mediaprep" class="nav-link" data-scroll-target="#preparing-checking-media-mediaprep">Preparing &amp; checking media — MediaPrep</a></li>
-  </ul></li>
   <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">0 · Prerequisites</a></li>
   <li><a href="#video-masking-notebook-mediapipe" id="toc-video-masking-notebook-mediapipe" class="nav-link" data-scroll-target="#video-masking-notebook-mediapipe">1 · Video masking notebook (MediaPipe)</a>
   <ul class="collapse">
   <li><a href="#create-an-environment-and-install" id="toc-create-an-environment-and-install" class="nav-link" data-scroll-target="#create-an-environment-and-install">Create an environment and install</a></li>
   <li><a href="#folder-layout-the-notebook-expects" id="toc-folder-layout-the-notebook-expects" class="nav-link" data-scroll-target="#folder-layout-the-notebook-expects">Folder layout the notebook expects</a></li>
-  <li><a href="#run-it-1" id="toc-run-it-1" class="nav-link" data-scroll-target="#run-it-1">Run it</a></li>
+  <li><a href="#run-it" id="toc-run-it" class="nav-link" data-scroll-target="#run-it">Run it</a></li>
   </ul></li>
-  <li><a href="#audio-de-identification-notebook" id="toc-audio-de-identification-notebook" class="nav-link" data-scroll-target="#audio-de-identification-notebook">2 · Audio de-identification notebook</a>
-  <ul class="collapse">
-  <li><a href="#optional-part-cs-speaker-embedding-check-resemblyzer" id="toc-optional-part-cs-speaker-embedding-check-resemblyzer" class="nav-link" data-scroll-target="#optional-part-cs-speaker-embedding-check-resemblyzer">Optional — Part C’s speaker-embedding check (<code>resemblyzer</code>)</a></li>
-  </ul></li>
+  <li><a href="#audio-de-identification-notebook" id="toc-audio-de-identification-notebook" class="nav-link" data-scroll-target="#audio-de-identification-notebook">2 · Audio de-identification notebook</a></li>
   <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">3 · Troubleshooting</a></li>
   </ul></li>
   </ul>
@@ -558,39 +549,6 @@ body {
 </blockquote>
 <p>They use <strong>different libraries</strong>, so the cleanest path is <strong>one small environment each</strong>. If you already built the NLP track’s <code>mdig-nlp</code> environment, you can reuse it for the audio notebook.</p>
 <hr>
-<section id="getting-a-video-to-mask-videodrop" class="level2">
-<h2 class="anchored" data-anchor-id="getting-a-video-to-mask-videodrop">Getting a video to mask — VIDEODROP</h2>
-<p>Before you can mask a clip you need one. <strong>VIDEODROP</strong> is a small local web tool (built for this school; <strong>yt-dlp + ffmpeg</strong> under the hood) that fetches source video <strong>on your own machine</strong> — no upload, nothing leaves your laptop.</p>
-<p><strong>Repo:</strong> <a href="https://github.com/babajideowoyele/videodrop" class="uri">https://github.com/babajideowoyele/videodrop</a></p>
-<section id="run-it" class="level3">
-<h3 class="anchored" data-anchor-id="run-it">Run it</h3>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>git clone https<span class="op">://</span>github<span class="op">.</span><span class="fu">com</span><span class="op">/</span>babajideowoyele<span class="op">/</span>videodrop</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> videodrop</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>python app<span class="op">.</span><span class="fu">py</span>          <span class="co"># stdlib server, no pip install; needs yt-dlp, ffmpeg, node on PATH</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>It opens <strong><code>http://127.0.0.1:7654</code></strong> in your browser. <code>Ctrl+C</code> in the terminal stops it (<code>run.ps1</code> does the same on Windows).</p>
-</section>
-<section id="use-it" class="level3">
-<h3 class="anchored" data-anchor-id="use-it">Use it</h3>
-<ul>
-<li><strong>Drop a URL</strong>, click <em>Fetch</em> to see available resolutions/subtitles, then pick <strong>resolution, frame rate</strong>, or <strong>audio-only</strong> (MP3/M4A).</li>
-<li>Optionally <strong>trim</strong> a start→end clip or <strong>split</strong> into chunks (by time, count, size, or chapters) — handy for keeping test clips short.</li>
-<li><strong>Batch / playlist</strong> mode takes many URLs (or a playlist link) through a job queue.</li>
-<li>For sign-in-gated sites it <strong>borrows your browser’s cookies</strong> (Firefox by default; switch in the header, or set <code>VIDEODROP_BROWSER=chrome</code>).</li>
-<li>Save the resulting <strong><code>.mp4</code></strong> into <code>Datasets/BalanceCorpus/videos/</code> — the folder the video-masking notebook reads (see below).</li>
-</ul>
-<blockquote class="blockquote">
-<p>Only download material you have the right to use, and remember the whole point of the day: once you have a clip, <strong>mask it before you share it</strong>.</p>
-</blockquote>
-</section>
-<section id="preparing-checking-media-mediaprep" class="level3">
-<h3 class="anchored" data-anchor-id="preparing-checking-media-mediaprep">Preparing &amp; checking media — MediaPrep</h3>
-<p>A companion SYNAPSIS tool, <strong>MediaPrep</strong> (<a href="https://github.com/babajideowoyele/mediaprep" class="uri">https://github.com/babajideowoyele/mediaprep</a>), is a local collect-and-prepare-media workbench: <strong>transcribe</strong> (Whisper), <strong>archive-check</strong> files against DANS formats, and <strong>scrub EXIF/GPS metadata</strong> before deposit — one Carbon UI, nothing uploaded. Useful between masking and the archiving step.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>git clone https<span class="op">://</span>github<span class="op">.</span><span class="fu">com</span><span class="op">/</span>babajideowoyele<span class="op">/</span>mediaprep</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> mediaprep</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>python app<span class="op">.</span><span class="fu">py</span>          <span class="co"># opens http://127.0.0.1:7655  (needs ffmpeg; pip install faster-whisper Pillow)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<hr>
-</section>
-</section>
 <section id="prerequisites" class="level2">
 <h2 class="anchored" data-anchor-id="prerequisites">0 · Prerequisites</h2>
 <ul>
@@ -599,26 +557,23 @@ body {
 <li>Git (to have this repository cloned locally).</li>
 </ul>
 <p>Check your Python:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <hr>
 </section>
 <section id="video-masking-notebook-mediapipe" class="level2">
 <h2 class="anchored" data-anchor-id="video-masking-notebook-mediapipe">1 · Video masking notebook (MediaPipe)</h2>
 <section id="create-an-environment-and-install" class="level3">
 <h3 class="anchored" data-anchor-id="create-an-environment-and-install">Create an environment and install</h3>
-<blockquote class="blockquote">
-<p>Run these <strong>from the repository root</strong> — the folder that contains both <code>Datasets/</code> and <code>thursday-masking/</code>. (If <code>pip install -r …requirements.txt</code> says <em>“Could not open requirements file”</em>, you’re one level down — <code>cd</code> up. Or skip this entirely: <code>masking-lite.ipynb</code> installs the libraries for you when you run it.)</p>
-</blockquote>
 <p><strong>conda (recommended):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-video python=3.11 <span class="at">-y</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-video</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-video python=3.11 <span class="at">-y</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-video</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>venv (no conda):</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv .venv-masking</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows:  .venv-masking\Scripts\activate     macOS/Linux:  source .venv-masking/bin/activate</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv .venv-masking</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows:  .venv-masking\Scripts\activate     macOS/Linux:  source .venv-masking/bin/activate</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="folder-layout-the-notebook-expects" class="level3">
 <h3 class="anchored" data-anchor-id="folder-layout-the-notebook-expects">Folder layout the notebook expects</h3>
@@ -633,8 +588,8 @@ body {
 <p>The two <code>Output_*</code> folders are created for you if missing. Already-processed videos are <strong>skipped</strong> on re-run (delete the output file to reprocess).</p>
 </blockquote>
 </section>
-<section id="run-it-1" class="level3">
-<h3 class="anchored" data-anchor-id="run-it-1">Run it</h3>
+<section id="run-it" class="level3">
+<h3 class="anchored" data-anchor-id="run-it">Run it</h3>
 <ol type="1">
 <li>Open <code>Masking_Mediapiping.ipynb</code>.</li>
 <li>Select the <strong>“Python (masking-video)”</strong> kernel (top-right kernel picker).</li>
@@ -646,26 +601,20 @@ body {
 </section>
 <section id="audio-de-identification-notebook" class="level2">
 <h2 class="anchored" data-anchor-id="audio-de-identification-notebook">2 · Audio de-identification notebook</h2>
-<p>This one shares its stack with the NLP track. <strong>If you already made <code>mdig-nlp</code>, just use it</strong> — it already has everything the notebook needs (librosa, soundfile, scipy, faster-whisper). No install:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate mdig-nlp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Then open <code>thursday-masking/notebooks/audio_deidentification.ipynb</code>, pick the <strong>“Python (mdig-nlp)”</strong> kernel, and run top to bottom. It finds a sample clip from the corpus automatically (and falls back to a synthetic voice if the corpus isn’t present, so it runs anywhere).</p>
-<p><strong>No <code>mdig-nlp</code>? A fresh environment:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-audio python=3.11 <span class="at">-y</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-audio</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> thursday-masking/requirements-audio.txt</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-audio <span class="at">--display-name</span> <span class="st">"Python (masking-audio)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This one shares its stack with the NLP track. <strong>If you already made <code>mdig-nlp</code>, just use it</strong> and skip the install.</p>
+<p><strong>Reuse the NLP environment:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate mdig-nlp        <span class="co"># already has librosa, soundfile, faster-whisper</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Or a fresh minimal environment:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-audio python=3.11 <span class="at">-y</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-audio</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install librosa soundfile scipy numpy matplotlib</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install faster-whisper        <span class="co"># optional: the "does the content survive?" ASR check</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-audio <span class="at">--display-name</span> <span class="st">"Python (masking-audio)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then open <code>thursday-masking/notebooks/audio_deidentification.ipynb</code>, pick the matching kernel, and run top to bottom. It finds a sample clip from the corpus automatically (and falls back to a synthetic voice if the corpus isn’t present, so it runs anywhere).</p>
 <blockquote class="blockquote">
-<p>Unlike the video notebook, the audio stack has <strong>no MediaPipe</strong>, so the “not Python 3.13” rule above does <strong>not</strong> apply here — 3.13 is fine. You can also just add the audio libraries to your existing <code>masking-video</code> env (<code>pip install -r thursday-masking/requirements-audio.txt</code>); they are purely additive and don’t disturb mediapipe/numpy.</p>
+<p>Optional Part C also uses <code>resemblyzer</code> for a real speaker-embedding privacy check (<code>pip install resemblyzer</code>). Without it, that one cell prints an install hint and is skipped — the rest runs fine.</p>
 </blockquote>
-<section id="optional-part-cs-speaker-embedding-check-resemblyzer" class="level3">
-<h3 class="anchored" data-anchor-id="optional-part-cs-speaker-embedding-check-resemblyzer">Optional — Part C’s speaker-embedding check (<code>resemblyzer</code>)</h3>
-<p>Part C3 measures privacy with a real speaker embedding. Without it that one cell prints an install hint and is skipped — <strong>the rest of the notebook runs fine</strong>, so don’t burn session time on it.</p>
-<p>⚠️ <strong><code>pip install resemblyzer</code> fails on most Windows machines.</strong> It needs to compile <code>webrtcvad</code>, which requires MS Visual C++ Build Tools. Use prebuilt wheels instead:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install webrtcvad-wheels          <span class="co"># prebuilt — no compiler needed</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--no-deps</span> resemblyzer     <span class="co"># --no-deps is deliberate: see below</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><code>--no-deps</code> is <strong>not</strong> a shortcut — resemblyzer declares a dependency on the ancient <code>typing</code> backport, which on Python 3.11 shadows the standard library’s <code>typing</code> and can break the environment. Every real dependency (torch, librosa, numpy, scipy) is already in <code>mdig-nlp</code>, so skipping deps is the safe path.</p>
 <hr>
-</section>
 </section>
 <section id="troubleshooting" class="level2">
 <h2 class="anchored" data-anchor-id="troubleshooting">3 · Troubleshooting</h2>
@@ -683,7 +632,7 @@ body {
 <tbody>
 <tr class="odd">
 <td><code>ERROR: Could not find a version that satisfies mediapipe</code></td>
-<td>You’re on Python 3.13 (or 3.8). Use 3.9–3.12. <strong>Video notebook only</strong> — the audio one is happy on 3.13.</td>
+<td>You’re on Python 3.13 (or 3.8). Use 3.9–3.12.</td>
 </tr>
 <tr class="even">
 <td>Kernel “Python (masking-video)” not in the list</td>
@@ -704,18 +653,6 @@ body {
 <tr class="even">
 <td>First audio cell is slow</td>
 <td>It’s a one-time model download (Whisper / encoder). Subsequent runs are cached and fast.</td>
-</tr>
-<tr class="odd">
-<td><code>Microsoft Visual C++ 14.0 or greater is required</code> when installing <code>resemblyzer</code></td>
-<td>Its <code>webrtcvad</code> dep builds from source on Windows. Don’t install Build Tools — use <code>pip install webrtcvad-wheels</code> then <code>pip install --no-deps resemblyzer</code>.</td>
-</tr>
-<tr class="even">
-<td><code>ModuleNotFoundError: librosa</code> in the audio notebook</td>
-<td>Wrong kernel — pick “Python (mdig-nlp)” (or your masking-audio kernel), not “base”/“Python (masking-video)”.</td>
-</tr>
-<tr class="odd">
-<td>Part C3 prints “Skipping speaker-embedding check”</td>
-<td><code>resemblyzer</code> isn’t installed. This is <strong>optional</strong> — the notebook is designed to run without it.</td>
 </tr>
 </tbody>
 </table>
@@ -1180,207 +1117,134 @@ body {
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Masking day — hands-on setup guide</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>This is the **one-page setup** for the two hands-on notebooks. Everything is **CPU-only** — no GPU</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>needed. Budget ~15 minutes for first-time install (mostly downloads).</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>There are two notebooks:</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Notebook <span class="pp">|</span> What it does <span class="pp">|</span> Where it lives <span class="pp">|</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Video masking** — <span class="in">`masking-lite.ipynb`</span> <span class="pp">|</span> Full-body tracking → blur / mask / skeleton / motion traces on video <span class="pp">|</span> <span class="in">`thursday-masking/notebooks/`</span> <span class="pp">|</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Audio de-identification** — <span class="in">`audio_deidentification.ipynb`</span> <span class="pp">|</span> Redact / disguise / anonymize a voice while keeping the words <span class="pp">|</span> <span class="in">`thursday-masking/notebooks/`</span> <span class="pp">|</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **`masking-lite.ipynb`** is the easy, self-locating copy of the video-masking tool — open it from</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`thursday-masking/notebooks/`</span><span class="at"> and it finds the corpus for you. (The full original lives at</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`Datasets/BalanceCorpus/scripts/motiontracking/Masking_Mediapiping.ipynb`</span><span class="at"> and behaves identically.)</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>They use **different libraries**, so the cleanest path is **one small environment each**. If you</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>already built the NLP track's <span class="in">`mdig-nlp`</span> environment, you can reuse it for the audio notebook.</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## Getting a video to mask — VIDEODROP</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>Before you can mask a clip you need one. **VIDEODROP** is a small local web tool (built for this</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>school; **yt-dlp + ffmpeg** under the hood) that fetches source video **on your own machine** — no</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>upload, nothing leaves your laptop.</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>**Repo:** <span class="ot">&lt;https://github.com/babajideowoyele/videodrop&gt;</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run it</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="in">```powershell</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="in">git clone https://github.com/babajideowoyele/videodrop</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="in">cd videodrop</span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="in">python app.py          # stdlib server, no pip install; needs yt-dlp, ffmpeg, node on PATH</span></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>It opens **`http://127.0.0.1:7654`** in your browser. <span class="in">`Ctrl+C`</span> in the terminal stops it</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>(<span class="in">`run.ps1`</span> does the same on Windows).</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="fu">### Use it</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Drop a URL**, click *Fetch* to see available resolutions/subtitles, then pick **resolution,</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>  frame rate**, or **audio-only** (MP3/M4A).</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Optionally **trim** a start→end clip or **split** into chunks (by time, count, size, or chapters)</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>  — handy for keeping test clips short.</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Batch / playlist** mode takes many URLs (or a playlist link) through a job queue.</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>For sign-in-gated sites it **borrows your browser's cookies** (Firefox by default; switch in the</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  header, or set <span class="in">`VIDEODROP_BROWSER=chrome`</span>).</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Save the resulting **`.mp4`** into <span class="in">`Datasets/BalanceCorpus/videos/`</span> — the folder the video-masking</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>  notebook reads (see below).</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Only download material you have the right to use, and remember the whole point of the day: once</span></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; you have a clip, **mask it before you share it**.</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Preparing &amp; checking media — MediaPrep</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>A companion SYNAPSIS tool, **MediaPrep** (<span class="ot">&lt;https://github.com/babajideowoyele/mediaprep&gt;</span>), is a local</span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>collect-and-prepare-media workbench: **transcribe** (Whisper), **archive-check** files against DANS</span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>formats, and **scrub EXIF/GPS metadata** before deposit — one Carbon UI, nothing uploaded. Useful</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>between masking and the archiving step.</span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="in">```powershell</span></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="in">git clone https://github.com/babajideowoyele/mediaprep</span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="in">cd mediaprep</span></span>
-<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="in">python app.py          # opens http://127.0.0.1:7655  (needs ffmpeg; pip install faster-whisper Pillow)</span></span>
-<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## 0 · Prerequisites</span></span>
-<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Python 3.9–3.12** (⚠️ **not 3.13** — MediaPipe has no 3.13 wheels yet).</span>
-<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**conda** (Anaconda/Miniconda) *or* Python's built-in <span class="in">`venv`</span>. Examples below show both.</span>
-<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Git (to have this repository cloned locally).</span>
-<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a>Check your Python:</span>
-<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
-<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-83"><a href="#cb10-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-84"><a href="#cb10-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 · Video masking notebook (MediaPipe)</span></span>
-<span id="cb10-85"><a href="#cb10-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-86"><a href="#cb10-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### Create an environment and install</span></span>
-<span id="cb10-87"><a href="#cb10-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-88"><a href="#cb10-88" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Run these **from the repository root** — the folder that contains both </span><span class="in">`Datasets/`</span><span class="at"> and</span></span>
-<span id="cb10-89"><a href="#cb10-89" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`thursday-masking/`</span><span class="at">. (If </span><span class="in">`pip install -r …requirements.txt`</span><span class="at"> says *"Could not open requirements</span></span>
-<span id="cb10-90"><a href="#cb10-90" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; file"*, you're one level down — </span><span class="in">`cd`</span><span class="at"> up. Or skip this entirely: </span><span class="in">`masking-lite.ipynb`</span><span class="at"> installs the</span></span>
-<span id="cb10-91"><a href="#cb10-91" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; libraries for you when you run it.)</span></span>
-<span id="cb10-92"><a href="#cb10-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-93"><a href="#cb10-93" aria-hidden="true" tabindex="-1"></a>**conda (recommended):**</span>
-<span id="cb10-94"><a href="#cb10-94" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-95"><a href="#cb10-95" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-video python=3.11 <span class="at">-y</span></span>
-<span id="cb10-96"><a href="#cb10-96" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-video</span>
-<span id="cb10-97"><a href="#cb10-97" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
-<span id="cb10-98"><a href="#cb10-98" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span>
-<span id="cb10-99"><a href="#cb10-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-100"><a href="#cb10-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-101"><a href="#cb10-101" aria-hidden="true" tabindex="-1"></a>**venv (no conda):**</span>
-<span id="cb10-102"><a href="#cb10-102" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-103"><a href="#cb10-103" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv .venv-masking</span>
-<span id="cb10-104"><a href="#cb10-104" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows:  .venv-masking\Scripts\activate     macOS/Linux:  source .venv-masking/bin/activate</span></span>
-<span id="cb10-105"><a href="#cb10-105" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
-<span id="cb10-106"><a href="#cb10-106" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span>
-<span id="cb10-107"><a href="#cb10-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-108"><a href="#cb10-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-109"><a href="#cb10-109" aria-hidden="true" tabindex="-1"></a><span class="fu">### Folder layout the notebook expects</span></span>
-<span id="cb10-110"><a href="#cb10-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-111"><a href="#cb10-111" aria-hidden="true" tabindex="-1"></a>Run from inside <span class="in">`Datasets/BalanceCorpus/scripts/motiontracking/`</span>. The notebook reads and writes with</span>
-<span id="cb10-112"><a href="#cb10-112" aria-hidden="true" tabindex="-1"></a>paths **relative to that folder**:</span>
-<span id="cb10-113"><a href="#cb10-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-114"><a href="#cb10-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-115"><a href="#cb10-115" aria-hidden="true" tabindex="-1"></a><span class="in">Datasets/BalanceCorpus/</span></span>
-<span id="cb10-116"><a href="#cb10-116" aria-hidden="true" tabindex="-1"></a><span class="in">├── videos/                     ← put the .mp4 clips to process here (searched recursively)</span></span>
-<span id="cb10-117"><a href="#cb10-117" aria-hidden="true" tabindex="-1"></a><span class="in">├── motiontracking/</span></span>
-<span id="cb10-118"><a href="#cb10-118" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── scripts/motiontracking/Masking_Mediapiping.ipynb</span></span>
-<span id="cb10-119"><a href="#cb10-119" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── Output_Videos/          ← masked videos are written here</span></span>
-<span id="cb10-120"><a href="#cb10-120" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── Output_TimeSeries/      ← per-video body/hands/face .csv are written here</span></span>
-<span id="cb10-121"><a href="#cb10-121" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-122"><a href="#cb10-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-123"><a href="#cb10-123" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The two </span><span class="in">`Output_*`</span><span class="at"> folders are created for you if missing. Already-processed videos are **skipped**</span></span>
-<span id="cb10-124"><a href="#cb10-124" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; on re-run (delete the output file to reprocess).</span></span>
-<span id="cb10-125"><a href="#cb10-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-126"><a href="#cb10-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run it</span></span>
-<span id="cb10-127"><a href="#cb10-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-128"><a href="#cb10-128" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Masking_Mediapiping.ipynb`</span>.</span>
-<span id="cb10-129"><a href="#cb10-129" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select the **"Python (masking-video)"** kernel (top-right kernel picker).</span>
-<span id="cb10-130"><a href="#cb10-130" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Run top to bottom. The notebook is now **broken into steps** (choose background → body mask/blur →</span>
-<span id="cb10-131"><a href="#cb10-131" aria-hidden="true" tabindex="-1"></a>   face blur/mask → finger traces → skeleton → kinematics → run over all videos). Read each step,</span>
-<span id="cb10-132"><a href="#cb10-132" aria-hidden="true" tabindex="-1"></a>   then run the final "Step 7" cell to process every clip in <span class="in">`videos/`</span>.</span>
-<span id="cb10-133"><a href="#cb10-133" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Toggle the switches in the **Options** cell to change the masking style (the default is full-body</span>
-<span id="cb10-134"><a href="#cb10-134" aria-hidden="true" tabindex="-1"></a>   blur + skeleton + finger traces).</span>
-<span id="cb10-135"><a href="#cb10-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-136"><a href="#cb10-136" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-137"><a href="#cb10-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-138"><a href="#cb10-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 · Audio de-identification notebook</span></span>
-<span id="cb10-139"><a href="#cb10-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-140"><a href="#cb10-140" aria-hidden="true" tabindex="-1"></a>This one shares its stack with the NLP track. **If you already made `mdig-nlp`, just use it** — it</span>
-<span id="cb10-141"><a href="#cb10-141" aria-hidden="true" tabindex="-1"></a>already has everything the notebook needs (librosa, soundfile, scipy, faster-whisper). No install:</span>
-<span id="cb10-142"><a href="#cb10-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-143"><a href="#cb10-143" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-144"><a href="#cb10-144" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate mdig-nlp</span>
-<span id="cb10-145"><a href="#cb10-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-146"><a href="#cb10-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-147"><a href="#cb10-147" aria-hidden="true" tabindex="-1"></a>Then open <span class="in">`thursday-masking/notebooks/audio_deidentification.ipynb`</span>, pick the **"Python (mdig-nlp)"**</span>
-<span id="cb10-148"><a href="#cb10-148" aria-hidden="true" tabindex="-1"></a>kernel, and run top to bottom. It finds a sample clip from the corpus automatically (and falls back to</span>
-<span id="cb10-149"><a href="#cb10-149" aria-hidden="true" tabindex="-1"></a>a synthetic voice if the corpus isn't present, so it runs anywhere).</span>
-<span id="cb10-150"><a href="#cb10-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-151"><a href="#cb10-151" aria-hidden="true" tabindex="-1"></a>**No `mdig-nlp`? A fresh environment:**</span>
-<span id="cb10-152"><a href="#cb10-152" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-153"><a href="#cb10-153" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-audio python=3.11 <span class="at">-y</span></span>
-<span id="cb10-154"><a href="#cb10-154" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-audio</span>
-<span id="cb10-155"><a href="#cb10-155" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> thursday-masking/requirements-audio.txt</span>
-<span id="cb10-156"><a href="#cb10-156" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-audio <span class="at">--display-name</span> <span class="st">"Python (masking-audio)"</span></span>
-<span id="cb10-157"><a href="#cb10-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-158"><a href="#cb10-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-159"><a href="#cb10-159" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Unlike the video notebook, the audio stack has **no MediaPipe**, so the "not Python 3.13" rule</span></span>
-<span id="cb10-160"><a href="#cb10-160" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; above does **not** apply here — 3.13 is fine. You can also just add the audio libraries to your</span></span>
-<span id="cb10-161"><a href="#cb10-161" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; existing </span><span class="in">`masking-video`</span><span class="at"> env (</span><span class="in">`pip install -r thursday-masking/requirements-audio.txt`</span><span class="at">); they are</span></span>
-<span id="cb10-162"><a href="#cb10-162" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; purely additive and don't disturb mediapipe/numpy.</span></span>
-<span id="cb10-163"><a href="#cb10-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-164"><a href="#cb10-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Optional — Part C's speaker-embedding check (`resemblyzer`)</span></span>
-<span id="cb10-165"><a href="#cb10-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-166"><a href="#cb10-166" aria-hidden="true" tabindex="-1"></a>Part C3 measures privacy with a real speaker embedding. Without it that one cell prints an install</span>
-<span id="cb10-167"><a href="#cb10-167" aria-hidden="true" tabindex="-1"></a>hint and is skipped — **the rest of the notebook runs fine**, so don't burn session time on it.</span>
-<span id="cb10-168"><a href="#cb10-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-169"><a href="#cb10-169" aria-hidden="true" tabindex="-1"></a>⚠️ **`pip install resemblyzer` fails on most Windows machines.** It needs to compile <span class="in">`webrtcvad`</span>, which</span>
-<span id="cb10-170"><a href="#cb10-170" aria-hidden="true" tabindex="-1"></a>requires MS Visual C++ Build Tools. Use prebuilt wheels instead:</span>
-<span id="cb10-171"><a href="#cb10-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-172"><a href="#cb10-172" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb10-173"><a href="#cb10-173" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install webrtcvad-wheels          <span class="co"># prebuilt — no compiler needed</span></span>
-<span id="cb10-174"><a href="#cb10-174" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">--no-deps</span> resemblyzer     <span class="co"># --no-deps is deliberate: see below</span></span>
-<span id="cb10-175"><a href="#cb10-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb10-176"><a href="#cb10-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-177"><a href="#cb10-177" aria-hidden="true" tabindex="-1"></a><span class="in">`--no-deps`</span> is **not** a shortcut — resemblyzer declares a dependency on the ancient <span class="in">`typing`</span> backport,</span>
-<span id="cb10-178"><a href="#cb10-178" aria-hidden="true" tabindex="-1"></a>which on Python 3.11 shadows the standard library's <span class="in">`typing`</span> and can break the environment. Every real</span>
-<span id="cb10-179"><a href="#cb10-179" aria-hidden="true" tabindex="-1"></a>dependency (torch, librosa, numpy, scipy) is already in <span class="in">`mdig-nlp`</span>, so skipping deps is the safe path.</span>
-<span id="cb10-180"><a href="#cb10-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-181"><a href="#cb10-181" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-182"><a href="#cb10-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-183"><a href="#cb10-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 · Troubleshooting</span></span>
-<span id="cb10-184"><a href="#cb10-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-185"><a href="#cb10-185" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Symptom <span class="pp">|</span> Fix <span class="pp">|</span></span>
-<span id="cb10-186"><a href="#cb10-186" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
-<span id="cb10-187"><a href="#cb10-187" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ERROR: Could not find a version that satisfies mediapipe`</span> <span class="pp">|</span> You're on Python 3.13 (or 3.8). Use 3.9–3.12. **Video notebook only** — the audio one is happy on 3.13. <span class="pp">|</span></span>
-<span id="cb10-188"><a href="#cb10-188" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Kernel "Python (masking-video)" not in the list <span class="pp">|</span> Re-run the <span class="in">`ipykernel install …`</span> line, then reload the Jupyter/VS Code window. <span class="pp">|</span></span>
-<span id="cb10-189"><a href="#cb10-189" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ModuleNotFoundError: mediapipe`</span> inside the notebook <span class="pp">|</span> Wrong kernel selected — pick the masking-video kernel, not "base". <span class="pp">|</span></span>
-<span id="cb10-190"><a href="#cb10-190" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Video won't open / 0 frames <span class="pp">|</span> Ensure the <span class="in">`.mp4`</span> is a real file (not a Git-LFS pointer). <span class="in">`git lfs pull`</span> if needed. <span class="pp">|</span></span>
-<span id="cb10-191"><a href="#cb10-191" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Output video is empty / codec error <span class="pp">|</span> Some OpenCV builds lack the MP4V codec; install <span class="in">`opencv-python`</span> (not <span class="in">`-headless`</span>), or change the <span class="in">`fourcc`</span> to <span class="in">`*'mp4v'`</span>/<span class="in">`*'XVID'`</span>. <span class="pp">|</span></span>
-<span id="cb10-192"><a href="#cb10-192" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> First audio cell is slow <span class="pp">|</span> It's a one-time model download (Whisper / encoder). Subsequent runs are cached and fast. <span class="pp">|</span></span>
-<span id="cb10-193"><a href="#cb10-193" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Microsoft Visual C++ 14.0 or greater is required`</span> when installing <span class="in">`resemblyzer`</span> <span class="pp">|</span> Its <span class="in">`webrtcvad`</span> dep builds from source on Windows. Don't install Build Tools — use <span class="in">`pip install webrtcvad-wheels`</span> then <span class="in">`pip install --no-deps resemblyzer`</span>. <span class="pp">|</span></span>
-<span id="cb10-194"><a href="#cb10-194" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ModuleNotFoundError: librosa`</span> in the audio notebook <span class="pp">|</span> Wrong kernel — pick "Python (mdig-nlp)" (or your masking-audio kernel), not "base"/"Python (masking-video)". <span class="pp">|</span></span>
-<span id="cb10-195"><a href="#cb10-195" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Part C3 prints "Skipping speaker-embedding check" <span class="pp">|</span> <span class="in">`resemblyzer`</span> isn't installed. This is **optional** — the notebook is designed to run without it. <span class="pp">|</span></span>
-<span id="cb10-196"><a href="#cb10-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-197"><a href="#cb10-197" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb10-198"><a href="#cb10-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-199"><a href="#cb10-199" aria-hidden="true" tabindex="-1"></a>*Both notebooks are exploratory teaching material for the MDIG2026 summer school. The video tool is</span>
-<span id="cb10-200"><a href="#cb10-200" aria-hidden="true" tabindex="-1"></a>the Masked-Piper pipeline (Owoyele et al., 2022, SoftwareX); the audio notebook implements the</span>
-<span id="cb10-201"><a href="#cb10-201" aria-hidden="true" tabindex="-1"></a>VoicePrivacy McAdams baseline (Patino et al., 2021).*</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Masking day — hands-on setup guide</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>This is the **one-page setup** for the two hands-on notebooks. Everything is **CPU-only** — no GPU</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>needed. Budget ~15 minutes for first-time install (mostly downloads).</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>There are two notebooks:</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Notebook <span class="pp">|</span> What it does <span class="pp">|</span> Where it lives <span class="pp">|</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Video masking** — <span class="in">`masking-lite.ipynb`</span> <span class="pp">|</span> Full-body tracking → blur / mask / skeleton / motion traces on video <span class="pp">|</span> <span class="in">`thursday-masking/notebooks/`</span> <span class="pp">|</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Audio de-identification** — <span class="in">`audio_deidentification.ipynb`</span> <span class="pp">|</span> Redact / disguise / anonymize a voice while keeping the words <span class="pp">|</span> <span class="in">`thursday-masking/notebooks/`</span> <span class="pp">|</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; **`masking-lite.ipynb`** is the easy, self-locating copy of the video-masking tool — open it from</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`thursday-masking/notebooks/`</span><span class="at"> and it finds the corpus for you. (The full original lives at</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; </span><span class="in">`Datasets/BalanceCorpus/scripts/motiontracking/Masking_Mediapiping.ipynb`</span><span class="at"> and behaves identically.)</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>They use **different libraries**, so the cleanest path is **one small environment each**. If you</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>already built the NLP track's <span class="in">`mdig-nlp`</span> environment, you can reuse it for the audio notebook.</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="fu">## 0 · Prerequisites</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Python 3.9–3.12** (⚠️ **not 3.13** — MediaPipe has no 3.13 wheels yet).</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**conda** (Anaconda/Miniconda) *or* Python's built-in <span class="in">`venv`</span>. Examples below show both.</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Git (to have this repository cloned locally).</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>Check your Python:</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1 · Video masking notebook (MediaPipe)</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Create an environment and install</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>**conda (recommended):**</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-video python=3.11 <span class="at">-y</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-video</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>**venv (no conda):**</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv .venv-masking</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows:  .venv-masking\Scripts\activate     macOS/Linux:  source .venv-masking/bin/activate</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> Datasets/BalanceCorpus/scripts/motiontracking/requirements.txt</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-video <span class="at">--display-name</span> <span class="st">"Python (masking-video)"</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="fu">### Folder layout the notebook expects</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>Run from inside <span class="in">`Datasets/BalanceCorpus/scripts/motiontracking/`</span>. The notebook reads and writes with</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>paths **relative to that folder**:</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a><span class="in">Datasets/BalanceCorpus/</span></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="in">├── videos/                     ← put the .mp4 clips to process here (searched recursively)</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="in">├── motiontracking/</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── scripts/motiontracking/Masking_Mediapiping.ipynb</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a><span class="in">│   ├── Output_Videos/          ← masked videos are written here</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a><span class="in">│   └── Output_TimeSeries/      ← per-video body/hands/face .csv are written here</span></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; The two </span><span class="in">`Output_*`</span><span class="at"> folders are created for you if missing. Already-processed videos are **skipped**</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; on re-run (delete the output file to reprocess).</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Run it</span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Open <span class="in">`Masking_Mediapiping.ipynb`</span>.</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Select the **"Python (masking-video)"** kernel (top-right kernel picker).</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Run top to bottom. The notebook is now **broken into steps** (choose background → body mask/blur →</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>   face blur/mask → finger traces → skeleton → kinematics → run over all videos). Read each step,</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>   then run the final "Step 7" cell to process every clip in <span class="in">`videos/`</span>.</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Toggle the switches in the **Options** cell to change the masking style (the default is full-body</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>   blur + skeleton + finger traces).</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2 · Audio de-identification notebook</span></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>This one shares its stack with the NLP track. **If you already made `mdig-nlp`, just use it** and</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>skip the install.</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>**Reuse the NLP environment:**</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate mdig-nlp        <span class="co"># already has librosa, soundfile, faster-whisper</span></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>**Or a fresh minimal environment:**</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> masking-audio python=3.11 <span class="at">-y</span></span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate masking-audio</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install librosa soundfile scipy numpy matplotlib</span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install faster-whisper        <span class="co"># optional: the "does the content survive?" ASR check</span></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> ipykernel install <span class="at">--user</span> <span class="at">--name</span> masking-audio <span class="at">--display-name</span> <span class="st">"Python (masking-audio)"</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>Then open <span class="in">`thursday-masking/notebooks/audio_deidentification.ipynb`</span>, pick the matching kernel, and run</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a>top to bottom. It finds a sample clip from the corpus automatically (and falls back to a synthetic</span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>voice if the corpus isn't present, so it runs anywhere).</span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Optional Part C also uses </span><span class="in">`resemblyzer`</span><span class="at"> for a real speaker-embedding privacy check</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; (</span><span class="in">`pip install resemblyzer`</span><span class="at">). Without it, that one cell prints an install hint and is skipped — the</span></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; rest runs fine.</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3 · Troubleshooting</span></span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Symptom <span class="pp">|</span> Fix <span class="pp">|</span></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|</span></span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ERROR: Could not find a version that satisfies mediapipe`</span> <span class="pp">|</span> You're on Python 3.13 (or 3.8). Use 3.9–3.12. <span class="pp">|</span></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Kernel "Python (masking-video)" not in the list <span class="pp">|</span> Re-run the <span class="in">`ipykernel install …`</span> line, then reload the Jupyter/VS Code window. <span class="pp">|</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`ModuleNotFoundError: mediapipe`</span> inside the notebook <span class="pp">|</span> Wrong kernel selected — pick the masking-video kernel, not "base". <span class="pp">|</span></span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Video won't open / 0 frames <span class="pp">|</span> Ensure the <span class="in">`.mp4`</span> is a real file (not a Git-LFS pointer). <span class="in">`git lfs pull`</span> if needed. <span class="pp">|</span></span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Output video is empty / codec error <span class="pp">|</span> Some OpenCV builds lack the MP4V codec; install <span class="in">`opencv-python`</span> (not <span class="in">`-headless`</span>), or change the <span class="in">`fourcc`</span> to <span class="in">`*'mp4v'`</span>/<span class="in">`*'XVID'`</span>. <span class="pp">|</span></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> First audio cell is slow <span class="pp">|</span> It's a one-time model download (Whisper / encoder). Subsequent runs are cached and fast. <span class="pp">|</span></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>*Both notebooks are exploratory teaching material for the MDIG2026 summer school. The video tool is</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>the Masked-Piper pipeline (Owoyele et al., 2022, SoftwareX); the audio notebook implements the</span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>VoicePrivacy McAdams baseline (Patino et al., 2021).*</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
