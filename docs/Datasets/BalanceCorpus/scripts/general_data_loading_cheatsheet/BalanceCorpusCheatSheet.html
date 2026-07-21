@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-07-15">
+<meta name="dcterms.date" content="2026-07-21">
 
 <title>Cheatsheet: Loading the BalanceCorpus</title>
 <style>
@@ -454,7 +454,7 @@ body {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../../../thursday-masking/notebooks/masking-lite.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Masking-lite — Media-Pipe full-body tracking, masking, blurring &amp; movement tracing</span></a>
+ <span class="menu-text">▶ How to run this — for everyone (no coding needed)</span></a>
   </div>
 </li>
       </ul>
@@ -532,7 +532,7 @@ body {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">July 15, 2026</p>
+      <p class="date">July 21, 2026</p>
     </div>
   </div>
   
@@ -1030,12 +1030,12 @@ Name: count, dtype: int64</code></pre>
 5 103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4.eaf
 4 103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4.eaf
                                                                                                                                                                                             media_url
-1 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmp4g006i41\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
-6 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmp4g006i41\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
-2 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmp4g006i41\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
-3 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmp4g006i41\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
-5 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmp4g006i41\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
-4 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmp4g006i41\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4</code></pre>
+1 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmpu4m1dxy0\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
+6 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmpu4m1dxy0\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
+2 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmpu4m1dxy0\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
+3 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmpu4m1dxy0\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
+5 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmpu4m1dxy0\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4
+4 file://d:\\Research_projects\\TilburgMultiscaleSummerschool2026\\Datasets\\BalanceCorpus\\videos\\103_203\\clue_giver\\tmpu4m1dxy0\\103_203_12_1_20250113_152455_doughnut_board_clueGiver_cam02.mp4</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1090,11 +1090,11 @@ Name: count, dtype: int64</code></pre>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>umap.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          x  ...  condition
-0  7.650042  ...      board
-1  9.918681  ...      board
-2  8.758283  ...      board
-3  7.663474  ...      board
-4  9.935769  ...      board
+0  7.651683  ...      board
+1  7.888662  ...      board
+2  7.983306  ...      board
+3  7.675891  ...      board
+4  7.856062  ...      board
 
 [5 rows x 4 columns]</code></pre>
 </div>
@@ -1120,7 +1120,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>sc <span class="op">=</span> ax.scatter(umap_kin[<span class="st">"x"</span>], umap_kin[<span class="st">"y"</span>], c<span class="op">=</span>umap_kin[<span class="st">"hand_peak_speed"</span>], s<span class="op">=</span><span class="dv">12</span>, cmap<span class="op">=</span><span class="st">"viridis"</span>)</span>
 <span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>fig.colorbar(sc, ax<span class="op">=</span>ax, label<span class="op">=</span><span class="st">"hand peak speed"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;matplotlib.colorbar.Colorbar object at 0x000002B0005C70B0&gt;</code></pre>
+<pre><code>&lt;matplotlib.colorbar.Colorbar object at 0x000001C3D3604260&gt;</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()<span class="op">;</span> plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">

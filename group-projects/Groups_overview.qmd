@@ -21,8 +21,8 @@ Members:
 :::
 
 ::: {.g-col-4}
-Topic: <br>
-Repository: <br>
+Topic: Does prior affiliation relate to movement and gaze coordination dynamics in dyadic interaction?<br>
+[Github repository](https://github.com/ethelpruss/purplecircle) <br>
 :::
 
 ::: {.g-col-2}
@@ -38,8 +38,8 @@ Members:
 :::
 
 ::: {.g-col-4}
-Topic: <br>
-Repository: <br>
+Topic: Wobbly friends <br>
+[Github repository](https://github.com/matteoschmelzer/wobblyFriends) <br>
 :::
 
 ::: {.g-col-2}
@@ -56,8 +56,8 @@ Members:
 :::
 
 ::: {.g-col-4}
-Topic: <br>
-Repository: <br>
+Topic: Impact of postural (in)stability on the temporal coordination of speech and gesture during face-to-face interactions<br>
+[Github repository](https://github.com/hestervbeek/BIGS-TilburgSS) <br>
 :::
 
 ::: {.g-col-2}
@@ -73,8 +73,8 @@ Members:
 :::
 
 ::: {.g-col-4}
-Topic: <br>
-Repository: <br>
+Topic: Exploring the relationships between eyebrow movement, pitch and effects on communication and accuracy in the guessing game <br>
+[Github repository](https://github.com/mearlboro/RaisedExpectations)<br>
 :::
 
 ::: {.g-col-2}
@@ -108,8 +108,8 @@ Members:
 :::
 
 ::: {.g-col-4}
-Topic: <br>
-Repository: <br>
+Topic: Multimodal variability as a predictor of social judgment <br>
+[Github repository](https://github.com/MCarneirodeAndrade/pinkcross) <br>
 :::
 
 :::
