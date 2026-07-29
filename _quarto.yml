@@ -31,7 +31,7 @@ website:
               - Datasets/BalanceCorpus/scripts/nlp_taboo/00_dataset_preview.ipynb
               - Datasets/BalanceCorpus/scripts/nlp_taboo/01_audio_to_transcripts.ipynb
               - Datasets/BalanceCorpus/scripts/nlp_taboo/02_semantic_homing.ipynb
-              - Datasets/BalanceCorpus/scripts/nlp_taboo/03_leyical_alignment.ipynb
+              - Datasets/BalanceCorpus/scripts/nlp_taboo/03_lexical_alignment.ipynb
           - section: "Gesture Classification"
             contents:
               - Datasets/BalanceCorpus/scripts/usingenvisionhgdetector/envisionhgdetector.ipynb
